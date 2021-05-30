@@ -1,7 +1,6 @@
 <?php
 
-require_once dirname(__FILE__)."dao/BaseDao.class.php"
+require_once dirname(__FILE__)."/dao/BaseDao.class.php";
 
-$variable = new BaseDao();
-echo "Hello from api";
+echo "hello from api";
 ?>

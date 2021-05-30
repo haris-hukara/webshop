@@ -7,6 +7,6 @@ class Config {
     const DB_PASSWORD = "webshop";
     const DB_SCHEME = "webshop";
 
-}
+}   
 
 ?>

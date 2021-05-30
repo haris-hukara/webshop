@@ -2,6 +2,6 @@
 
 require_once dirname(__FILE__)."/dao/BaseDao.class.php";
 
-$coTest = new BaseDao();
+$base = new BaseDao();
 echo "hello from api";
 ?>

@@ -1,0 +1,12 @@
+{
+    "name": "ibu/webshop",
+    "description": "Web shop for web course",
+    "license": "Apache2",
+    "authors": [
+        {
+            "name": "haris-hukara",
+            "email": "haris.hukara@stu.ibu.edu.ba"
+        }
+    ],
+    "require": {}
+}

@@ -1,6 +1,6 @@
 <?php 
 
-class AccountDao extends BaseDao{
+class CustomerDetailsDao extends BaseDao{
 
     public function add_account($account){
         

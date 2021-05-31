@@ -21,9 +21,31 @@ class BaseDao{
         }
       }
 
-        public function insert(){
+        // key = column
+        public function insert($tableName, $entity){
+            $query = "INSERT INTO ${tableName} (";
             
-        }
+            foreach ($entity as $column => $value) {
+              $query .= $column.", ";
+            }
+            
+            $query = substr($query, 0, -2);
+            $query .= ") VALUES (";
+            
+            foreach ($entity as $column => $value) {
+              $query .= ":".$column.", ";
+            }
+
+            $query = substr($query, 0, -2);
+            $query .= ")";
+        
+            $stmt= $this->connection->prepare($query);
+            $stmt->execute($entity);
+
+            $entity['id'] = $this->connection->lastInsertId();
+            return $entity;
+          }
+
 
         public function update($tableName, $id, $entity, $id_column = "id"){
             $query = "UPDATE ${tableName} SET ";

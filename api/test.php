@@ -10,12 +10,12 @@ $user_dao = new UserDao();
 // $user = $user_dao->get_user_by_email("haris@email.ba");
 
 $user1 = [
-    "email" => "haris@mail.com",
-    "password" => "123456"
+    "email" => "haris1@mail.com",
+    "password" => "123444444"
 ];
 
 // $user_dao->add_user($user);
-$user = $user_dao->update_user(1, $user1);
+$user = $user_dao->update_user_by_email("haris@mail.com", $user1);
 
 
 ?>

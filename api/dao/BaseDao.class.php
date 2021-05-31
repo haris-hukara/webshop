@@ -25,15 +25,28 @@ class BaseDao{
             
         }
 
-        public function update(){
+        public function update($tableName, $id, $entity, $id_column = "id"){
+            $query = "UPDATE ${tableName} SET ";
+
+            foreach($entity as $key => $value){
+                $query .= $key ." = :". $key. ", ";
+            }
             
+            $query = substr($query, 0, -2);
+            $query .= " WHERE ${id_column} = :id";
+    
+            $stmt = $this->connection->prepare($query);
+            $entity['id'] = $id;
+            $stmt->execute($entity);
         }
+
 
         public function query($query, $params){
             $stmt = $this->connection->prepare($query);
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
+
 
         public function query_unique($query, $params){
             $results = $this->query($query, $params);

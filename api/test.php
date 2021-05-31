@@ -11,19 +11,19 @@ $dao = new CustomerDetailsDao();
 // $user = $user_dao->get_user_by_email("haris@email.ba");
 
 $details = [
-    "name" => "Ime",
-    "surname" => "prezime",
-    "email" => "mail@mail.com",
-    "phone_number" => "123 123 123",
+    "name" => "Przi",
+    "surname" => "Przovski",
+    "email" => "mai111l@mail.com",
+    "phone_number" => "12223 123 123",
     "city_id" => 1,
     "zip_code" => "71000",
-    "address" => "adresa stanovanja 1"
+    "address" => "adresa stanov 123"
 ];
 
 // $user_dao->add_user($user);
-$user = $dao->get_customer_details(2);
+$user = $dao->add($details);
+print_r ($user);
 
-print_r($user);
 
 
 ?>

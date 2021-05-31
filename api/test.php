@@ -9,13 +9,13 @@ $user_dao = new UserDao();
 
 // $user = $user_dao->get_user_by_email("haris@email.ba");
 
-$user = [
-    "email" => "Samir@mail.com",
-    "password" => "pass",
-    "customer_details_id" => 1
+$user1 = [
+    "email" => "haris@mail.com",
+    "password" => "123456"
 ];
 
-$user_dao->add_user($user);
+// $user_dao->add_user($user);
+$user = $user_dao->update_user(1, $user1);
 
 
 ?>

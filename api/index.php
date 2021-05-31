@@ -1,7 +1,13 @@
 <?php
+require dirname(__FILE__).'/../vendor/autoload.php';
 
-require_once dirname(__FILE__)."/dao/BaseDao.class.php";
+Flight::route('/', function(){
+    echo 'hello world!';
+});
 
-$base = new BaseDao();
-echo "hello from api";
+Flight::route('/hello2', function(){
+    echo 'hello world2!';
+});
+
+Flight::start();
 ?>

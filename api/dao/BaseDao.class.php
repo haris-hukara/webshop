@@ -25,7 +25,8 @@ class BaseDao{
         
       
        
-       protected function insert($table, $entity){
+       
+          protected function insert($table, $entity){
             $query = "INSERT INTO ${table} (";
             
             foreach ($entity as $column => $value) {
@@ -50,7 +51,8 @@ class BaseDao{
           }       
         
           
-       protected function execute_update($table, $id, $entity, $id_column = "id"){
+      
+          protected function execute_update($table, $id, $entity, $id_column = "id"){
                $query = "UPDATE ${table} SET ";
    
                foreach($entity as $key => $value){
@@ -66,7 +68,8 @@ class BaseDao{
            }
 
      
-       protected function query($query, $params){
+       
+           protected function query($query, $params){
                $stmt = $this->connection->prepare($query);
                $stmt->execute($params);
                return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -74,23 +77,27 @@ class BaseDao{
 
     
 
-       protected function query_unique($query, $params){
+      
+           protected function query_unique($query, $params){
             $results = $this->query($query, $params);
             return reset($results);
         }
 
 
-       public function add($entity){
+       
+        public function add($entity){
           return $this->insert($this->table, $entity);
         }
 
 
-       public function update($id, $entity){
+      
+        public function update($id, $entity){
           $this->execute_update($this->table, $id, $entity);
         }
         
         
-       public function get_by_id($id){
+       
+        public function get_by_id($id){
           return $this->query_unique("SELECT * FROM ".$this->table." WHERE id = :id", ["id" => $id]);
         }
 

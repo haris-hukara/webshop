@@ -8,11 +8,19 @@ require_once dirname(__FILE__).'/dao/UserAccountDao.class.php';
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 
 require_once dirname(__FILE__).'/routes/userAccount.php';
+
+/* utility function for reading params from URL */
+Flight::map('query', function($name, $default_value = NULL){
+    $request = Flight::request();
+    $query_param = @$request->query->getData()[$name];
+    $query_param = $query_param ? $query_param : $default_value;
+    return $query_param;
+});
+
+/* register DAO layer */
 Flight::register('userAccountDao', 'UserAccountDao');
 
-Flight::route('/', function(){
-    echo 'hello world!';
-});
+
 
 
 Flight::start();

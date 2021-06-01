@@ -7,7 +7,13 @@ class UserAccountDao extends BaseDao{
         parent::__construct("user_account");
     }
     
-    
+    public function get_user_account($search, $offset, $limit){
+        return $this->query("SELECT * 
+                             FROM user_account
+                             WHERE LOWER(email) LIKE CONCAT('%', :email, '%')
+                             LIMIT ${limit} OFFSET ${offset}", ["email" => strtolower($search)]);
+    }
+
     public function get_user_by_email($email){
      return $this->query_unique("SELECT * 
                                  FROM user_account

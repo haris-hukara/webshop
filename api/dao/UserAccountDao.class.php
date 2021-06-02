@@ -14,13 +14,7 @@ class UserAccountDao extends BaseDao{
                              LIMIT ${limit} OFFSET ${offset}", ["email" => strtolower($search)]);
     }
 
-    public function get_user_by_email($email){
-     return $this->query_unique("SELECT * 
-                                 FROM user_account
-                                 WHERE email = :email" , ["email" => $email]);
-         
-    }
-    
+
     public function update_user_by_email($email, $entity){
         $this->update("user_account", $email, $entity, "email");
 

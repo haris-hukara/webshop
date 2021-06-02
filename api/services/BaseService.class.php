@@ -3,6 +3,7 @@
 class BaseService{
     protected $dao;
 
+    
     public function get_by_id($id){
         return $this->dao->get_by_id($id);
     }

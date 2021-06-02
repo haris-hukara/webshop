@@ -26,4 +26,12 @@ Flight::route('PUT /account/@id', function($id){
     Flight::userAccountService()->update($id, $data);
 });
 
+
+Flight::route('POST /account/register', function(){
+    $data = Flight::request()->data->getdata();
+    Flight::userAccountService()->register($data);
+});
+
+
+
 ?>

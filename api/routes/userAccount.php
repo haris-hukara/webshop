@@ -15,10 +15,11 @@ Flight::route('GET /account/@id', function($id){
 });
 
 
+/*
 Flight::route('POST /account', function(){
     $data = Flight::request()->data->getdata();
     flight::json(Flight::userAccountService()->add($data));
-});
+}); */
 
 
 Flight::route('PUT /account/@id', function($id){
@@ -26,10 +27,16 @@ Flight::route('PUT /account/@id', function($id){
     Flight::userAccountService()->update($id, $data);
 });
 
-
+/* user account registration route*/
 Flight::route('POST /account/register', function(){
     $data = Flight::request()->data->getdata();
     Flight::userAccountService()->register($data);
+});
+
+/* user account confirm registration route*/
+Flight::route('GET /account/confirm/@token', function($token){
+    Flight::userAccountService()->confirm($token);
+    Flight::json(["message" => "Account activated"]);
 });
 
 

@@ -17,9 +17,12 @@ class UserAccountDao extends BaseDao{
 
     public function update_user_by_email($email, $entity){
         $this->update("user_account", $email, $entity, "email");
-
     }
 
+    public function get_user_by_token($token){
+        return $this->query_unique("SELECT * FROM user_account
+                                    WHERE token = :token", ["token" => $token]);
+    }
 
 }
 ?>

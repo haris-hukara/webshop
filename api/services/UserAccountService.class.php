@@ -16,7 +16,8 @@ class UserAccountService extends BaseService{
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
 
-      // open transaction here
+      try {
+           // open transaction here
       $details = $this->userDetailsDao->add([
         "name" => $userAccount['name'],
         "surname" => $userAccount['surname'],
@@ -38,24 +39,33 @@ class UserAccountService extends BaseService{
         "created_at" => date(Config::DATE_FORMAT),
         "token" => md5(random_bytes(16))
       ]);
+       // commit transaction here
+      } catch (\Exception $e) {
+        
+        //roll back
+        
+        throw $e;
+      }
+
+       // TODO: send email with token
     }
-    // commit transaction here
-    
+   
+    public function confirm($token){
+      $userAccount = $this->dao->get_user_by_token($token);
 
-    public function get_user_account($search, $offset, $limit){
-
-            if ($search){
-              return ($this->dao->get_user_account($search, $offset, $limit));
-            }else{
-              return ($this->dao->get_all($offset,$limit));
-            }
-        }
+      if(!isset($userAccount['id'])) throw new Exception("Invalid token");
     
-    public function add($userAccount){
-        if(!isset($userAccount['email'])) throw new Exception("Email is missing");
+    $this->dao->update($userAccount['id'], ["status" => "ACTIVE"]);
     
-    return parent::add($userAccount);
-    }
+  }
+    // TODO: send email to user
+  
 
-}
+
+  }
 ?>
+
+
+
+
+  

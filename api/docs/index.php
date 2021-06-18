@@ -1,15 +1,16 @@
-
  <!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
+<?php 
 
+
+
+?>
 <head>
     <meta charset="UTF-8">
     <title>Web Shop</title>
     <link rel="stylesheet" type="text/css" href="swagger-ui.css">
-    <link rel="stylesheet" type="text/css" href="custom-swagger.css">
     <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
     <style>
         html {
             box-sizing: border-box;
@@ -39,7 +40,7 @@
         window.onload = function () {
             // Begin Swagger UI call region
             const ui = SwaggerUIBundle({
-                url: "http://localhost/webshop/api/test.php",
+                url: "//<?=$_SERVER['SERVER_NAME']?><?=str_replace("docs/", "swagger",$_SERVER['REQUEST_URI'])?>",
                 dom_id: '#swagger-ui',
                 deepLinking: true,
                 presets: [

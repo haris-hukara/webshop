@@ -26,6 +26,7 @@ Flight::register('userDetailsService', 'UserDetailsService');
 /* include routes */
 require_once dirname(__FILE__).'/routes/userAccount.php';
 require_once dirname(__FILE__).'/routes/userDetails.php';
+require_once dirname(__FILE__).'/routes/doc.php';
 
 
 Flight::start();

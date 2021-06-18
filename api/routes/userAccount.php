@@ -1,8 +1,7 @@
 <?php
-
 /**
  * @OA\Info(title="OnlineShop API", version="0.1")
- *  * @OA\OpenApi(
+ *    @OA\OpenApi(
  *      @OA\Server(url="http://localhost/webshop/api/", description="Developer environment")
  * )
  */
@@ -25,7 +24,7 @@ Flight::route('GET /account', function(){
 
 /**
  * @OA\Get(path="/account/{id}",
- *     @OA\Parameter(@OA\Schema(type="integer"),in="path", allowReserved=true, name="id", default="1"),
+ *     @OA\Parameter(@OA\Schema(type="integer"),in="path", allowReserved=true, name="id", example="1"),
  *     @OA\Response(response="200", description="List accounts from database")
  *)
  */

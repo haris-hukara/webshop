@@ -60,7 +60,14 @@ class UserAccountService extends BaseService{
   }
     // TODO: send email to user
   
-
+   public function get_user_account($search, $offset, $limit, $order){
+  
+              if ($search){
+                return ($this->dao->get_user_account($search, $offset, $limit, $order));
+              }else{
+            return ($this->dao->get_all($offset,$limit, $order));
+        }
+   }
 
   }
 ?>

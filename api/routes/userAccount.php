@@ -39,7 +39,20 @@ Flight::route('POST /account', function(){
     flight::json(Flight::userAccountService()->add($data));
 }); */
 
-
+/**
+* @OA\Put(path="/account/{id}",tags={"account"},
+* @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "28", description="Update account by account_id"),
+**@OA\RequestBody(description ="Basic account info that is going to be updated", required = true,
+*          @OA\MediaType(mediaType="application/json",
+*                 @OA\Schema(
+*                     @OA\Property(property="email", type="string",example="emai213l@email.ba",description="123"),           
+*                     @OA\Property(property="password", type="string",example="password",description="123"),           
+*            ) 
+*        )
+*   ), 
+* @OA\Response(response="200", description="Update account based on account id")
+* )     
+*/ 
 Flight::route('PUT /account/@id', function($id){
     $data = Flight::request()->data->getdata();
     Flight::userAccountService()->update($id, $data);

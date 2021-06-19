@@ -20,6 +20,10 @@ Flight::map('error', function(Exception $ex){
     
 */
 
+Flight::route('GET /', function(){  
+    Flight::redirect('/docs');
+
+});
 
 
 /* utility function for reading params from URL */

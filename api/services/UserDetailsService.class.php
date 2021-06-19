@@ -3,6 +3,10 @@ require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/UserDetailsDao.class.php";
 require_once dirname(__FILE__)."/../dao/UserAccountDao.class.php";
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 class UserDetailsService extends BaseService{
 
     public function __construct(){
@@ -19,7 +23,8 @@ class UserDetailsService extends BaseService{
       if(!isset($userDetails['zip_code'])) throw new Exception("Zip Code is missing");
       if(!isset($userDetails['address'])) throw new Exception("Address is missing");
       
-  return parent::add($userDetails);
+
+    return parent::add($userDetails);
   }
 
 

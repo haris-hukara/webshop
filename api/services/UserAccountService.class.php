@@ -2,7 +2,7 @@
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/UserAccountDao.class.php";
 require_once dirname(__FILE__)."/../dao/UserDetailsDao.class.php";
-
+  
 class UserAccountService extends BaseService{
     
   private $userDetailsDao;
@@ -15,7 +15,8 @@ class UserAccountService extends BaseService{
 
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
-
+      $userAccount['created_at'] = date(Config::DATE_FORMAT);
+      
       try {
            // open transaction here
       $details = $this->userDetailsDao->add([
@@ -26,7 +27,7 @@ class UserAccountService extends BaseService{
         "city" => $userAccount['city'],
         "zip_code" => $userAccount['zip_code'],
         "address" => $userAccount['address'],
-        "created_at" => date(Config::DATE_FORMAT)
+        "created_at" => $userAccount['created_at']
       ]);
      
 
@@ -36,8 +37,9 @@ class UserAccountService extends BaseService{
         "user_details_id" => $details['id'],
         "status" => "PENDING",
         "role" => "USER",
-        "created_at" => date(Config::DATE_FORMAT),
+        "created_at" => $userAccount['created_at'],
         "token" => md5(random_bytes(16))
+        
       ]);
        // commit transaction here
       } catch (\Exception $e) {

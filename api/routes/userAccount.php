@@ -7,8 +7,8 @@
  */
 
 /**
- * @OA\Get(path="/account",
- *     @OA\Response(response="200", description="List accounts from database")
+ * @OA\Get(path="/account", tags={"account"},
+ *     @OA\Response(response="200", description="List all accounts from database")
  * )
  */
 
@@ -23,9 +23,9 @@ Flight::route('GET /account', function(){
 });
 
 /**
- * @OA\Get(path="/account/{id}",
- *     @OA\Parameter(@OA\Schema(type="integer"),in="path", allowReserved=true, name="id", example="1"),
- *     @OA\Response(response="200", description="List accounts from database")
+ * @OA\Get(path="/account/{id}",tags={"account"},
+ *     @OA\Parameter(@OA\Schema(type="integer"), in="query", allowReserved=true, name="id", example = 28, description="Search for account based on account_id"),
+ *     @OA\Response(response="200", description="List accounts from database by account_id")
  *)
  */
 Flight::route('GET /account/@id', function($id){
@@ -45,7 +45,27 @@ Flight::route('PUT /account/@id', function($id){
     Flight::userAccountService()->update($id, $data);
 });
 
+
 /* user account registration route*/
+/**
+*@OA\Post(path="/account/register",tags={"account"},
+*@OA\RequestBody(description ="Body for user registrations", required = true,
+*          @OA\MediaType(mediaType="application/json",
+*                 @OA\Schema(
+*                     @OA\Property(property="name", type="string",example="name",description="123"),           
+*                     @OA\Property(property="surname", type="string",example="surname",description="123"),           
+*                     @OA\Property(property="email", type="string",example="emai213l@email.ba",description="123"),           
+*                     @OA\Property(property="password", type="string",example="password",description="123"),           
+*                     @OA\Property(property="phone_number", type="string",example="000 000 000",description="123"), 
+*                     @OA\Property(property="city", type="string",example="city",description="123"),           
+*                     @OA\Property(property="zip_code", type="string",example="71000",description="5 digit zip"),
+*                     @OA\Property(property="address", type="string",example="address 13",description="123")           
+*            ) 
+*        )
+*   ),
+*  @OA\Response(response="200", description="Register account")
+* )     
+*/ 
 Flight::route('POST /account/register', function(){
     $data = Flight::request()->data->getdata();
     Flight::userAccountService()->register($data);

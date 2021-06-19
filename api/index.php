@@ -9,6 +9,18 @@ require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once dirname(__FILE__).'/services/UserAccountService.class.php';
 require_once dirname(__FILE__).'/services/UserDetailsService.class.php';
 
+/*
+
+Flight::set('flight.log:errors',TRUE);
+
+ error handling for our API 
+Flight::map('error', function(Exception $ex){
+    Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
+    }); 
+    
+*/
+
+
 
 /* utility function for reading params from URL */
 Flight::map('query', function($name, $default_value = NULL){
@@ -18,6 +30,7 @@ Flight::map('query', function($name, $default_value = NULL){
     return $query_param;
 });
 
+
 /* register Bussiness Logic layer services */
 Flight::register('userAccountService', 'UserAccountService');
 Flight::register('userDetailsService', 'UserDetailsService');
@@ -26,6 +39,7 @@ Flight::register('userDetailsService', 'UserDetailsService');
 /* include routes */
 require_once dirname(__FILE__).'/routes/userAccount.php';
 require_once dirname(__FILE__).'/routes/userDetails.php';
+/* get swagger route */
 require_once dirname(__FILE__).'/routes/doc.php';
 
 

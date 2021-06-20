@@ -19,7 +19,7 @@ class UserAccountDao extends BaseDao{
         return $this->query( "SELECT * 
                               FROM user_account
                               WHERE LOWER(email) LIKE CONCAT('%', :email, '%')
-                              ORDER BY ${order_column} ${order_direction}
+                              ORDER BY ${order} ${order_direction}
                               LIMIT ${limit} OFFSET ${offset}", 
                              ["email" => strtolower($search)]);
     }

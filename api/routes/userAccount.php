@@ -11,7 +11,6 @@
  *     @OA\Response(response="200", description="List all accounts from database")
  * )
  */
-
 Flight::route('GET /account', function(){  
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 10);
@@ -81,7 +80,7 @@ Flight::route('PUT /account/@id', function($id){
 */ 
 Flight::route('POST /account/register', function(){
     $data = Flight::request()->data->getdata();
-    Flight::userAccountService()->register($data);
+    Flight::json(Flight::userAccountService()->register($data));
 });
 
 /* user account confirm registration route*/

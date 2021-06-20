@@ -2,14 +2,18 @@
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/UserAccountDao.class.php";
 require_once dirname(__FILE__)."/../dao/UserDetailsDao.class.php";
-  
+
+require_once dirname(__FILE__)."/../clients/SMTPClient.class.php";
+
 class UserAccountService extends BaseService{
     
   private $userDetailsDao;
-    
-    public function __construct(){
+  private $smtpClient;
+  
+   public function __construct(){
      $this->dao = new UserAccountDao();   
-     $this->userDetailsDao = new UserDetailsDao();   
+     $this->userDetailsDao = new UserDetailsDao();
+     $this->smtpClient = new SMTPClient();
     }
 
 
@@ -17,7 +21,7 @@ class UserAccountService extends BaseService{
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
       $userAccount['created_at'] = date(Config::DATE_FORMAT);
       
-      try {
+     // try {
            // open transaction here
       $details = $this->userDetailsDao->add([
         "name" => $userAccount['name'],
@@ -31,7 +35,7 @@ class UserAccountService extends BaseService{
       ]);
      
 
-      parent::add([
+       $userAccount = parent::add([
         "email" => $details['email'],
         "password" => $userAccount['password'],
         "user_details_id" => $details['id'],
@@ -39,19 +43,17 @@ class UserAccountService extends BaseService{
         "role" => "USER",
         "created_at" => $userAccount['created_at'],
         "token" => md5(random_bytes(16))
-        
-      ]);
-       // commit transaction here
-      } catch (\Exception $e) {
-        
-        //roll back
-        
-        throw $e;
-      }
+      ]); 
 
-       // TODO: send email with token
-    }
-   
+      return $userAccount;
+  }
+
+  
+ //   $this->smtpClient->send_register_user_token($userAccount);
+
+
+ 
+    
     public function confirm($token){
       $userAccount = $this->dao->get_user_by_token($token);
 

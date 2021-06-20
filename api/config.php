@@ -8,6 +8,11 @@ class Config {
     const DB_PASSWORD = "webshop";
     const DB_SCHEME = "webshop";
 
+    const SMTP_HOST ="smtp.gmail.com";
+    const SMTP_PORT = 587;
+    const SMTP_USER ="webproject.webshop@gmail.com";
+    const SMTP_PASSWORD = "Pass123?";
+
 }   
 
 ?>

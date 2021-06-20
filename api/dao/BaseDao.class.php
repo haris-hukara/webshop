@@ -86,7 +86,7 @@ class BaseDao{
 
        
         public function add($entity){
-          return $this->insert($this->table, $entity);
+         return $this->insert($this->table, $entity);
         }
 
 

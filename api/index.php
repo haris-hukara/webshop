@@ -34,7 +34,7 @@ Flight::map('query', function($name, $default_value = NULL){
     return $query_param;
 });
 
-
+ 
 /* register Bussiness Logic layer services */
 Flight::register('userAccountService', 'UserAccountService');
 Flight::register('userDetailsService', 'UserDetailsService');

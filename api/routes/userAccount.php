@@ -23,7 +23,7 @@ Flight::route('GET /account', function(){
 
 /**
  * @OA\Get(path="/account/{id}",tags={"account"},
- *     @OA\Parameter(@OA\Schema(type="integer"), in="query", allowReserved=true, name="id", example = 28, description="Search for account based on account_id"),
+ *     @OA\Parameter(@OA\Schema(type="integer"), in="path", allowReserved=true, name="id", example = 50, description="Search for account based on account_id"),
  *     @OA\Response(response="200", description="List accounts from database by account_id")
  *)
  */

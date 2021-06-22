@@ -5,20 +5,19 @@ error_reporting(E_ALL);
 
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 
-/* include classes */
+/* include service classes */
 require_once dirname(__FILE__).'/services/UserAccountService.class.php';
 require_once dirname(__FILE__).'/services/UserDetailsService.class.php';
+require_once dirname(__FILE__).'/services/CityService.class.php';
+require_once dirname(__FILE__).'/services/OrderService.class.php';
 
-/*
-
+// log errors into apache log on bitnami server
 Flight::set('flight.log:errors',TRUE);
 
- error handling for our API 
+// error handling for API
 Flight::map('error', function(Exception $ex){
-    Flight::json(["message" => $ex->getMessage()], $ex->getCode() ? $ex->getCode() : 500);
-    }); 
-    
-*/
+    Flight::json(['message' => $ex->getMessage()] , $ex->getCode() ? $ex->getCode() : 500);
+});
 
 Flight::route('GET /', function(){  
     Flight::redirect('/docs');
@@ -38,11 +37,15 @@ Flight::map('query', function($name, $default_value = NULL){
 /* register Bussiness Logic layer services */
 Flight::register('userAccountService', 'UserAccountService');
 Flight::register('userDetailsService', 'UserDetailsService');
+Flight::register('cityService', 'CityService');
+Flight::register('orderService', 'OrderService');
 
 
 /* include routes */
 require_once dirname(__FILE__).'/routes/userAccount.php';
 require_once dirname(__FILE__).'/routes/userDetails.php';
+require_once dirname(__FILE__).'/routes/city.php';
+require_once dirname(__FILE__).'/routes/order.php';
 /* get swagger route */
 require_once dirname(__FILE__).'/routes/doc.php';
 

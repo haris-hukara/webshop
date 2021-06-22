@@ -16,16 +16,40 @@ class BaseDao{
       
               $this->connection->setAttribute(PDO::ATTR_ERRMODE,
                                               PDO::ERRMODE_EXCEPTION);
-      
+              /* setting autocommit to false */
+              $this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT,0);
+
             } catch(PDOException $e) {
               throw $e;
             }
           }
 
+          public function beginTransaction(){
+            $response = $this->connection->beginTransaction();
+          }
         
-      
-       
-       
+          public function commit(){
+            $this->connection->commit();
+          }
+        
+          public function rollBack(){
+            $response = $this->connection->rollBack();
+          }
+
+          public static function parse_order($order){
+            switch(substr($order, 0, 1)){
+              case '-': $order_direction = "ASC"; break;
+              case '+': $order_direction = "DESC"; break;
+              default: throw new Exception("Invalid order format. First character should be either + or -"); break;
+            };
+        
+            // Filter SQL injection attacks on column name
+            $order_column = substr($order, 1);
+        
+            return [$order_column, $order_direction];
+          }
+
+
           protected function insert($table, $entity){
             $query = "INSERT INTO ${table} (";
             
@@ -67,7 +91,6 @@ class BaseDao{
                $stmt->execute($entity);
            }
 
-     
        
            protected function query($query, $params){
                $stmt = $this->connection->prepare($query);
@@ -75,14 +98,11 @@ class BaseDao{
                return $stmt->fetchAll(PDO::FETCH_ASSOC);
            }
 
-    
-
-      
+         
            protected function query_unique($query, $params){
             $results = $this->query($query, $params);
             return reset($results);
         }
-
 
        
         public function add($entity){
@@ -102,11 +122,14 @@ class BaseDao{
         }
 
     
+        public function get_all($offset = 0, $limit = 25, $order="-id"){
+          list($order_column, $order_direction) = self::parse_order($order);
       
-     
-      public function get_all($offset = 0, $limit = 25){
-        return $this->query("SELECT * FROM ".$this->table." LIMIT ${limit} OFFSET ${offset}", []);
-      }
+          return $this->query("SELECT *
+                               FROM ".$this->table."
+                               ORDER BY ${order_column} ${order_direction}
+                               LIMIT ${limit} OFFSET ${offset}", []);
+        }
     
     }
     ?>

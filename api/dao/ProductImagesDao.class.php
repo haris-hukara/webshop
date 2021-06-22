@@ -8,5 +8,5 @@ class ProductImagesDao extends BaseDao{
     }
 
 
-
+}
 ?>

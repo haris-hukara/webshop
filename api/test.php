@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 
 
+
     $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465,"ssl"))
     ->setUsername('webproject.webshop@gmail.com')
     ->setPassword('Pass123?')

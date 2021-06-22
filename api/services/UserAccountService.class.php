@@ -19,11 +19,10 @@ class UserAccountService extends BaseService{
 
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
-      $userAccount['created_at'] = date(Config::DATE_FORMAT);
       
-     // try {
-           // open transaction here
-      $details = $this->userDetailsDao->add([
+    try {
+        $this->dao->beginTransaction();
+        $details = $this->userDetailsDao->add([
         "name" => $userAccount['name'],
         "surname" => $userAccount['surname'],
         "email" => $userAccount['email'],
@@ -31,20 +30,28 @@ class UserAccountService extends BaseService{
         "city" => $userAccount['city'],
         "zip_code" => $userAccount['zip_code'],
         "address" => $userAccount['address'],
-        "created_at" => $userAccount['created_at']
+        "created_at" => date(Config::DATE_FORMAT)
       ]);
-     
-
-       $userAccount = parent::add([
+      
+      $userAccount = parent::add([
         "email" => $details['email'],
         "password" => $userAccount['password'],
         "user_details_id" => $details['id'],
         "status" => "PENDING",
         "role" => "USER",
-        "created_at" => $userAccount['created_at'],
+        "created_at" => date(Config::DATE_FORMAT),
         "token" => md5(random_bytes(16))
       ]); 
+      $this->dao->commit();
 
+    } catch (\Exception $e){
+        $this->dao->rollBack();
+     if(str_contains($e->getMessage(), 'user_account.email_UNIQUE')){
+         throw new Exception("Account with same email exsists in the database", 400, $e);
+        }else{
+          throw $e;    
+        }
+    }
       return $userAccount;
   }
 
@@ -65,7 +72,8 @@ class UserAccountService extends BaseService{
     // TODO: send email to user
   
    public function get_user_account($search, $offset, $limit, $order){
-                if ($search){
+  
+              if ($search){
                 return ($this->dao->get_user_account($search, $offset, $limit, $order));
               }else{
             return ($this->dao->get_all($offset,$limit, $order));

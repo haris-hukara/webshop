@@ -8,14 +8,9 @@ class UserAccountDao extends BaseDao{
     }
     
     // $order = "-id" sort by id in desc 
-    public function get_user_account($search, $offset, $limit, $order = "-id"){
-        switch (substr($order, 0, 1)){
-            case '-': $order_direction = 'ASC'; break;
-            case '+': $order_direction = 'DESC'; break;
-            default: throw new Exception("Invalid order format"); break;
-        };
+    public function get_user_account($search, $offset, $limit, $order){
+    list($order_column, $order_direction) = self::parse_order($order);
         
-    // TODO investigate sql injection
         return $this->query( "SELECT * 
                               FROM user_account
                               WHERE LOWER(email) LIKE CONCAT('%', :email, '%')

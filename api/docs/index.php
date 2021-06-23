@@ -1,6 +1,5 @@
  <!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
-<?php ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

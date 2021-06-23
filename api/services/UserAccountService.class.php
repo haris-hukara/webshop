@@ -16,15 +16,12 @@ class UserAccountService extends BaseService{
      $this->smtpClient = new SMTPClient();
     }
 
-/* 
 
-   $this->dao->beginTransaction()
-          $this->dao->commit()
-          $this->dao->rollBack()*/
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
       $userAccount['created_at'] = date(Config::DATE_FORMAT);
      try {
+        $this->dao->beginTransaction();
         $details = $this->userDetailsDao->add([
         "name" => $userAccount['name'],
         "surname" => $userAccount['surname'],
@@ -45,8 +42,9 @@ class UserAccountService extends BaseService{
         "created_at" => $userAccount['created_at'],
         "token" => md5(random_bytes(16))
       ]); 
-
+      $this->dao->commit();
        } catch (\Exception $e){
+        $this->dao->rollBack();
        if(str_contains($e->getMessage(), 'user_account.email_UNIQUE')){
          throw new Exception("Account with same email exsists in the database", 400, $e);
         }else{

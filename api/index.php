@@ -21,7 +21,6 @@ Flight::map('error', function(Exception $ex){
 */
 Flight::route('GET /', function(){  
     Flight::redirect('/docs');
-
 });
 
 

@@ -22,8 +22,21 @@ Flight::route('GET /city', function(){
 
 /**
 *  @OA\Post(path="/city",tags={"city"},
-*                     @OA\Parameter( type="string", in="query",name="city_name", default="tuzla", description= "Input for adding city name. First letter of each word in city name is converted to uppercase, other letters are lowercase <br> example: cITy -> City"),           
-*                     @OA\Parameter( type="string", in="query",name="country_name", default="Bosnia and Herzegovina", description= "Input for country name to which city is added. Used for finding country_id based on user input, case insensitive"),
+*  @OA\RequestBody(description ="Body for order", required = true,
+*          @OA\MediaType(mediaType="application/json",
+*                 @OA\Schema(
+*                     @OA\Property(property="city_name", 
+*                                      type="string",
+*                                      example="tuzla",
+*                                      description="Input for adding city name. First letter of each word in city name is converted to uppercase, other letters are lowercase <br> example: cITy -> City"),           
+*                     @OA\Property(property="country_name", 
+*                                      type="string",
+*                                      example="Bosnia and Herzegovina",
+*                                      description="Input for country name to which city is added. Used for finding country_id based on user input, case insensitive"),   
+*
+*            ) 
+*        )
+*   ),
 *    @OA\Response(response="200", description="Adding city to a country if that country exists in database")
 * )     
 */ 

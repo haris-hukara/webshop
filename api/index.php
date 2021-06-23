@@ -12,13 +12,13 @@ require_once dirname(__FILE__).'/services/CityService.class.php';
 require_once dirname(__FILE__).'/services/OrderService.class.php';
 
 // log errors into apache log on bitnami server
-Flight::set('flight.log:errors',TRUE);
+// Flight::set('flight.log:errors',TRUE);
 
-// error handling for API
+/*   error handling for API
 Flight::map('error', function(Exception $ex){
-    Flight::json(['message' => $ex->getMessage()] , $ex->getCode() ? $ex->getCode() : 500);
+    Flight::json(['message' => $ex->getMessage()] , $ex->getCode());
 });
-
+*/
 Flight::route('GET /', function(){  
     Flight::redirect('/docs');
 

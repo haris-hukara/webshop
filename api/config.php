@@ -8,10 +8,21 @@ class Config {
     const DB_PASSWORD = "webshop";
     const DB_SCHEME = "webshop";
 
-    const SMTP_HOST ="smtp.gmail.com";
-    const SMTP_PORT = 587;
-    const SMTP_USER ="webproject.webshop@gmail.com";
-    const SMTP_PASSWORD = "Pass123?";
+      public static function SMTP_HOST(){
+        return Config::get_env("SMTP_HOST", "smtp.gmail.com");
+      }
+      public static function SMTP_PORT(){
+        return Config::get_env("SMTP_PORT", "587");
+      }
+      public static function SMTP_USER(){
+        return Config::get_env("SMTP_USER", "");
+      }
+      public static function SMTP_PASSWORD(){
+        return Config::get_env("SMTP_PASSWORD", "");
+      }
+      public static function get_env($name, $default){
+        return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;
+      }
 
 }   
 

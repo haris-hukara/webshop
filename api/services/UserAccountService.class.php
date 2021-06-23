@@ -17,6 +17,7 @@ class UserAccountService extends BaseService{
     }
 
 /* 
+
    $this->dao->beginTransaction()
           $this->dao->commit()
           $this->dao->rollBack()*/
@@ -33,8 +34,8 @@ class UserAccountService extends BaseService{
         "zip_code" => $userAccount['zip_code'],
         "address" => $userAccount['address'],
         "created_at" => $userAccount['created_at']
-      ]);
-      
+        ]);
+  
       $userAccount = $this->dao->add([
         "email" => $details['email'],
         "password" => $userAccount['password'],

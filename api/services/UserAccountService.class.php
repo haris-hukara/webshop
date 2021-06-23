@@ -10,7 +10,7 @@ class UserAccountService extends BaseService{
   private $userDetailsDao;
   private $smtpClient;
   
-   public function __construct(){
+   public function __construct(){ 
      $this->dao = new UserAccountDao();   
      $this->userDetailsDao = new UserDetailsDao();
      $this->smtpClient = new SMTPClient();
@@ -42,6 +42,7 @@ class UserAccountService extends BaseService{
         "created_at" => $userAccount['created_at'],
         "token" => md5(random_bytes(16))
       ]); 
+
       $this->dao->commit();
        } catch (\Exception $e){
         $this->dao->rollBack();

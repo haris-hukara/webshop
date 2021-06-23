@@ -24,7 +24,6 @@ Flight::route('GET /', function(){
 
 });
 
-
 /* utility function for reading params from URL */
 Flight::map('query', function($name, $default_value = NULL){
     $request = Flight::request();

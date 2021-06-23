@@ -33,7 +33,7 @@ class UserAccountService extends BaseService{
         "created_at" => $userAccount['created_at']
       ]);
       
-      $userAccount = $this->dao->add([
+      $userAccount = parent::add([
         "email" => $details['email'],
         "password" => $userAccount['password'],
         "user_details_id" => $details['id'],
@@ -51,8 +51,10 @@ class UserAccountService extends BaseService{
         throw $e;    
       }
     }
-      $this->dao->comit();
-    //  $this->smtpClient->send_register_user_token($userAccount);
+      $this->dao->commit();
+    
+      //  $this->smtpClient->send_register_user_token($userAccount);
+   
       return $userAccount;
   }
     

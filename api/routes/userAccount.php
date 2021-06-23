@@ -2,7 +2,7 @@
 /**
  * @OA\Info(title="OnlineShop API", version="0.1")
  *    @OA\OpenApi(
- *      @OA\Server(url="http://localhost/webshop/api/", description="Developer environment")
+ *      @OA\Server(url="http://localhost/webshop/", description="Developer environment")
  * )
  */
 
@@ -15,7 +15,6 @@ Flight::route('GET /account', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 10);
     $search = Flight::query('search');
-    
     $order = Flight::query('order', "-id");    
 
     flight::json(Flight::userAccountService()->get_user_account($search, $offset, $limit, $order));

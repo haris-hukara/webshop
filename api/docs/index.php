@@ -1,11 +1,6 @@
  <!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
-<?php 
-
-
-
-?>
 <head>
     <meta charset="UTF-8">
     <title>Web Shop</title>
@@ -40,7 +35,7 @@
         window.onload = function () {
             // Begin Swagger UI call region
             const ui = SwaggerUIBundle({
-                url: "//<?=$_SERVER['SERVER_NAME']?><?=str_replace("docs/", "swagger",($_SERVER['REQUEST_URI'].":81"))?>",
+                url: "//<?=$_SERVER['SERVER_NAME']?><?=str_replace("docs/", "swagger",($_SERVER['REQUEST_URI']))?>",
                 dom_id: '#swagger-ui',
                 deepLinking: true,
                 presets: [

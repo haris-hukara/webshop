@@ -12,11 +12,11 @@ class SMTPClient {
       ->setPassword(Config::SMTP_PASSWORD);
 
     $this->mailer = new Swift_Mailer($transport);
-  } 
+  }   
 
   public function send_register_user_token($userAccount){
     $message = (new Swift_Message('Confirm your account'))
-      ->setFrom(['webproject.webshop@gmail.com' => 'Webshop'])
+      ->setFrom(['haris.hukara@stu.ibu.edu.ba' => 'Webshop'])
       ->setTo([$userAccount['email']])
       ->setBody('Here is the confirmation link: http://localhost/webshop/api/account/confirm/'.$userAccount['token']);
       
@@ -25,7 +25,7 @@ class SMTPClient {
 
   public function send_user_recovery_token($userAccount){
     $message = (new Swift_Message('Reset Your Password'))
-      ->setFrom(['webproject.webshop@gmail.com' => 'Webshop'])
+      ->setFrom(['haris.hukara@stu.ibu.edu.ba' => 'Webshop'])
       ->setTo([$userAccount['email']])
       ->setBody('Here is the recovery token: '.$userAccount['token']);
 

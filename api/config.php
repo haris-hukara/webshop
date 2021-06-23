@@ -11,7 +11,7 @@ class Config {
     const SMTP_HOST ="smtp.gmail.com";
     const SMTP_PORT = 587;
     const SMTP_USER ="webproject.webshop@gmail.com";
-    const SMTP_PASSWORD = "Pass123?";
+    const SMTP_PASSWORD = "?123Pass";
 
 }   
 

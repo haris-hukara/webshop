@@ -1,7 +1,11 @@
 <?php
 /**
  * @OA\Get(path="/city", tags={"city"},
- *     @OA\Response(response="200", description="List all cities from database, offset, limit, and search are supported")
+ *                    @OA\Parameter( type="integer", in="query",name="offset", default=0, description= "Offset for paggination"),           
+*                     @OA\Parameter( type="integer", in="query",name="limit", default=10, description= "Limit for paggination"),
+*                     @OA\Parameter( type="integer", in="query",name="search", default="Sarajevo", description= "Case insensitive search for cities"),
+*                     @OA\Parameter( type="string", in="query",name="order", default="-id", description= "Sorting elements by column_name <br><br>  -column_name for ascending order <br>+column_name for descending order"),
+ *     @OA\Response(response="200", description="List of all cities from database with paggination")
  * )
  */
 Flight::route('GET /city', function(){  
@@ -18,15 +22,9 @@ Flight::route('GET /city', function(){
 
 /**
 *  @OA\Post(path="/city",tags={"city"},
-*  @OA\RequestBody(description ="Body for user registrations", required = true,
-*          @OA\MediaType(mediaType="application/json",
-*                 @OA\Schema(
-*                     @OA\Property(property="city_name", type="string",example="tuzla",description="getting city name and converting it so that first letter of each word is upper cased"),           
-*                     @OA\Property(property="country_name", type="string",example="Bosnia and Herzegovina",description="getting country name from user so that we can add id for city country_id field")     
-*            ) 
-*        )
-*   ),
-*  @OA\Response(response="200", description="Register account")
+*                     @OA\Parameter( type="string", in="query",name="city_name", default="tuzla", description= "Input for adding city name. First letter of each word in city name is converted to uppercase, other letters are lowercase <br> example: cITy -> City"),           
+*                     @OA\Parameter( type="string", in="query",name="country_name", default="Bosnia and Herzegovina", description= "Input for country name to which city is added. Used for finding country_id based on user input, case insensitive"),
+*    @OA\Response(response="200", description="Adding city to a country if that country exists in database")
 * )     
 */ 
 Flight::route('POST /city', function(){

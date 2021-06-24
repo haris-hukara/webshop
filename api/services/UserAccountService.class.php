@@ -21,7 +21,8 @@ class UserAccountService extends BaseService{
 
       if(!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);
       if($db_user['status'] != 'ACTIVE') throw new Exception("Account not active", 400);
-      if($db_user['password'] != $userAccount['password']) throw new Exception("Invalid password", 400);
+      /* user password is hashed using md5 because same hashing is used when user is registering*/
+      if($db_user['password'] != md5($userAccount['password'])) throw new Exception("Invalid password", 400);
 
       return $db_user;
     }
@@ -46,7 +47,8 @@ class UserAccountService extends BaseService{
 
       $userAccount = $this->dao->add([
         "email" => $details['email'],
-        "password" => $userAccount['password'],
+        /* md5 is used for hashing the password, user password input should be hashed on login */
+        "password" =>md5($userAccount['password']),
         "user_details_id" => $details['id'],
         "status" => "PENDING",
         "role" => "USER",

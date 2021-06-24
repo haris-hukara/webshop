@@ -46,7 +46,7 @@ class UserAccountService extends BaseService{
         ]);
 
       $userAccount = $this->dao->add([
-        "email" => $details['email'],
+        "email" => $details['email'],   
         /* md5 is used for hashing the password, user password input should be hashed on login */
         "password" =>md5($userAccount['password']),
         "user_details_id" => $details['id'],

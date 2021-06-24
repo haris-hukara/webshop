@@ -65,11 +65,11 @@ Flight::route('PUT /account/@id', function($id){
 *                 @OA\Schema(
 *                     @OA\Property(property="name",required = true, type="string",example="name",description="Name"),           
 *                     @OA\Property(property="surname",required = true, type="string",example="surname",description="Surname"),           
-*                     @OA\Property(property="email",required = true, type="string",example="emai123@email.ba",description="User's email"),           
+*                     @OA\Property(property="email",required = true, type="string",example="haris.hukara@stu.ibu.edu.ba",description="User's email"),           
 *                     @OA\Property(property="password",required = true, type="string",example="password",description="User password"),           
 *                     @OA\Property(property="phone_number",required = true, type="string",example="000 000 000",description="Phone number"), 
 *                     @OA\Property(property="city",required = true, type="string",example="city",description="City name"),           
-*                     @OA\Property(property="zip_code",required = true, type="string",example="71000",description="5 digit zip"),
+*                     @OA\Property(property="zip_code",required = true, type="string",example="71000",description="5 digit zip code"),
 *                     @OA\Property(property="address",required = true, type="string",example="address 13",description="User address")           
 *            ) 
 *        )
@@ -94,8 +94,8 @@ Flight::route('GET /account/confirm/@token', function($token){
 *@OA\RequestBody(description ="Basic user login info", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(
-*                     @OA\Property(property="email",required = true, type="string",example="mail@mail.com",description="User's email"),           
-*                     @OA\Property(property="password",required = true, type="string",example="pass",description="User password")           
+*                     @OA\Property(property="email",required = true, type="string",example="haris.hukara@stu.ibu.edu.ba",description="User's email"),           
+*                     @OA\Property(property="password",required = true, type="string",example="password",description="User password")           
 *            ) 
 *        )
 *   ),

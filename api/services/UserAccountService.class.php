@@ -6,21 +6,32 @@ require_once dirname(__FILE__)."/../dao/UserDetailsDao.class.php";
 require_once dirname(__FILE__)."/../clients/SMTPClient.class.php";
 
 class UserAccountService extends BaseService{
-    
+
   private $userDetailsDao;
   private $smtpClient;
-  
+
    public function __construct(){ 
      $this->dao = new UserAccountDao();   
      $this->userDetailsDao = new UserDetailsDao();
      $this->smtpClient = new SMTPClient();
     }
 
+    public function login($userAccount){
+      $db_user = $this->dao->get_user_by_email($userAccount['email']);
+
+      if(!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);
+      if($db_user['status'] != 'ACTIVE') throw new Exception("Account not active", 400);
+      if($db_user['password'] != $userAccount['password']) throw new Exception("Invalid password", 400);
+
+      return $db_user;
+    }
 
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
       $userAccount['created_at'] = date(Config::DATE_FORMAT);
-     try {
+     
+      try {
+
         $this->dao->beginTransaction();
         $details = $this->userDetailsDao->add([
         "name" => $userAccount['name'],
@@ -32,7 +43,7 @@ class UserAccountService extends BaseService{
         "address" => $userAccount['address'],
         "created_at" => $userAccount['created_at']
         ]);
-  
+
       $userAccount = $this->dao->add([
         "email" => $details['email'],
         "password" => $userAccount['password'],
@@ -44,26 +55,30 @@ class UserAccountService extends BaseService{
       ]); 
 
       $this->dao->commit();
-       } catch (\Exception $e){
-        $this->dao->rollBack();
+     
+    } catch (\Exception $e){
+    
+      $this->dao->rollBack();
        if(str_contains($e->getMessage(), 'user_account.email_UNIQUE')){
          throw new Exception("Account with same email exsists in the database", 400, $e);
         }else{
           throw $e;    
-        } 
+        }  
       }
+    
       $this->smtpClient->send_registration_token($userAccount);
+  
       return $userAccount;
-  }
+      }
     
     public function confirm($token){
       $userAccount = $this->dao->get_user_by_token($token);
 
       if(!isset($userAccount['id'])) throw new Exception("Invalid token");
-    
+
     $this->dao->update($userAccount['id'], ["status" => "ACTIVE"]);
-    
-  }
+
+    }
     // TODO: send email to user
   
    public function get_user_account($search, $offset, $limit, $order){
@@ -75,6 +90,8 @@ class UserAccountService extends BaseService{
         }
    }
 
+  
+  
   }
 ?>
 

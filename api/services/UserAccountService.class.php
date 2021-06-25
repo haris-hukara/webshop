@@ -27,6 +27,20 @@ class UserAccountService extends BaseService{
       return $db_user;
     }
 
+    public function forgot($userAccount){
+      $db_user = $this->dao->get_user_by_email($userAccount['email']);
+      if(!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);
+      $db_user = $this->update($db_user['id'], ['token' =>md5(random_bytes(16))]);
+      $this->smtpClient->send_recovery_token($db_user);
+    }
+
+    public function reset($userAccount){
+      $db_user = $this->dao->get_user_by_token($userAccount['token']);
+
+      if(!isset($db_user['id'])) throw new Exception("Invalid token", 400);
+      $this->dao->update($db_user['id'],['password' => md5($userAccount ['password']) ]);
+    }
+
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
       $userAccount['created_at'] = date(Config::DATE_FORMAT);
@@ -76,7 +90,7 @@ class UserAccountService extends BaseService{
     public function confirm($token){
       $userAccount = $this->dao->get_user_by_token($token);
 
-      if(!isset($userAccount['id'])) throw new Exception("Invalid token");
+      if(!isset($userAccount['id'])) throw new Exception("Invalid token", 400);
 
     $this->dao->update($userAccount['id'], ["status" => "ACTIVE"]);
 

@@ -30,6 +30,7 @@ class UserAccountService extends BaseService{
       return ["token" => $jwt];
     }
 
+
     public function forgot($userAccount){
       $db_user = $this->dao->get_user_by_email($userAccount['email']);
       if(!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);
@@ -48,6 +49,7 @@ class UserAccountService extends BaseService{
       $this->smtpClient->send_recovery_token($db_user);
     }
 
+
     public function reset($userAccount){
       $db_user = $this->dao->get_user_by_token($userAccount['token']);
 
@@ -63,6 +65,7 @@ class UserAccountService extends BaseService{
                           'token' => NULL ]
                         );
     }
+
 
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
@@ -120,6 +123,7 @@ class UserAccountService extends BaseService{
     }
     // TODO: send email to user
   
+    
    public function get_user_account($search, $offset, $limit, $order){
   
               if ($search){

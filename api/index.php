@@ -46,6 +46,7 @@ require_once dirname(__FILE__).'/routes/userAccount.php';
 require_once dirname(__FILE__).'/routes/userDetails.php';
 require_once dirname(__FILE__).'/routes/city.php';
 require_once dirname(__FILE__).'/routes/order.php';
+require_once dirname(__FILE__).'/routes/middleware.php';
 /* get swagger route */
 require_once dirname(__FILE__).'/routes/doc.php';
 

@@ -3,7 +3,7 @@
  * @OA\Info(title="OnlineShop API", version="0.1")
  *    @OA\OpenApi(
  *      @OA\Server(url="http://localhost/webshop/api/", description="Developer environment")
- * ) 
+ * ), 
  *  @OA\SecurityScheme(
  *      securityScheme="ApiKeyAuth",
  *      name="Authentication",
@@ -51,7 +51,7 @@ Flight::route('GET /account/@id', function($id){
         if($decoded['id'] == $id){
         Flight::json(Flight::userAccountService()->get_by_id($id));
     }else{
-        Flight::json(["message" => "This account is not yours" ]);
+        Flight::json(["message" => "This account is not yours"],403);
     }
     } catch (\Exception $e) {
         Flight::json(["message" => $e->getMessage()], 401);

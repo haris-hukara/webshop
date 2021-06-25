@@ -3,7 +3,13 @@
  * @OA\Info(title="OnlineShop API", version="0.1")
  *    @OA\OpenApi(
  *      @OA\Server(url="http://localhost/webshop/api/", description="Developer environment")
- * )
+ * ) 
+ *  @OA\SecurityScheme(
+ *      securityScheme="ApiKeyAuth",
+ *      name="Authentication",
+ *      in="header",
+ *      type="apiKey",
+ * )    
  */
 
 /**
@@ -21,13 +27,33 @@ Flight::route('GET /account', function(){
 });
 
 /**
- * @OA\Get(path="/account/{id}",tags={"account"},
- *     @OA\Parameter(@OA\Schema(type="integer"), in="path", allowReserved=true, name="id", example = 50, description="Search for account based on account_id"),
+ * @OA\Get(path="/account/{id}",tags={"account"}, security={{"ApiKeyAuth":{}}}, 
+ *     @OA\Parameter(
+ *         name="Authentication",
+ *         in="header",
+ *         required=true,
+ *         description="JWT {access-token}",
+ *          default ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJybCI6IlVTRVIifQ.2JLdTXnlSOYE2PsbQykMKFtT7C1B6F728BWZ2XThv-I",
+ *      @OA\SecurityScheme(
+ *      securityScheme="ApiKeyAuth"
+ * ),
+ *      ), 
+ *     @OA\Parameter(@OA\Schema(type="integer"), in="path", allowReserved=true, name="id", example = 1, description="Search for account based on account_id"),
  *     @OA\Response(response="200", description="List of accounts from database based on account_id")
  *)
  */
 Flight::route('GET /account/@id', function($id){
-    Flight::json(Flight::userAccountService()->get_by_id($id));
+    $headers = getallheaders();
+    $JWTtoken = @$headers['Authentication'];
+
+    try {
+        $decoded = (array)\Firebase\JWT\JWT::decode($JWTtoken, "JWT SECRET",['HS256']);
+        Flight::json(Flight::userAccountService()->get_by_id($id));
+    
+    } catch (\Exception $e) {
+        Flight::json(["message" => $e->getMessage()], 401);
+    }
+   
 });
 
 
@@ -39,11 +65,11 @@ Flight::route('POST /account', function(){
 
 /**
 * @OA\Put(path="/account/{id}",tags={"account"},
-* @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "28", description="Update account by account_id"),
+* @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update account by account_id"),
 **@OA\RequestBody(description ="Basic account info that is going to be updated", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(
-*                     @OA\Property(property="email", type="string",example="emai213l@email.ba",description="123"),           
+*                     @OA\Property(property="email", type="string",example="example@email.ba",description="123"),           
 *                     @OA\Property(property="password", type="string",example="password",description="123"),           
 *            ) 
 *        )
@@ -52,6 +78,7 @@ Flight::route('POST /account', function(){
 * )     
 */ 
 Flight::route('PUT /account/@id', function($id){
+
     $data = Flight::request()->data->getdata();
     Flight::userAccountService()->update($id, $data);
 });

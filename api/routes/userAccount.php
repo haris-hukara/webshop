@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @OA\Info(title="OnlineShop API", version="0.1")
  *    @OA\OpenApi(
@@ -13,7 +14,7 @@
  */
 
 /**
- * @OA\Get(path="/account", tags={"account"},
+ * @OA\Get(path="/account", tags={"account"},security={{"ApiKeyAuth":{}}},
  *     @OA\Response(response="200", description="List of all accounts from database")
  * )
  */
@@ -43,19 +44,13 @@ Flight::route('GET /account', function(){
  *)
  */
 Flight::route('GET /account/@id', function($id){
-    $headers = getallheaders();
-    $JWTtoken = @$headers['Authentication'];
-
-    try {
-        $decoded = (array)\Firebase\JWT\JWT::decode($JWTtoken, "JWT SECRET",['HS256']);
-        if($decoded['id'] == $id){
-        Flight::json(Flight::userAccountService()->get_by_id($id));
+  
+   if((Flight::get("decoded")['id']) != $id){
+       Flight::json(["message" => "This account is not yours"]);
     }else{
-        Flight::json(["message" => "This account is not yours"],403);
-    }
-    } catch (\Exception $e) {
-        Flight::json(["message" => $e->getMessage()], 401);
-    }
+       Flight::json(Flight::userAccountService()->get_by_id($id));
+   }
+    //  if( != $id ) throw new Exception("This account not for you",403);
    
 });
 
@@ -67,7 +62,7 @@ Flight::route('POST /account', function(){
 }); */
 
 /**
-* @OA\Put(path="/account/{id}",tags={"account"},
+* @OA\Put(path="/account/{id}",tags={"account"},security={{"ApiKeyAuth":{}}},
 * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update account by account_id"),
 **@OA\RequestBody(description ="Basic account info that is going to be updated", required = true,
 *          @OA\MediaType(mediaType="application/json",
@@ -90,9 +85,7 @@ Flight::route('PUT /account/@id', function($id){
 /* user account registration route*/
 /**
 *@OA\Post(path="/account/register",tags={"account"},
-*@OA\RequestBody(description ="Body for user registrations", required = true,
-*          @OA\MediaType(mediaType="application/json",
-*                 @OA\Schema(
+*@OA\RequestBody(description ="Body 
 *                     @OA\Property(property="name",required = true, type="string",example="name",description="Name"),           
 *                     @OA\Property(property="surname",required = true, type="string",example="surname",description="Surname"),           
 *                     @OA\Property(property="email",required = true, type="string",example="haris.hukara@stu.ibu.edu.ba",description="User's email"),           
@@ -103,7 +96,9 @@ Flight::route('PUT /account/@id', function($id){
 *                     @OA\Property(property="address",required = true, type="string",example="address 13",description="User address")           
 *            ) 
 *        )
-*   ),
+*   ),for user registrations", required = true,
+*          @OA\MediaType(mediaType="application/json",
+*                 @OA\Schema(
 *  @OA\Response(response="200", description="Account registration message")
 * )     
 */ 

@@ -20,6 +20,12 @@ Flight::map('error', function(Exception $ex){
     Flight::json(['message' => $ex->getMessage()] , $ex->getCode());
 });
 */
+Flight::route('GET /swagger', function(){  
+    $openapi = @\OpenApi\scan(dirname(__FILE__)."/../routes");
+    header('Content-Type: application/json');
+    echo $openapi->toJson();
+});
+
 Flight::route('GET /', function(){  
     Flight::redirect('/docs');
 });
@@ -32,7 +38,25 @@ Flight::map('query', function($name, $default_value = NULL){
     $query_param = $query_param ? $query_param : $default_value;
     return $query_param;
 });
+/*  Delete later
+    trying out things  middleware didn't work  
 
+    Flight::map('middleware', function(){
+    if(Flight::request()->url == '/swagger') return TRUE;
+
+    $headers = getallheaders();
+    $token = @$headers['Authentication'];
+    
+    try {
+        $decoded = \Firebase\JWT\JWT::decode($token, "JWT SECRET",['HS256']);
+        Flight::set("decoded", $decoded);
+        return TRUE; 
+    } catch (\Exception $e) {
+        Flight::json(["message" => $e->getMessage()], 401);
+        die;
+    }
+});
+*/
  
 /* register Bussiness Logic layer services */
 Flight::register('userAccountService', 'UserAccountService');
@@ -42,11 +66,11 @@ Flight::register('orderService', 'OrderService');
 
 
 /* include routes */
+require_once dirname(__FILE__).'/routes/middleware.php';
 require_once dirname(__FILE__).'/routes/userAccount.php';
 require_once dirname(__FILE__).'/routes/userDetails.php';
 require_once dirname(__FILE__).'/routes/city.php';
 require_once dirname(__FILE__).'/routes/order.php';
-require_once dirname(__FILE__).'/routes/middleware.php';
 /* get swagger route */
 require_once dirname(__FILE__).'/routes/doc.php';
 

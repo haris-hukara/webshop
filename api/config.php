@@ -15,10 +15,10 @@ class Config {
         return Config::get_env("SMTP_PORT", "587");
       }
       public static function SMTP_USER(){
-        return Config::get_env("SMTP_USER", "");
+        return Config::get_env("SMTP_USER", "webproject.webshop@gmail.com");
       }
       public static function SMTP_PASSWORD(){
-        return Config::get_env("SMTP_PASSWORD", "");
+        return Config::get_env("SMTP_PASSWORD", "WebProject123");
       }
       public static function get_env($name, $default){
         return isset($_ENV[$name]) && trim($_ENV[$name]) != '' ? $_ENV[$name] : $default;

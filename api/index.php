@@ -20,11 +20,6 @@ Flight::map('error', function(Exception $ex){
     Flight::json(['message' => $ex->getMessage()] , $ex->getCode());
 });
 */
-Flight::route('GET /swagger', function(){  
-    $openapi = @\OpenApi\scan(dirname(__FILE__)."/../routes");
-    header('Content-Type: application/json');
-    echo $openapi->toJson();
-});
 
 Flight::route('GET /', function(){  
     Flight::redirect('/docs');
@@ -57,7 +52,12 @@ Flight::map('query', function($name, $default_value = NULL){
     }
 });
 */
- 
+Flight::map('header', function($name){
+    $headers = getallheaders();
+    return @$headers[$name];
+  });
+
+
 /* register Bussiness Logic layer services */
 Flight::register('userAccountService', 'UserAccountService');
 Flight::register('userDetailsService', 'UserDetailsService');

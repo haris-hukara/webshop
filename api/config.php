@@ -7,6 +7,7 @@ class Config {
     const DB_USERNAME = "webshop";
     const DB_PASSWORD = "webshop";
     const DB_SCHEME = "webshop";
+    const JWT_SECRET = "JWT SECRET";
 
       public static function SMTP_HOST(){
         return Config::get_env("SMTP_HOST", "smtp.gmail.com");

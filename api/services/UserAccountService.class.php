@@ -25,12 +25,7 @@ class UserAccountService extends BaseService{
       /* user password is hashed using md5 because same hashing is used when user is registering*/
       if($db_user['password'] != md5($userAccount['password'])) throw new Exception("Invalid password", 400);
 
-      $jwt = Firebase\JWT\JWT::encode( [ "exp"=>(time()+ Config::JWT_TOKEN_TIME), 
-                                         "id"=> $db_user["id"], 
-                                         "rl"=>$db_user["role"]
-                                        ], "JWT SECRET");
-      
-      return ["token" => $jwt];
+      return $db_user;
     }
 
 
@@ -65,8 +60,9 @@ class UserAccountService extends BaseService{
 
       $this->dao->update( $db_user['id'],
                           ['password' => md5($userAccount ['password']),
-                          'token' => NULL ]
+                           'token' => NULL ]
                         );
+      return $db_user;
     }
 
 
@@ -121,10 +117,11 @@ class UserAccountService extends BaseService{
 
       if(!isset($userAccount['id'])) throw new Exception("Invalid token", 400);
 
-    $this->dao->update($userAccount['id'], ["status" => "ACTIVE", 'token' => NULL]);
+      $this->dao->update($userAccount['id'], ["status" => "ACTIVE", 'token' => NULL]);
 
+       return $userAccount;
     }
-    // TODO: send email to user
+    
   
     
    public function get_user_account($search, $offset, $limit, $order){

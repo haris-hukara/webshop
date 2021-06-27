@@ -57,6 +57,17 @@ Flight::map('header', function($name){
     return @$headers[$name];
   });
 
+  /* utility function for generating JWT Token */
+  Flight::map('jwt', function($user){
+    $jwt = Firebase\JWT\JWT::encode( 
+        [ "exp"=>(time()+ Config::JWT_TOKEN_TIME), 
+          "id"=> $user["id"], 
+          "rl"=> $user["role"]
+        ],"JWT SECRET");
+
+    return ["token" => $jwt];
+  });
+
 
 /* register Bussiness Logic layer services */
 Flight::register('userAccountService', 'UserAccountService');

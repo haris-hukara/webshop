@@ -7,11 +7,18 @@ class CountryDao extends BaseDao{
         parent::__construct("country");
     }
    
-    public function get_country_id($country){
+    public function get_country_id_by_name($country){
         $country = $this->query_unique("SELECT *
                                      FROM country
                                      WHERE LOWER(name) = :name", ["name" => strtolower($country)]);
         return $country['id'];
+    }
+    
+    public function get_country_name_by_id($id){
+        $country = $this->query_unique("SELECT *
+                                     FROM country
+                                     WHERE id = :id", ["id" => $id]);
+        return $country['name'];
     }
 
  

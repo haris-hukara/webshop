@@ -12,16 +12,16 @@ private $smtpClient;
    $this->orderDetailsDao = new OrderDetailsDao();
   }
 
-  public function add_order($order){
-    parent::add([ 
-      "user_details_id" => $order['user_details_id'],
-      "shipping_address" => $order['shipping_address'],
+  public function add_order($order){   
+    
+   $order = parent::add([ 
       "user_details_id" => $order['user_details_id'],
       "shipping_address" => $order['shipping_address'],
       "payment_method_id" => $order['payment_method_id'],
       "order_date" => date(Config::DATE_FORMAT),
       "status" => $order['status']
     ]);
+    return $order;
   }
 
   public function get_orders(){

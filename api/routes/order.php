@@ -1,14 +1,12 @@
 <?php
 /**
- * @OA\Get(path="/order", tags={"order"},
+ * @OA\Get(path="/admin/orders", tags={"order"},security={{"ApiKeyAuth":{}}},
  *     @OA\Response(response="200", description="List all accounts from database")
  * )
  */
-Flight::route('GET /order', function(){    
+Flight::route('GET /admin/orders', function(){    
     flight::json(Flight::orderService()->get_orders());
 });
-
-
 
 /**
 *  @OA\Post(path="/order",tags={"order"},

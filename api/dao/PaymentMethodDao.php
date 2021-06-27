@@ -7,6 +7,10 @@ class PaymentMethodDao extends BaseDao{
         parent::__construct("payment_method");
     }
 
+    public function get_payment_method_name_by_id($id){
+        $payment_name = $this->get_by_id($id);
+        return $payment_name['name'];
+    }
 
-
+}
 ?>

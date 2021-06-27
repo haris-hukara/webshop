@@ -1,6 +1,6 @@
 <?php
 /**
- * @OA\Get(path="/admin/orders", tags={"order"},security={{"ApiKeyAuth":{}}},
+ * @OA\Get(path="/admin/orders", tags={"order","admin"},security={{"ApiKeyAuth":{}}},
  *     @OA\Response(response="200", description="List all accounts from database")
  * )
  */

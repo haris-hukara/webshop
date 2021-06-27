@@ -1,6 +1,6 @@
 <?php
 /**
- * @OA\Get(path="/admin/city", tags={"city"},security={{"ApiKeyAuth":{}}},
+ * @OA\Get(path="/admin/city", tags={"city","admin"},security={{"ApiKeyAuth":{}}},
  *                    @OA\Parameter( type="integer", in="query",name="offset", default=0, description= "Offset for paggination"),           
 *                     @OA\Parameter( type="integer", in="query",name="limit", default=10, description= "Limit for paggination"),
 *                     @OA\Parameter( type="integer", in="query",name="search", default="Sarajevo", description= "Case insensitive search for cities"),
@@ -21,7 +21,7 @@ Flight::route('GET /admin/city', function(){
 
 
 /**
-*  @OA\Post(path="/admin/city",tags={"city"},security={{"ApiKeyAuth":{}}},
+*  @OA\Post(path="/admin/city",tags={"city","admin"},security={{"ApiKeyAuth":{}}},
 *  @OA\RequestBody(description ="Body for order", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(

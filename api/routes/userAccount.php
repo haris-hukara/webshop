@@ -14,7 +14,7 @@
  */
 
 /**
- * @OA\Get(path="/admin/accounts", tags={"account"},security={{"ApiKeyAuth":{}}},
+ * @OA\Get(path="/admin/accounts", tags={"account","admin"},security={{"ApiKeyAuth":{}}},
   *    @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="search", description="Search string for accounts. Case insensitive search."),
@@ -32,7 +32,7 @@ Flight::route('GET /admin/accounts', function(){
 });
 
 /**
- * @OA\Get(path="/admin/accounts/{id}", tags={"account"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Get(path="/admin/accounts/{id}", tags={"account","admin"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Id of account"),
  *     @OA\Response(response="200", description="Fetch individual account")
  * )

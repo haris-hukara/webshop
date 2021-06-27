@@ -8,6 +8,7 @@ class Config {
     const DB_PASSWORD = "webshop";
     const DB_SCHEME = "webshop";
     const JWT_SECRET = "JWT SECRET";
+    const JWT_TOKEN_TIME = 604800; // exp time for JWT token in seconds
 
       public static function SMTP_HOST(){
         return Config::get_env("SMTP_HOST", "smtp.gmail.com");

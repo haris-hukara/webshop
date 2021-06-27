@@ -25,7 +25,10 @@ class UserAccountService extends BaseService{
       /* user password is hashed using md5 because same hashing is used when user is registering*/
       if($db_user['password'] != md5($userAccount['password'])) throw new Exception("Invalid password", 400);
 
-      $jwt = Firebase\JWT\JWT::encode(["id"=> $db_user["id"], "rl"=>$db_user["role"]], "JWT SECRET");
+      $jwt = Firebase\JWT\JWT::encode( [ "exp"=>(time()+ Config::JWT_TOKEN_TIME), 
+                                         "id"=> $db_user["id"], 
+                                         "rl"=>$db_user["role"]
+                                        ], "JWT SECRET");
       
       return ["token" => $jwt];
     }

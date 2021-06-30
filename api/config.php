@@ -3,10 +3,23 @@
 class Config {
 
     const DATE_FORMAT = "Y-m-d H:i:s";
-    const DB_HOST = "localhost";
-    const DB_USERNAME = "webshop";
-    const DB_PASSWORD = "webshop";
-    const DB_SCHEME = "webshop";
+
+    public static function DB_HOST(){
+      return Config::get_env("DB_HOST", "localhost");
+    }
+    public static function DB_USERNAME(){
+      return Config::get_env("DB_USERNAME", "letteryourself");
+    }
+    public static function DB_PASSWORD(){
+      return Config::get_env("DB_PASSWORD", "letteryourself");
+    }
+    public static function DB_SCHEME(){
+      return Config::get_env("DB_SCHEME", "letter_yourself");
+    }
+    public static function DB_PORT(){
+      return Config::get_env("DB_PORT", "3306");
+    }
+
     const JWT_SECRET = "JWT SECRET";
     const JWT_TOKEN_TIME = 604800; // exp time for JWT token in seconds
 

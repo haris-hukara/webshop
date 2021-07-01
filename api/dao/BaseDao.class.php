@@ -10,6 +10,7 @@ class BaseDao{
           $this->table = $table;  
           try {
               $this->connection = new PDO("mysql:host=".Config::DB_HOST().
+                                               ";port=".Config::DB_PORT(),
                                              ";dbname=".Config::DB_SCHEME(),
                                                         Config::DB_USERNAME(),
                                                         Config::DB_PASSWORD());

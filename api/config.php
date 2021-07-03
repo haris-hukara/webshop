@@ -8,13 +8,13 @@ class Config {
       return Config::get_env("DB_HOST", "localhost");
     }
     public static function DB_USERNAME(){
-      return Config::get_env("DB_USERNAME", "letteryourself");
+      return Config::get_env("DB_USERNAME", "webshop");
     }
     public static function DB_PASSWORD(){
-      return Config::get_env("DB_PASSWORD", "letteryourself");
+      return Config::get_env("DB_PASSWORD", "webshop");
     }
     public static function DB_SCHEME(){
-      return Config::get_env("DB_SCHEME", "letter_yourself");
+      return Config::get_env("DB_SCHEME", "webshop");
     }
     public static function DB_PORT(){
       return Config::get_env("DB_PORT", "3306");

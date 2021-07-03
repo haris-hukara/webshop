@@ -39,7 +39,7 @@
     /></head
   ><!--/head-->
 
-  <body>
+  <body style="display: none">
     <section id="form">
       <!--form-->
       <div class="container">
@@ -99,15 +99,24 @@
     <script src="assets/js/main.js"></script>
 
     <script type="text/javascript">
+      $(function () {
+        if (window.localStorage.getItem("token")) {
+          window.location = "index.html";
+        } else {
+          $("body").show();
+        }
+      });
+
       function doLogin() {
         var login_info = {
           email: $("#email").val(),
           password: $("#password").val(),
         };
+
         $("#login").prop("disabled", true);
         $.post("http://localhost/webshop/api/login", login_info)
           .done(function (data) {
-            alert("Data Loaded: " + data);
+            window.localStorage.setItem("token", data.token);
             window.location = "index.html";
           })
           .fail(function (error) {

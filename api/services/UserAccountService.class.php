@@ -66,13 +66,13 @@ class UserAccountService extends BaseService{
     }
 
 
+
     public function register($userAccount){
       if(!isset($userAccount['email'])) throw new Exception("Email is missing");
-     
-      try {
-
-        $this->dao->beginTransaction();
-        $details = parent::add([
+      
+    try{
+	  $this->dao->beginTransaction();
+        $details = $this->userDetailsDao->add([
         "name" => $userAccount['name'],
         "surname" => $userAccount['surname'],
         "email" => $userAccount['email'],
@@ -81,24 +81,21 @@ class UserAccountService extends BaseService{
         "zip_code" => $userAccount['zip_code'],
         "address" => $userAccount['address'],
         "created_at" => date(Config::DATE_FORMAT)
-        ]);
-
-      $userAccount = $this->dao->add([
-        "email" => $details['email'],   
-        /* md5 is used for hashing the password, user password input should be hashed on login */
-        "password" =>md5($userAccount['password']),
+      ]);
+      
+      $userAccount = parent::add([
+        "email" => $details['email'],
+        "password" => $userAccount['password'],
         "user_details_id" => $details['id'],
         "status" => "PENDING",
         "role" => "USER",
         "created_at" => date(Config::DATE_FORMAT),
         "token" => md5(random_bytes(16))
       ]); 
-
-      $this->dao->commit();
-     
-    } catch (\Exception $e){
-    
-      $this->dao->rollBack();
+      
+       $this->dao->commit();
+	    } catch (\Exception $e){
+    	 $this->dao->rollBack();
        if(str_contains($e->getMessage(), 'user_account.email_UNIQUE')){
          throw new Exception("Account with same email exsists in the database", 400, $e);
         }else{

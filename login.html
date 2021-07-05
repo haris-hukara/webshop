@@ -43,6 +43,11 @@
     <section id="form">
       <!--form-->
       <div class="container">
+        <div id="signup-form-alert" class="row hidden">
+          <div class="alert alert-success" role="alert">
+            A simple success alert — check it out!
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-4 col-sm-offset-1">
             <div class="login-form">
@@ -79,6 +84,7 @@
           <div class="col-sm-1">
             <h2 class="or">OR</h2>
           </div>
+
           <div class="col-sm-4">
             <div class="signup-form">
               <!--sign up form-->
@@ -171,8 +177,11 @@
         $("#signup-submit").prop("disabled", true);
         $.post("http://localhost/webshop/api/register", signup_info)
           .done(function (data) {
-            console.log(data);
-            alert("success register");
+            $(".signup-form").addClass("hidden");
+            $(".login-form").addClass("hidden");
+            $(".or").addClass("hidden");
+            $("#signup-form-alert").removeClass("hidden");
+            $("#signup-form-alert .alert").html(data.message);
           })
           .fail(function (error) {
             $("#signup-submit").prop("disabled", false);

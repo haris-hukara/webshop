@@ -18,6 +18,12 @@
     <!-- Custom CSS -->
     <link href="./assets/css/startmin.css" rel="stylesheet" />
 
+    <!-- Toastr CSS -->
+    <link
+      href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+      rel="stylesheet"
+    />
+
     <!-- Custom Fonts -->
     <link
       href="./assets/css/font-awesome.min.css"
@@ -266,6 +272,10 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="./assets/js/bootstrap.min.js"></script>
 
+    <!-- Toastr JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <!-- JavaScript utility functions-->
     <script src="./assets/js/utils.js"></script>
 
     <script type="text/javascript">
@@ -307,10 +317,7 @@
 
       function doRegister() {
         $("#register-link").prop("disabled", true);
-        $.post(
-          "http://localhost/webshop/api/register",
-          jsonize_form("#register-form")
-        )
+        $.post("api/register", jsonize_form("#register-form"))
           .done(function (data) {
             console.log(data);
             $("#register-form-container").addClass("hidden");
@@ -320,32 +327,26 @@
           .fail(function (error) {
             $("#register-link").prop("disabled", false);
             console.log(error);
-            alert(error.responseJSON.message);
+            toastr.error(error.responseJSON.message);
           });
       }
 
       function doLogin() {
         $("#login-link").prop("disabled", true);
-        $.post(
-          "http://localhost/webshop/api/login",
-          jsonize_form("#login-form")
-        )
+        $.post("api/login", jsonize_form("#login-form"))
           .done(function (data) {
             window.localStorage.setItem("token", data.token);
             window.location = "index.html";
           })
           .fail(function (error) {
             $("#login-link").prop("disabled", false);
-            alert(error.responseJSON.message);
+            toastr.error(error.responseJSON.message);
           });
       }
 
       function doForgotPassword() {
         $("#forgot-link").prop("disabled", true);
-        $.post(
-          "http://localhost/webshop/api/forgot",
-          jsonize_form("#forgot-email")
-        )
+        $.post("webshop/api/forgot", jsonize_form("#forgot-email"))
           .done(function (data) {
             console.log(data);
             $("#forgot-form-container").addClass("hidden");
@@ -362,17 +363,14 @@
 
       function doChangePassword() {
         $("#change-link").prop("disabled", true);
-        $.post(
-          "http://localhost/webshop/api/reset",
-          jsonize_form("#change-password-form")
-        )
+        $.post("webshop/api/reset", jsonize_form("#change-password-form"))
           .done(function (data) {
             window.localStorage.setItem("token", data.token);
             window.location = "index.html";
           })
           .fail(function (error) {
             $("#change-link").prop("disabled", false);
-            alert(error.responseJSON.message);
+            toastr.error(error.responseJSON.message);
           });
       }
     </script>

@@ -362,8 +362,9 @@
         var forgot_info = {
           email: $("#forgot-email").val(),
         };
+
         $("#forgot-link").prop("disabled", true);
-        $.post("http://localhost/autoresponder/api/forgot", forgot_info)
+        $.post("http://localhost/webshop/api/forgot", forgot_info)
           .done(function (data) {
             console.log(data);
             $("#forgot-form-container").addClass("hidden");
@@ -385,7 +386,7 @@
         };
 
         $("#change-link").prop("disabled", true);
-        $.post("http://localhost/autoresponder/api/reset", change_info)
+        $.post("http://localhost/webshop/api/reset", change_info)
           .done(function (data) {
             window.localStorage.setItem("token", data.token);
             window.location = "index.html";

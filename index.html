@@ -151,9 +151,8 @@
                     >
                   </li>
                   <li>
-                    <a href="login.html"
-                      ><i class="fa fa-lock" onclick="doLogout();"></i> Log
-                      out</a
+                    <a onclick="doLogout();" href="login.html"
+                      ><i class="fa fa-lock"></i> Log out</a
                     >
                   </li>
                 </ul>
@@ -194,8 +193,8 @@
                       </li>
                       <li><a href="pages/checkout.html">Checkout</a></li>
                       <li><a href="pages/cart.html">Cart</a></li>
-                      <li onclick="doLogout();">
-                        <a href="login.html">Log out</a>
+                      <li>
+                        <a onclick="doLogout();">Log out</a>
                       </li>
                     </ul>
                   </li>
@@ -433,7 +432,7 @@
     <script type="text/javascript">
       function doLogout() {
         window.localStorage.clear();
-        window.location = "login.html";
+        window.location = "index.html";
       }
     </script>
   </body>

@@ -42,11 +42,10 @@
               <h3 class="panel-title">Please Sign In</h3>
             </div>
             <div class="panel-body">
-              <form role="form">
+              <form id="login-form" role="form">
                 <fieldset>
                   <div class="form-group">
                     <input
-                      id="email"
                       class="form-control"
                       placeholder="E-mail"
                       name="email"
@@ -56,7 +55,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="password"
                       class="form-control"
                       placeholder="Password"
                       name="password"
@@ -97,11 +95,10 @@
               <h3 class="panel-title">Register Form</h3>
             </div>
             <div class="panel-body">
-              <form role="form">
+              <form id="register-form" role="form">
                 <fieldset>
                   <div class="form-group">
                     <input
-                      id="register-name"
                       class="form-control"
                       placeholder="Name"
                       name="name"
@@ -110,7 +107,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-surname"
                       class="form-control"
                       placeholder="Surname"
                       name="surname"
@@ -119,7 +115,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-email"
                       class="form-control"
                       placeholder="Email Address"
                       name="email"
@@ -128,7 +123,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-password"
                       class="form-control"
                       placeholder="Password"
                       name="password"
@@ -137,7 +131,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-phone"
                       class="form-control"
                       placeholder="Phone Number"
                       name="phone"
@@ -146,7 +139,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-city"
                       class="form-control"
                       placeholder="City"
                       name="city"
@@ -155,7 +147,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-address"
                       class="form-control"
                       placeholder="Address"
                       name="address"
@@ -164,7 +155,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      id="register-zip"
                       class="form-control"
                       placeholder="Zip Code"
                       name="zip"
@@ -198,11 +188,10 @@
               <h3 class="panel-title">Forgot Password</h3>
             </div>
             <div class="panel-body">
-              <form role="form">
+              <form id="forgot-form" role="form">
                 <fieldset>
                   <div class="form-group">
                     <input
-                      id="forgot-email"
                       class="form-control"
                       placeholder="E-mail"
                       name="email"
@@ -236,7 +225,7 @@
               <h3 class="panel-title">Change Password</h3>
             </div>
             <div class="panel-body">
-              <form role="form">
+              <form id="change-password-form" role="form">
                 <fieldset>
                   <input
                     id="change-password-token"
@@ -277,6 +266,8 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="./assets/js/bootstrap.min.js"></script>
 
+    <script src="./assets/js/utils.js"></script>
+
     <script type="text/javascript">
       $(function () {
         if (window.localStorage.getItem("token")) {
@@ -315,19 +306,11 @@
       }
 
       function doRegister() {
-        var register_info = {
-          name: $("#register-name").val(),
-          surname: $("#register-surname").val(),
-          email: $("#register-email").val(),
-          password: $("#register-password").val(),
-          phone_number: $("#register-phone").val(),
-          city: $("#register-city").val(),
-          zip_code: $("#register-zip").val(),
-          address: $("#register-address").val(),
-        };
-
         $("#register-link").prop("disabled", true);
-        $.post("http://localhost/webshop/api/register", register_info)
+        $.post(
+          "http://localhost/webshop/api/register",
+          jsonize_form("#register-form")
+        )
           .done(function (data) {
             console.log(data);
             $("#register-form-container").addClass("hidden");
@@ -342,12 +325,11 @@
       }
 
       function doLogin() {
-        var login_info = {
-          email: $("#email").val(),
-          password: $("#password").val(),
-        };
         $("#login-link").prop("disabled", true);
-        $.post("http://localhost/webshop/api/login", login_info)
+        $.post(
+          "http://localhost/webshop/api/login",
+          jsonize_form("#login-form")
+        )
           .done(function (data) {
             window.localStorage.setItem("token", data.token);
             window.location = "index.html";
@@ -359,12 +341,11 @@
       }
 
       function doForgotPassword() {
-        var forgot_info = {
-          email: $("#forgot-email").val(),
-        };
-
         $("#forgot-link").prop("disabled", true);
-        $.post("http://localhost/webshop/api/forgot", forgot_info)
+        $.post(
+          "http://localhost/webshop/api/forgot",
+          jsonize_form("#forgot-email")
+        )
           .done(function (data) {
             console.log(data);
             $("#forgot-form-container").addClass("hidden");
@@ -380,13 +361,11 @@
       }
 
       function doChangePassword() {
-        var change_info = {
-          token: $("#change-password-token").val(),
-          password: $("#change-password").val(),
-        };
-
         $("#change-link").prop("disabled", true);
-        $.post("http://localhost/webshop/api/reset", change_info)
+        $.post(
+          "http://localhost/webshop/api/reset",
+          jsonize_form("#change-password-form")
+        )
           .done(function (data) {
             window.localStorage.setItem("token", data.token);
             window.location = "index.html";

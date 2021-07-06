@@ -27,7 +27,7 @@ class SMTPClient {
     $message = (new Swift_Message('Reset Your Password'))
       ->setFrom(['haris.hukara@stu.ibu.edu.ba' => 'Webshop'])
       ->setTo([$userAccount['email']])
-      ->setBody('http://localhost/webshop/index.html?token='.$userAccount['token']);
+      ->setBody('Recovery link: http://localhost/webshop/login.html?token='.$userAccount['token']);
 
     $this->mailer->send($message);
   }

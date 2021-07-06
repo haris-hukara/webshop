@@ -85,7 +85,7 @@ class UserAccountService extends BaseService{
       
       $userAccount = parent::add([
         "email" => $details['email'],
-        "password" => $userAccount['password'],
+        "password" => md5($userAccount['password']),
         "user_details_id" => $details['id'],
         "status" => "PENDING",
         "role" => "USER",

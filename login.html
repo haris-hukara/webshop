@@ -346,7 +346,7 @@
 
       function doForgotPassword() {
         $("#forgot-link").prop("disabled", true);
-        $.post("webshop/api/forgot", jsonize_form("#forgot-email"))
+        $.post("api/forgot", jsonize_form("#forgot-email"))
           .done(function (data) {
             console.log(data);
             $("#forgot-form-container").addClass("hidden");
@@ -363,7 +363,7 @@
 
       function doChangePassword() {
         $("#change-link").prop("disabled", true);
-        $.post("webshop/api/reset", jsonize_form("#change-password-form"))
+        $.post("api/reset", jsonize_form("#change-password-form"))
           .done(function (data) {
             window.localStorage.setItem("token", data.token);
             window.location = "index.html";

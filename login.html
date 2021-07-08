@@ -1,286 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Login | Webshop</title>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-
-    <title>Webshop | Login</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- MetisMenu CSS -->
-    <link href="./assets/css/metisMenu.min.css" rel="stylesheet" />
-
-    <!-- Custom CSS -->
-    <link href="./assets/css/startmin.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/fonts/Linearicons-Free-v1.0.0/icon-font.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/animsition/css/animsition.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/select2/select2.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/daterangepicker/daterangepicker.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="assets/css/util.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css" />
+    <!--===============================================================================================-->
 
     <!-- Toastr CSS -->
     <link
       href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
       rel="stylesheet"
     />
-
-    <!-- Custom Fonts -->
-    <link
-      href="./assets/css/font-awesome.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- Bootstrap Core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
   </head>
-
   <body style="display: none">
-    <div class="container">
-      <div id="login-form-container" class="row">
-        <div class="col-md-4 col-md-offset-4">
-          <div class="login-panel panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Please Sign In</h3>
-            </div>
-            <div class="panel-body">
-              <!-- LOGIN FORM   -->
-              <form id="login-form" role="form">
-                <fieldset>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="E-mail"
-                      name="email"
-                      type="email"
-                      autofocus
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      type="password"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <button
-                      id="login-link"
-                      onclick="doLogin();"
-                      class="btn btn-lg btn-success btn-block"
-                    >
-                      Login
-                    </button>
-                  </div>
-                  <div class="form-group pull-left">
-                    <a href="#" onclick="showForgotForm()">Forgot Password</a>
-                  </div>
-                  <div class="form-group pull-right">
-                    <a href="#" onclick="showRegisterForm()">Register here</a>
-                  </div>
-                </fieldset>
-              </form>
-            </div>
+    <div id="form-alert" class="row hidden" style="display: block; margin: 2em">
+      <div class="alert alert-success" role="alert">
+        This is a success alert—check it out!
+      </div>
+    </div>
+
+    <div class="limiter">
+      <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+          <div id="login-form-container">
+            <form
+              id="login-form"
+              class="login100-form validate-form flex-sb flex-w"
+              role="form"
+            >
+              <span class="login100-form-title p-b-51"> Login </span>
+
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Email is required"
+              >
+                <input
+                  class="input100"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  minlength="5"
+                  required
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Password is required"
+              >
+                <input
+                  class="input100"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  minlength="8"
+                  required
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div class="flex-sb-m w-full p-t-3 p-b-24">
+                <div>
+                  <a href="#" onclick="showForgotForm()" class="txt1">
+                    Forgot Password
+                  </a>
+                </div>
+                <div>
+                  <a href="#" onclick="showRegisterForm()" class="txt1">
+                    Register Here
+                  </a>
+                </div>
+              </div>
+              <div class="container-login100-form-btn m-t-17">
+                <button
+                  id="login-link"
+                  onclick="doLogin();"
+                  class="login100-form-btn"
+                >
+                  Login
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-      </div>
-      <div id="form-alert" class="row hidden" style="margin-top: 50px">
-        <div class="alert alert-success" role="alert">
-          This is a success alert—check it out!
-        </div>
-      </div>
-      <div id="register-form-container" class="row hidden">
-        <div class="col-md-4 col-md-offset-4">
-          <div class="login-panel panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Register Form</h3>
-            </div>
-            <div class="panel-body">
-              <!-- REGISTRATION FORM    -->
-              <form id="register-form" role="form">
-                <fieldset>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Name"
-                      name="name"
-                      type="text"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Surname"
-                      name="surname"
-                      type="text"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Email Address"
-                      name="email"
-                      type="email"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      type="password"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Phone Number"
-                      name="phone_number"
-                      type="text"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="City"
-                      name="city"
-                      type="text"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Zip Code"
-                      name="zip_code"
-                      type="number"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="Address"
-                      name="address"
-                      type="text"
-                    />
-                  </div>
+          <br /><br /><br />
+          <div id="register-form-container" class="hidden">
+            <form
+              id="register-form"
+              class="login100-form validate-form flex-sb flex-w"
+              role="form"
+            >
+              <span class="login100-form-title p-b-51"> Register </span>
 
-                  <div class="form-group">
-                    <button
-                      id="register-link"
-                      onclick="doRegister();"
-                      class="btn btn-lg btn-success btn-block"
-                    >
-                      Register
-                    </button>
-                  </div>
-                  <div class="form-group pull-right">
-                    <a href="#" onclick="showLoginForm()">Back to Login</a>
-                  </div>
-                </fieldset>
-              </form>
-            </div>
+              <div class="wrap-input100 validate-input m-b-16">
+                <input
+                  class="input100"
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  required
+                  minlength="2"
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div class="wrap-input100 validate-input m-b-16">
+                <input
+                  class="input100"
+                  type="text"
+                  name="surname"
+                  placeholder="Surname"
+                  required
+                  minlength="2"
+                />
+                <span class="focus-input100"></span>
+              </div>
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Email Address is required"
+              >
+                <input
+                  class="input100"
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                  minlength="5"
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Password is required"
+              >
+                <input
+                  class="input100"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  minlength="8"
+                />
+                <span class="focus-input100"></span>
+              </div>
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Phone Number is required"
+              >
+                <input
+                  class="input100"
+                  type="text"
+                  name="phone_number"
+                  placeholder="Phone Number"
+                  required
+                  minlength="9"
+                  maxlength="16"
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="City is required"
+              >
+                <input
+                  class="input100"
+                  type="text"
+                  name="city"
+                  placeholder="City"
+                  required
+                  minlength="3"
+                />
+                <span class="focus-input100"></span>
+              </div>
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Zip Code is required"
+              >
+                <input
+                  class="input100"
+                  type="number"
+                  name="zip_code"
+                  placeholder="Zip Code"
+                  required
+                  maxlength="5"
+                  minlength="5"
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Address is required"
+              >
+                <input
+                  class="input100"
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  required
+                  minlength="5"
+                />
+                <span class="focus-input100"></span>
+              </div>
+
+              <div class="flex-sb-m w-full p-t-3 p-b-24">
+                <div></div>
+                <div>
+                  <a href="#" onclick="showLoginForm()" class="txt1">
+                    Back to login
+                  </a>
+                </div>
+              </div>
+              <div class="container-login100-form-btn m-t-17">
+                <button
+                  id="register-link"
+                  onclick="doRegister();"
+                  class="login100-form-btn"
+                >
+                  Register
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-      </div>
+          <div id="forgot-form-container" class="hidden">
+            <form id="forgot-form" role="form">
+              <span class="login100-form-title p-b-51"> Forgot password </span>
 
-      <div id="forgot-form-container" class="row hidden">
-        <div class="col-md-4 col-md-offset-4">
-          <div class="login-panel panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Forgot Password</h3>
-            </div>
-            <div class="panel-body">
-              <!-- FORGET PASSWORD FORM   -->
-              <form id="forgot-form" role="form">
-                <fieldset>
-                  <div class="form-group">
-                    <input
-                      class="form-control"
-                      placeholder="E-mail"
-                      name="email"
-                      type="email"
-                      autofocus
-                    />
-                  </div>
-                  <div class="form-group">
-                    <button
-                      id="forgot-link"
-                      onclick="doForgotPassword()"
-                      class="btn btn-lg btn-success btn-block"
-                    >
-                      Send Recovery Link
-                    </button>
-                  </div>
-                  <div class="form-group pull-right">
-                    <a href="#" onclick="showLoginForm()">Back to Login</a>
-                  </div>
-                </fieldset>
-              </form>
-            </div>
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Email is required"
+              >
+                <input
+                  class="input100"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  minlength="5"
+                  required
+                />
+                <span class="focus-input100"></span>
+              </div>
+              <div class="flex-sb-m w-full p-t-3 p-b-24">
+                <div></div>
+                <div>
+                  <a href="#" onclick="showLoginForm()" class="txt1">
+                    Back to login
+                  </a>
+                </div>
+              </div>
+              <div class="container-login100-form-btn m-t-17">
+                <button onclick="doForgotPassword()" class="login100-form-btn">
+                  Send recoverey link
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-      </div>
-
-      <div id="change-password-form-container" class="row hidden">
-        <div class="col-md-4 col-md-offset-4">
-          <div class="login-panel panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Change Password</h3>
-            </div>
-            <div class="panel-body">
-              <form id="change-password-form" role="form">
-                <fieldset>
-                  <input
-                    id="change-password-token"
-                    name="token"
-                    type="hidden"
-                  />
-
-                  <div class="form-group">
-                    <!-- CHANGE PASSWORD FORM -->
-                    <input
-                      id="change-password"
-                      class="form-control"
-                      placeholder="Password"
-                      name="password"
-                      type="password"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <button
-                      id="change-link"
-                      onclick="doChangePassword();"
-                      class="btn btn-lg btn-success btn-block"
-                    >
-                      Change Password
-                    </button>
-                  </div>
-                </fieldset>
-              </form>
-            </div>
+          <div id="change-password-form-container" class="hidden">
+            <form id="change-password-form" role="form">
+              <span class="login100-form-title p-b-51"> Change password </span>
+              <input
+                id="change-password-token"
+                class="input100"
+                type="hidden"
+                name="token"
+              />
+              <span class="focus-input100"></span>
+              <div
+                class="wrap-input100 validate-input m-b-16"
+                data-validate="Password is required"
+              >
+                <input
+                  class="input100"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  minlength="8"
+                  required
+                />
+                <span class="focus-input100"></span>
+              </div>
+              <div class="flex-sb-m w-full p-t-3 p-b-24">
+                <div></div>
+                <div>
+                  <a href="#" onclick="showLoginForm()" class="txt1">
+                    Back to login
+                  </a>
+                </div>
+              </div>
+              <div class="container-login100-form-btn m-t-17">
+                <button
+                  id="change-link"
+                  onclick="doChangePassword();"
+                  class="login100-form-btn"
+                >
+                  Change password
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="./assets/js/jquery.min.js"></script>
-
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="./assets/js/bootstrap.min.js"></script>
-
-    <!-- Toastr JS -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="//cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="assets/js/login.js"></script>
     <!-- JavaScript utility functions-->
     <script src="./assets/js/utils.js"></script>
+    <!-- Toastr JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script type="text/javascript">
       $(function () {
@@ -377,6 +464,28 @@
             toastr.error(error.responseJSON.message);
           });
       }
+
+      $("#register-form").validate({
+        submitHandler: function (form) {
+          form.submit();
+        },
+      });
+
+      $("#login-form").validate({
+        submitHandler: function (form) {
+          form.submit();
+        },
+      });
+      $("#forgot-form").validate({
+        submitHandler: function (form) {
+          form.submit();
+        },
+      });
+      $("#change-password-form").validate({
+        submitHandler: function (form) {
+          form.submit();
+        },
+      });
     </script>
   </body>
 </html>

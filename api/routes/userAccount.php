@@ -92,7 +92,7 @@ Flight::route('PUT /account/@id', function($id){
 Flight::route('POST /register', function(){
     $data = Flight::request()->data->getdata();
     Flight::userAccountService()->register($data);
-    Flight::json(["message"=>"Confirmation email has been sent. Pleas confirm your account "]);
+    Flight::json(["message"=>"Confirmation email has been sent. Please confirm your account !"]);
 });
 
 /**

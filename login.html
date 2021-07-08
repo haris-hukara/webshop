@@ -385,6 +385,9 @@
           $("#change-password-token").val(urlParams.get("token"));
           showChangePasswordForm();
         }
+        if (urlParams.has("confirm")) {
+          confirmRegistration(urlParams.get("confirm"));
+        }
       });
 
       function showChangePasswordForm() {
@@ -424,6 +427,19 @@
             console.log(error);
             toastr.error(error.responseJSON.message);
           });
+      }
+      function confirmRegistration(token) {
+        $.ajax({
+          url: "api/confirm/" + token,
+          type: "get",
+          success: function (response) {
+            window.localStorage.setItem("token", response.token);
+            window.location = "index.html";
+          },
+          error: function (xhr) {
+            toastr.error(xhr.responseJSON.message);
+          },
+        });
       }
 
       function doLogin() {
@@ -469,17 +485,18 @@
           });
       }
 
+      $("#login-form").validate({
+        submitHandler: function (form) {
+          form.submit();
+        },
+      });
+
       $("#register-form").validate({
         submitHandler: function (form) {
           form.submit();
         },
       });
 
-      $("#login-form").validate({
-        submitHandler: function (form) {
-          form.submit();
-        },
-      });
       $("#forgot-form").validate({
         submitHandler: function (form) {
           form.submit();

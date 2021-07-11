@@ -120,11 +120,7 @@
                 </div>
               </div>
               <div class="container-login100-form-btn m-t-17">
-                <button
-                  id="login-link"
-                  onclick="doLogin();"
-                  class="login100-form-btn"
-                >
+                <button id="login-link" type="submit" class="login100-form-btn">
                   Login
                 </button>
               </div>
@@ -263,7 +259,7 @@
               <div class="container-login100-form-btn m-t-17">
                 <button
                   id="register-link"
-                  onclick="doRegister();"
+                  type="submit"
                   class="login100-form-btn"
                 >
                   Register
@@ -298,7 +294,7 @@
                 </div>
               </div>
               <div class="container-login100-form-btn m-t-17">
-                <button onclick="doForgotPassword()" class="login100-form-btn">
+                <button type="submit" class="login100-form-btn">
                   Send recoverey link
                 </button>
               </div>
@@ -339,7 +335,7 @@
               <div class="container-login100-form-btn m-t-17">
                 <button
                   id="change-link"
-                  onclick="doChangePassword();"
+                  type="submit"
                   class="login100-form-btn"
                 >
                   Change password
@@ -486,25 +482,30 @@
       }
 
       $("#login-form").validate({
-        submitHandler: function (form) {
-          form.submit();
+        submitHandler: function (form, event) {
+          event.preventDefault();
+          doLogin();
         },
       });
 
       $("#register-form").validate({
-        submitHandler: function (form) {
-          form.submit();
+        submitHandler: function (form, event) {
+          event.preventDefault();
+          doRegister();
         },
       });
 
       $("#forgot-form").validate({
-        submitHandler: function (form) {
-          form.submit();
+        submitHandler: function (form, event) {
+          event.preventDefault();
+          doForgotPassword();
         },
       });
+
       $("#change-password-form").validate({
-        submitHandler: function (form) {
-          form.submit();
+        submitHandler: function (form, event) {
+          event.preventDefault();
+          doChangePassword();
         },
       });
     </script>

@@ -10,6 +10,7 @@ require_once dirname(__FILE__).'/services/UserAccountService.class.php';
 require_once dirname(__FILE__).'/services/UserDetailsService.class.php';
 require_once dirname(__FILE__).'/services/CityService.class.php';
 require_once dirname(__FILE__).'/services/OrderService.class.php';
+require_once dirname(__FILE__).'/services/ProductsService.class.php';
 
 
 // log errors into apache log on bitnami server
@@ -74,6 +75,7 @@ Flight::register('userAccountService', 'UserAccountService');
 Flight::register('userDetailsService', 'UserDetailsService');
 Flight::register('cityService', 'CityService');
 Flight::register('orderService', 'OrderService');
+Flight::register('productsService', 'ProductsService');
 
 
 /* include routes */
@@ -82,6 +84,7 @@ require_once dirname(__FILE__).'/routes/userAccount.php';
 require_once dirname(__FILE__).'/routes/userDetails.php';
 require_once dirname(__FILE__).'/routes/city.php';
 require_once dirname(__FILE__).'/routes/order.php';
+require_once dirname(__FILE__).'/routes/products.php';
 /* get swagger route */
 require_once dirname(__FILE__).'/routes/doc.php';
 

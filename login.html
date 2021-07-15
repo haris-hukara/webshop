@@ -429,8 +429,11 @@
           url: "api/confirm/" + token,
           type: "get",
           success: function (response) {
-            window.localStorage.setItem("token", response.token);
-            window.location = "index.html";
+            toastr.success("You successfully activated your account");
+            setTimeout(function () {
+              window.localStorage.setItem("token", response.token);
+              window.location = "index.html";
+            }, 3000);
           },
           error: function (xhr) {
             toastr.error(xhr.responseJSON.message);

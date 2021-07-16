@@ -28,6 +28,18 @@ class OrderService extends BaseService{
     }
   }
 
+  public function update_order($id, $data){
+    
+    $order = parent::update($id,
+    ["shipping_address" => ucwords(strtolower($data['shipping_address'])),
+     "payment_method_id" => $data['payment_method_id'],
+     "status" => $data['status']
+    ]
+    ); 
+  
+    return $order;
+  }
+
 
 }
 

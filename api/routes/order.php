@@ -49,4 +49,26 @@ Flight::route('POST /order', function(){
     $data = Flight::request()->data->getdata();
     Flight::json(Flight::orderService()->add_order($data));
 });
+
+
+ /**
+* @OA\Put(path="/admin/order/{id}",tags={"order","admin"},security={{"ApiKeyAuth":{}}},
+* @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update country by id"),
+**@OA\RequestBody(description ="Basic account info that is going to be updated", required = true,
+*          @OA\MediaType(mediaType="application/json",
+*                 @OA\Schema(
+*                     @OA\Property(property="shipping_address", type="string",example="Shipping address",description="Shipping addres"),           
+*                     @OA\Property(property="payment_method_id", type="integer",example=1,description="Payment method"),           
+*                     @OA\Property(property="status", type="string",example="DELIVERED",description="Order status"),           
+*            ) 
+*        )
+*   ), 
+* @OA\Response(response="200", description="Update account message")
+* )     
+*/ 
+Flight::route('PUT /admin/order/@id', function($id){  
+    $data = Flight::request()->data->getdata();
+    flight::json(Flight::orderService()->update($id, $data));
+});
+
 ?>

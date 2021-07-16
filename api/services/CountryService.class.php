@@ -47,7 +47,6 @@ class CountryService extends BaseService{
       $country = parent::update($id,
                             [ "name" => ucwords(strtolower($data['name'])) ]
       ); 
-      
         return $country;
     }
 

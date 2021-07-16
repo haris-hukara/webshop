@@ -8,11 +8,33 @@ class OrderDetailsDao extends BaseDao{
     }
     
     public function get_order_details_by_id($id){
-      $details =  $this->query("SELECT * 
-                      FROM order_details
-                      WHERE order_id = :order_id", 
-                      ["order_id" => $id]);
-    return $details;
+      $details =  $this->query("SELECT 	od.order_id, 
+                                        p.name AS 'product_name', 
+                                        ps.name AS 'category',
+                                        p.gender_category AS 'gender',
+                                        s.name AS 'size',
+                                        od.quantity,
+                                        p.unit_price, 
+                                        (quantity*unit_price) AS total,
+                                        p.image_link
+  
+                                FROM order_details od 
+                                JOIN products p ON p.id = od.product_id
+                                JOIN sizes s ON s.id = od.size_id
+                                JOIN product_subcategory ps ON ps.id = p.subcategory_id
+                                WHERE od.order_id = :order_id", 
+                                ["order_id" => $id]);
+        return $details;
+    }   
+
+    public function get_order_price_by_id($id){
+      $details =  $this->query_unique("SELECT 	od.order_id, 
+                                            SUM(od.quantity * p.unit_price) AS 'total_price'
+                                       FROM order_details od 
+                                       JOIN products p ON p.id = od.product_id
+                                       WHERE od.order_id = :order_id", 
+                                       ["order_id" => $id]);
+        return $details;
     }   
 
     

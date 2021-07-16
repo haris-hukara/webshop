@@ -12,15 +12,16 @@ require_once dirname(__FILE__).'/services/CityService.class.php';
 require_once dirname(__FILE__).'/services/OrderService.class.php';
 require_once dirname(__FILE__).'/services/ProductsService.class.php';
 require_once dirname(__FILE__).'/services/CountryService.class.php';
+require_once dirname(__FILE__).'/services/OrderDetailsService.class.php';
 
 
 // log errors into apache log on bitnami server
 // Flight::set('flight.log:errors',TRUE);
 
-/*   error handling for API */
+/*   error handling for API 
 Flight::map('error', function(Exception $ex){
     Flight::json(['message' => $ex->getMessage()] , $ex->getCode());
-});
+});*/
 
 
 Flight::route('GET /', function(){  
@@ -78,6 +79,7 @@ Flight::register('cityService', 'CityService');
 Flight::register('orderService', 'OrderService');
 Flight::register('productsService', 'ProductsService');
 Flight::register('countryService', 'CountryService');
+Flight::register('orderDetailsService', 'OrderDetailsService');
 
 
 /* include routes */
@@ -88,6 +90,7 @@ require_once dirname(__FILE__).'/routes/city.php';
 require_once dirname(__FILE__).'/routes/order.php';
 require_once dirname(__FILE__).'/routes/products.php';
 require_once dirname(__FILE__).'/routes/country.php';
+require_once dirname(__FILE__).'/routes/orderDetails.php';
 /* get swagger route */
 require_once dirname(__FILE__).'/routes/doc.php';
 

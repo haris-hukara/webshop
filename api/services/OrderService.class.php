@@ -1,15 +1,11 @@
 <?php 
 require_once dirname(__FILE__)."/BaseService.class.php";
 require_once dirname(__FILE__)."/../dao/OrdersDao.class.php";
-require_once dirname(__FILE__)."/../dao/OrderDetailsDao.class.php";
 
 class OrderService extends BaseService{
-private $orderDetailsDao;
-private $smtpClient;
 
  public function __construct(){
    $this->dao = new OrdersDao();   
-   $this->orderDetailsDao = new OrderDetailsDao();
   }
 
   public function add_order($order){   
@@ -24,9 +20,14 @@ private $smtpClient;
     return $order;
   }
 
-  public function get_orders(){
-      return $this->dao->get_orders();
+  public function get_orders($search, $offset, $limit, $order){
+    if ($search){
+      return ($this->dao->get_orders($search, $offset, $limit, $order));
+    }else{
+      return ($this->dao->get_all($offset,$limit, $order));
+    }
   }
+
 
 }
 

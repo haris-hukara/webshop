@@ -25,7 +25,7 @@ class UserAccountDao extends BaseDao{
     }
 
     public function update_user_by_email($email, $entity){
-        $this->update("user_account", $email, $entity, "email");
+        $this->execute_update("user_account", $email, $entity, "email");
     }
 
     public function get_user_by_token($token){

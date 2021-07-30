@@ -42,12 +42,6 @@ Flight::route('GET /admin/accounts/@id', function($id){
 });
 
 
-/*
-Flight::route('POST /account', function(){
-    $data = Flight::request()->data->getdata();
-    flight::json(Flight::userAccountService()->add($data));
-}); */
-
 /**
 * @OA\Put(path="/account/{id}",tags={"account"},security={{"ApiKeyAuth":{}}},
 * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update account by account_id"),
@@ -63,7 +57,6 @@ Flight::route('POST /account', function(){
 * )     
 */ 
 Flight::route('PUT /account/@id', function($id){
-
     $data = Flight::request()->data->getdata();
     flight::json(Flight::userAccountService()->update($id, $data));
 });

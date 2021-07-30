@@ -38,6 +38,37 @@ class OrderDetailsDao extends BaseDao{
     }   
 
     
+    public function get_order_details($order_id, $product_id, $size_id){
+
+        $query = "SELECT *
+                  FROM order_details
+                  WHERE order_id = :order_id  
+                  AND product_id = :product_id  
+                  AND size_id = :size_id" ;
+
+        return $this->query_unique($query, 
+                            ["order_id" => $order_id,
+                             "product_id" => $product_id,
+                             "size_id" => $size_id]
+                            );   
     
+    }
+
+    public function update_order_details_quantity($order_id, $product_id, $size_id,$quantity){
+             $this->query(
+                    ("UPDATE order_details
+                    SET quantity = :quantity
+                    WHERE order_id = :order_id 
+                    AND product_id = :product_id 
+                    AND size_id = :size_id"),
+                   
+                   [ "order_id" => $order_id, 
+                     "product_id" => $product_id, 
+                     "size_id" => $size_id, 
+                     "quantity" => $quantity]  
+                    );
+    }
+
+
 }
 ?>

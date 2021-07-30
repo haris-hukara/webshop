@@ -75,6 +75,10 @@ class BaseDao{
           
       
           protected function execute_update($table, $id, $entity, $id_column = "id"){
+              if($entity['password']){
+                 $entity['password'] = md5($entity['password']);
+              }
+              
                $query = "UPDATE ${table} SET ";
    
                foreach($entity as $key => $value){

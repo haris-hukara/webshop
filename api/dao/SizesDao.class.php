@@ -7,5 +7,6 @@ class SizesDao extends BaseDao{
         parent::__construct("sizes");
     }
 
+}
 
 ?>

@@ -9,10 +9,6 @@ class ProductsService extends BaseService{
      $this->dao = new ProductsDao();   
     }
 
-    public function get_product_stock($id, $size = NULL){
-        return $this->dao->get_product_stock($id, $size);
-    }
-
     public function get_products($search, $offset, $limit, $order ,$category){
       if ($search || $category ){
         return ($this->dao->get_products($search, $offset, $limit, $order ,$category));

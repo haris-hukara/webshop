@@ -21,9 +21,28 @@ class UserDetailsService extends BaseService{
       if(!isset($userDetails['city'])) throw new Exception("City is missing");
       if(!isset($userDetails['zip_code'])) throw new Exception("Zip Code is missing");
       if(!isset($userDetails['address'])) throw new Exception("Address is missing");
-    
-    return parent::add($userDetails);
+       
+        $details = $this->dao->add([
+        "name" => $userDetails['name'],
+        "surname" => $userDetails['surname'],
+        "email" => $userDetails['email'],
+        "phone_number" => $userDetails['phone_number'],
+        "city" => $userDetails['city'],
+        "zip_code" => $userDetails['zip_code'],
+        "address" => $userDetails['address'],
+        "created_at" => date(Config::DATE_FORMAT)
+      ]);
+
+      return $details;
   }
+
+  public function get_user_details($search, $offset, $limit, $order){
+    if ($search){
+      return ($this->dao->get_user_details($search, $offset, $limit, $order));
+    }else{
+      return ($this->dao->get_all($offset,$limit, $order));
+}
+}
 
 }
 ?>

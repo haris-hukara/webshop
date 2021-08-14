@@ -54,20 +54,21 @@ class OrderDetailsDao extends BaseDao{
     
     }
 
-    public function update_order_details_quantity($order_id, $product_id, $size_id,$quantity){
-             $this->query(
+    public function update_order_details_quantity($order_id, $product_id, $size_id, $quantity){
+        $params = [ "order_id" => $order_id, 
+                    "product_id" => $product_id, 
+                    "size_id" => $size_id, 
+                    "quantity" => $quantity];
+        $this->query(
                     ("UPDATE order_details
-                    SET quantity = :quantity
-                    WHERE order_id = :order_id 
-                    AND product_id = :product_id 
-                    AND size_id = :size_id"),
+                      SET quantity = :quantity
+                      WHERE order_id = :order_id 
+                      AND product_id = :product_id 
+                      AND size_id = :size_id"),
                    
-                   [ "order_id" => $order_id, 
-                     "product_id" => $product_id, 
-                     "size_id" => $size_id, 
-                     "quantity" => $quantity]  
-                    );
-    }
+                    $params);
+       return $params;
+       }
 
 
 }

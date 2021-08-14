@@ -41,7 +41,7 @@ class ProductStockDao extends BaseDao{
     }
 
 
-    public function update_product_stock($product_id, $size_id, $quantity_ordered){  
+    public function change_product_stock($product_id, $size_id, $quantity_ordered){  
         $product = $this->get_product_stock_by_size_id($product_id, $size_id);
         $quantity_avaliable = $product['quantity_avaliable'];
                 
@@ -69,7 +69,22 @@ class ProductStockDao extends BaseDao{
                      "new_quantity" => $new_quantity]  
                     );
     }
-  
+   
+       
+    public function update_product_stock($product_id, $size_id, $quantity_avaliable){  
+                
+       $params = [ "product_id" => $product_id, 
+                    "size_id" => $size_id, 
+                    "quantity_avaliable" => $quantity_avaliable] ;
+      
+       $query =   "UPDATE product_stock
+                   SET quantity_avaliable = :quantity_avaliable
+                   WHERE product_id = :product_id AND size_id = :size_id";
+       
+       $this->query( $query, $params);
+       
+       return $params;
+    }
 
-}
+} 
 ?>

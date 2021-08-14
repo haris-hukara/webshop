@@ -14,7 +14,7 @@
  */
 
 /**
- * @OA\Get(path="/admin/accounts", tags={"account","admin"},security={{"ApiKeyAuth":{}}},
+ * @OA\Get(path="/admin/accounts", tags={"user account","admin"},security={{"ApiKeyAuth":{}}},
   *    @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="search", description="Search string for accounts. Case insensitive search."),
@@ -32,7 +32,7 @@ Flight::route('GET /admin/accounts', function(){
 });
 
 /**
- * @OA\Get(path="/admin/accounts/{id}", tags={"account","admin"}, security={{"ApiKeyAuth": {}}},
+ * @OA\Get(path="/admin/accounts/{id}", tags={"user account","admin"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Id of account"),
  *     @OA\Response(response="200", description="Fetch individual account")
  * )
@@ -43,7 +43,7 @@ Flight::route('GET /admin/accounts/@id', function($id){
 
 
 /**
-* @OA\Put(path="/account/{id}",tags={"account"},security={{"ApiKeyAuth":{}}},
+* @OA\Put(path="/account/{id}",tags={"user account"},security={{"ApiKeyAuth":{}}},
 * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update account by account_id"),
 **@OA\RequestBody(description ="Basic account info that is going to be updated", required = true,
 *          @OA\MediaType(mediaType="application/json",
@@ -64,7 +64,7 @@ Flight::route('PUT /account/@id', function($id){
 
 /* user account registration route*/
 /**
-*@OA\Post(path="/register",tags={"account"},
+*@OA\Post(path="/register",tags={"user account", "login"},
 *@OA\RequestBody(description ="Body for user registrations", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(
@@ -101,7 +101,7 @@ Flight::route('GET /confirm/@token', function($token){
 
 
 /**
-*@OA\Post(path="/login",tags={"account"},
+*@OA\Post(path="/login",tags={"login"},
 *@OA\RequestBody(description ="Basic user login info", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(
@@ -120,7 +120,7 @@ Flight::route('POST /login', function(){
 });
 
 /**
-*@OA\Post(path="/forgot",tags={"account"}, description="Send recovery URL to user email",
+*@OA\Post(path="/forgot",tags={"login"}, description="Send recovery URL to user email",
 *@OA\RequestBody(description ="Basic user login info", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(
@@ -138,7 +138,7 @@ Flight::route('POST /forgot', function(){
 });
 
 /**
-*@OA\Post(path="/reset",tags={"account"}, description="Reset user password using recovery token",
+*@OA\Post(path="/reset",tags={"login"}, description="Reset user password using recovery token",
 *@OA\RequestBody(description ="Basic user login info", required = true,
 *          @OA\MediaType(mediaType="application/json",
 *                 @OA\Schema(

@@ -18,6 +18,16 @@ Flight::route('GET /admin/orders', function(){
 });
 
 /**
+ * @OA\Get(path="/admin/orders/{id}", tags={"order","admin"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Id of account"),
+ *     @OA\Response(response="200", description="Fetch individual account")
+ * )
+ */
+Flight::route('GET /admin/orders/@id', function($id){
+    Flight::json(Flight::orderService()->get_by_id($id));  
+});
+
+/**
 *  @OA\Post(path="/order",tags={"order"},
 *  @OA\RequestBody(description ="Body for order", required = true,
 *          @OA\MediaType(mediaType="application/json",

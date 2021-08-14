@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @OA\Get(path="/order/details/{id}", tags={"Order Details"},
  *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Order ID"),
@@ -53,4 +54,34 @@ Flight::route('POST /order/details', function(){
 });
 
 
+/**
+* @OA\Put(path="/order/details/quantity",tags={"Order Details"},
+**@OA\RequestBody(description ="Body for updating order details quantity", required = true,
+*          @OA\MediaType(mediaType="application/json",
+*                 @OA\Schema(
+*                     @OA\Property(property="order_id", 
+*                                      type="integer",
+*                                      example=1,
+*                                      description="ID of order"),           
+*                     @OA\Property(property="product_id", 
+*                                      type="integer",
+*                                      example=1,
+*                                      description="Product ID"),           
+*                     @OA\Property(property="size_id", 
+*                                      type="integer",
+*                                      example=1,
+*                                      description="Size ID"),                     
+*                     @OA\Property(property="quantity", 
+*                                      type="integer",
+*                                      example=1,
+*                                      description="Quantity"),  ) 
+*        )
+*   ), 
+* @OA\Response(response="200", description="Update account message")
+* )     
+*/ 
+Flight::route('PUT /order/details/quantity', function(){  
+    $data = Flight::request()->data->getdata();
+    flight::json(Flight::orderDetailsService()->update_order_details_quantity($data));
+});
 ?>

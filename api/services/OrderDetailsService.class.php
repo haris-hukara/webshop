@@ -27,7 +27,7 @@ class OrderDetailsService extends BaseService{
     if(!isset($details['quantity'])) throw new Exception("Quantity is missing");
     
     $product = $this->productStockDao->get_product_stock_by_size_id($details['product_id'],
-    $details['size_id']);
+                                                                    $details['size_id']);
     
     $product_stock = $product['quantity_avaliable']; 
     $user_quantity = $details['quantity'];
@@ -40,7 +40,7 @@ class OrderDetailsService extends BaseService{
         // add details
         $order_details = $this->dao->add($details);
         // update stock
-        $this->productStockDao->update_product_stock($details['product_id'],
+        $this->productStockDao->change_product_stock($details['product_id'],
                                                      $details['size_id'],
                                                      $details['quantity']);
       
@@ -57,7 +57,46 @@ class OrderDetailsService extends BaseService{
      
   }
 
+  public function update_order_details_quantity($details){
+    
+    if(!isset($details['order_id'])) throw new Exception("Order ID is missing");
+    if(!isset($details['product_id'])) throw new Exception("Product ID is missing");
+    if(!isset($details['size_id'])) throw new Exception("Size ID is missing");
+    if(!isset($details['quantity'])) throw new Exception("Quantity is missing");
 
+    $new_quantity = $details['quantity']; 
 
+    $stored_details = $this->dao->get_order_details($details['order_id'],
+                                                    $details['product_id'],
+                                                    $details['size_id']);
+    $old_order_quantity  = $stored_details['quantity'];
+
+    $product = $this->productStockDao->get_product_stock_by_size_id($details['product_id'],
+                                                                    $details['size_id']);
+    $current_product_stock = $product['quantity_avaliable']; 
+
+    $stock_quantity = $old_order_quantity + $current_product_stock;
+
+    if ( $new_quantity <= 0 || $new_quantity > $stock_quantity){
+         throw new Exception("Enter a valid quantity. Quantity in stock: ". $stock_quantity );
+    }else{
+    
+      if($new_quantity != $old_order_quantity) { 
+        // update stock and update order details
+        $new_stock = $current_product_stock - ( $new_quantity - $old_order_quantity );
+        $this->productStockDao->set_product_stock($details['product_id'],
+                                                  $details['size_id'], 
+                                                  $new_stock);
+
+       return $this->dao->update_order_details_quantity($details['order_id'],
+                                                        $details['product_id'],
+                                                        $details['size_id'], 
+                                                        $details['quantity']);
+      }else{
+        throw new Exception("Quantity input is same, nothing to change");
+      }
+    }
+  }   
+                 
 }
 ?>

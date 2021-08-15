@@ -7,13 +7,17 @@ class ProductsService extends BaseService{
     
    public function __construct(){ 
      $this->dao = new ProductsDao();   
-    }
+   }
 
     public function get_products($search, $offset, $limit, $order ,$category){
-      if ($search || $category ){
+      if ($search && $category ){
         return ($this->dao->get_products($search, $offset, $limit, $order ,$category));
+      }if($search){
+        return ($this->dao->get_products($search, $offset, $limit, $order ,$category =""));
+      }if($category){
+        return ($this->dao->get_products($search ="", $offset, $limit, $order ,$category));
       }else{
-        return ($this->dao->get_all($offset,$limit, $order));
+        return ($this->dao->get_products($search ="", $offset, $limit, $order ,$category=""));
       }
     }
 

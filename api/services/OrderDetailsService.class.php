@@ -6,15 +6,20 @@ require_once dirname(__FILE__)."/../dao/ProductsDao.class.php";
 class OrderDetailsService extends BaseService{
 
   private $productStockDao;
+  private $userAccountDao;
 
  public function __construct(){
    $this->dao = new OrderDetailsDao();   
    $this->productStockDao = new ProductStockDao();
+   $this->userAccountDao = new UserAccountDao();
   }
 
-  public function get_order_details_by_id($id){
-    return ($this->dao->get_order_details_by_id($id));
+  public function get_order_details_by_id($user, $order_id){
+    if( $user['rl'] != "ADMIN"){
+        return $this->dao->get_order_details_by_account_id_and_order_id($user['id'], $order_id);
     }
+    return $this->dao->get_order_details_by_order_id($order_id);
+  }
 
   public function get_order_price_by_id($id){
     return ($this->dao->get_order_price_by_id($id));
@@ -35,7 +40,7 @@ class OrderDetailsService extends BaseService{
     if ( $details['quantity'] <= 0 || $details['quantity'] > $product_stock){
         throw new Exception("Enter a valid quantity. Quantity in stock: ". $product_stock );
         
-    }else{  
+    }else{ 
       try {
         // add details
         $order_details = $this->dao->add($details);

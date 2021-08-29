@@ -16,6 +16,19 @@ class UserDetailsDao extends BaseDao{
                                   ORDER BY ${order} ${order_direction}
                                   LIMIT ${limit} OFFSET ${offset}", 
                                  ["email" => strtolower($search)]);
-        }
+    }
+
+    public function get_user_details_by_account_id_and_details_id($account_id, $details_id){
+            
+            return $this->query_unique( "SELECT ud.*
+                                         FROM user_details ud
+                                         JOIN user_account ua ON ud.id = ua.user_details_id 
+                                         WHERE ua.id = :account_id
+                                         AND ud.id = :details_id",
+                                 ["account_id" => $account_id,
+                                  "details_id" => $details_id ]);
+    }
+
+   
 }
 ?>

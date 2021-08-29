@@ -49,12 +49,12 @@ Flight::route('GET /user/details', function(){
  */
 
 Flight::route('GET /user/details/@id', function($id){
-    Flight::json(Flight::userDetailsService()->get_by_id($id));
+   Flight::json(Flight::userDetailsService()->get_user_details_by_account_id_and_details_id(Flight::get('user'), $id));
 });
 
 
 /**
-* @OA\Put(path="/details/{id}",tags={"User Details"},
+* @OA\Put(path="/user/details/{id}",tags={"User Details"},security={{"ApiKeyAuth": {}}},
 * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update account by account_id"),
 **@OA\RequestBody(description ="Basic account info that is going to be updated", required = true,
 *          @OA\MediaType(mediaType="application/json",
@@ -72,9 +72,9 @@ Flight::route('GET /user/details/@id', function($id){
 * @OA\Response(response="200", description="Update account message")
 * )     
 */ 
-Flight::route('PUT /details/@id', function($id){
+Flight::route('PUT /user/details/@id', function($id){
     $data = Flight::request()->data->getdata();
-    flight::json(Flight::userDetailsService()->update($id, $data));
+    flight::json(Flight::userDetailsService()->update_user_details(Flight::get('user'), $id, $data));
 });
 
 ?>

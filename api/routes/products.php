@@ -1,6 +1,6 @@
 <?php
 /**
- * @OA\Get(path="/admin/products", tags={"products","admin"},security={{"ApiKeyAuth":{}}},
+ * @OA\Get(path="/products", tags={"products"},security={{"ApiKeyAuth":{}}},
  *                    @OA\Parameter( type="integer", in="query",name="offset", default=0, description= "Offset for paggination"),           
 *                     @OA\Parameter( type="integer", in="query",name="limit", default=10, description= "Limit for paggination"),
 *                     @OA\Parameter( type="integer", in="query",name="search", default="Adidas", description= "Case insensitive search for product name"),
@@ -9,7 +9,7 @@
  *     @OA\Response(response="200", description="List of all products from database with paggination")
  * )
  */
-Flight::route('GET /admin/products', function(){  
+Flight::route('GET /products', function(){  
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 10);
     $search = Flight::query('search');

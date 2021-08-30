@@ -91,8 +91,10 @@
                               <option  class="dropdown-item" value=5>XL</option>
                             </select>
                             
-                            <button onclick="addProduct(1,1,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
-                              
+                            <button onclick="addProduct(1,2,2)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
+                            <button onclick="removeProduct(1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Remove </button>
+                            <button onclick="inCart(1,2)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">In cart </button>
+                            
                              
                             
                         </div>
@@ -188,12 +190,38 @@
 
 </html>
 <script type="text/javascript">
+
+function inCart(product_id, size_id){
+
+    var cart = JSON.parse(localStorage.getItem("products"));
+
+            for(var i = 0; i < cart.length; i++){
+                if(cart[i].product_id == product_id && cart[i].size == size_id){
+                return i;           
+                }
+            }
+        return -1;
+    }
+
+function removeProduct(index){
+let storageProducts = JSON.parse(localStorage.getItem('products'));
+storageProducts.splice(index, 1);
+let products = storageProducts;
+localStorage.setItem('products', JSON.stringify(products));
+}
+
+function getQuantity(index){
+    return JSON.parse(localStorage.getItem("products"))[index].quantity;
+}
+
 function addProduct(product_id, size_id, quantity){
 
-    if(localStorage.getItem('products').length == 0 || inCart(product_id, size_id) !== false){
-        var old_quantity = getQuantity(inCart(product_id, size_id));
-        removeProduct(product_id, size_id);
-        addProduct(product_id, size_id, (quantity+old_quantity) );
+    if(inCart(product_id,size_id) !== -1){
+      var index = inCart(product_id,size_id);
+      var old = getQuantity(index);
+      removeProduct(index);
+      addProduct(product_id, size_id, (old+quantity));
+    
     }else{
 
     let products = [];
@@ -202,41 +230,11 @@ function addProduct(product_id, size_id, quantity){
     }
     products.push({product_id : product_id, size : size_id, quantity: quantity });
     localStorage.setItem('products', JSON.stringify(products));
+    
     }
 
 }
 
-function removeProduct(index){
-let storageProducts = JSON.parse(localStorage.getItem('products'));
-let products = storageProducts.filter(product => product[index] );
-localStorage.setItem('products', JSON.stringify(products));
-}
 
-function inCart(product_id, size_id){
-
-    var cart = JSON.parse(localStorage.getItem("products"));
-    for(var i = 0; i < cart.length; i++){
-        if(cart[i].product_id == product_id && cart[i].size == size_id){
-           return i;           
-        }
-    }
-    return false;
-}
-
-function getQuantity(index){
-    var cart = JSON.parse(localStorage.getItem("products"));
-    return cart[index].quantity;
-}
 
 </script>
-
-/* 
-get from array
-JSON.parse(localStorage.getItem("products"))[0]
-{productId: 2, image: "<imageLink>"}
-JSON.parse(localStorage.getItem("products"))[0].product_id
-2
-JSON.parse(localStorage.getItem("products"))[0].image
-"<imageLink>"
-
-    */

@@ -1,6 +1,25 @@
 <?php
 /**
- * @OA\Get(path="/products", tags={"products"},security={{"ApiKeyAuth":{}}},
+ * @OA\Get(path="/admin/products", tags={"products"},security={{"ApiKeyAuth":{}}},
+ *                    @OA\Parameter( type="integer", in="query",name="offset", default=0, description= "Offset for paggination"),           
+*                     @OA\Parameter( type="integer", in="query",name="limit", default=10, description= "Limit for paggination"),
+*                     @OA\Parameter( type="integer", in="query",name="search", default="Adidas", description= "Case insensitive search for product name"),
+*                     @OA\Parameter( type="integer", in="query",name="category", default="Hoodie", description= "Case insensitive search for product category"),
+*                     @OA\Parameter( type="string", in="query",name="order", default="-id", description= "Sorting elements by column_name <br><br>  -column_name for ascending order <br>+column_name for descending order"),
+ *     @OA\Response(response="200", description="List of all products from database with paggination")
+ * )
+ */
+Flight::route('GET /admin/products', function(){  
+    $offset = Flight::query('offset', 0);
+    $limit = Flight::query('limit', 10);
+    $search = Flight::query('search');
+    $category = Flight::query('category');
+    $order = Flight::query('order', "-id");    
+
+    flight::json(Flight::productsService()->get_products($search, $offset, $limit, $order, $category));
+});
+/**
+ * @OA\Get(path="/products", tags={"products"},
  *                    @OA\Parameter( type="integer", in="query",name="offset", default=0, description= "Offset for paggination"),           
 *                     @OA\Parameter( type="integer", in="query",name="limit", default=10, description= "Limit for paggination"),
 *                     @OA\Parameter( type="integer", in="query",name="search", default="Adidas", description= "Case insensitive search for product name"),
@@ -16,7 +35,7 @@ Flight::route('GET /products', function(){
     $category = Flight::query('category');
     $order = Flight::query('order', "-id");    
 
-    flight::json(Flight::productsService()->get_products($search, $offset, $limit, $order, $category));
+    flight::json(Flight::productsService()->get_avaliable_products($search, $offset, $limit, $order, $category));
 });
 
 
@@ -50,6 +69,16 @@ Flight::route('PUT /admin/products/@id', function($id){
  */
 Flight::route('GET /admin/products/@id', function($id){
     Flight::json(Flight::productsService()->get_by_id($id));  
+});
+
+/**
+ * @OA\Get(path="/product/avaliable_sizes/{id}", tags={"products"},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Id of product"),
+ *     @OA\Response(response="200", description="Fetch avaliable product sizes and quantity their quantity in stock")
+ * )
+ */
+Flight::route('GET /product/avaliable_sizes/@id', function($id){
+    Flight::json(Flight::productsService()->get_avaliable_sizes($id));  
 });
 
 /**

@@ -62,8 +62,7 @@ class ProductsDao extends BaseDao{
         $avaliable_products = "SELECT DISTINCT ps.product_id
                                 FROM products p 
                                 JOIN product_stock ps ON p.id = ps.product_id
-                                WHERE p.id = 1 
-                                AND ps.quantity_avaliable > 0";
+                                WHERE ps.quantity_avaliable > 0";
 
         $query = "SELECT p.id,
                         p.name, 

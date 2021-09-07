@@ -218,9 +218,9 @@ function addProduct(product_id, size, quantity){
     }
   }
 
-  function loadData(){
+  function loadData(offset = 0, limit = 1, search ="", order ="%2bid" ){
       $.ajax({
-        url:"api/products",
+        url:"api/products?offset="+offset+"&limit="+limit+"&search="+search+"&order=" + order,
         type:"GET",
         success: function(data){
           var html ="";

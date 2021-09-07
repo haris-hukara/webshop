@@ -66,7 +66,7 @@
                   
                   <div class=" float-md-left d-flex">
                     <div class="dropdown mr-1 ml-md-auto">
-                      <select id="sort" class="btn btn btn-secondary">
+                      <select id="per_page" class="btn btn btn-secondary">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
@@ -76,7 +76,9 @@
                 </div>
                 </div>
               </div>
-            
+           
+           <input type="text" class="form-control py-4" id="product_search" placeholder="Enter product name">
+           <button onclick="search()" type="button" class="btn" style="margin-top:1em; border-radius: 0.2em; width: 100%; background-color: #7971ea; color: white;">Refresh search</button>
 
             </div>
           </div>
@@ -95,11 +97,18 @@ setCartCount();
 loadData();
 
 
+function getElementValue(element_id){
+ return document.getElementById(element_id).value
+}
 
+function getDropdownValue(i){
+  var e = document.getElementById(i);
+  return e.options[e.selectedIndex].value;
+}
 
 function getSizeId(i){
   var e = document.getElementById(i);
-  return e.options[e.selectedIndex].value;
+  return JSON.parse( e.options[e.selectedIndex].value);
 }
 
 

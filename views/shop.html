@@ -76,25 +76,7 @@
                 </div>
                 </div>
               </div>
-              <div class="border p-4 rounded mb-4">
-   
-                <div class="mb-4">
-                  <div class="col-md-12 mb-5">
-                    <h2 class="text-black h5">Sort by</h2>
-                  
-                  <div class=" float-md-left d-flex">
-                    <div class="dropdown mr-1 ml-md-auto">
-                      <select id="sort" class="btn btn btn-secondary">
-                        <option value="-name">Name ↑</option>
-                        <option value="+name">Name ↓</option>
-                        <option value="-unit_price">Price ↑</option>
-                        <option value="+unit_price">Price ↓</option>
-                        </select>
-                    </div>
-                  </div>
-                </div>
-                </div>
-              </div>
+            
 
             </div>
           </div>
@@ -112,6 +94,9 @@ var a;
 setCartCount();
 loadData();
 
+
+
+
 function getSizeId(i){
   var e = document.getElementById(i);
   return e.options[e.selectedIndex].value;
@@ -128,13 +113,23 @@ function getProducts(){
     });
 }
 
-function getProductStock(product_id){
+function htmlStock(value,name){
+  var html =`"<option class="dropdown-item" value="`+value+`">`+name+`</option>"`;    
+  return html;
+}
+
+function getProductStock(product_id, html_id){
     $.ajax({
         url:"api/product/avaliable_sizes/" + product_id,
         type: "GET",
         success: function (data){
-            console.log(data);}
-    });
+          var html ="";
+          for (var i = 0; i < data.length; i++){
+            html += `"<option class="dropdown-item" value="`+data[i].size_id+`">`+data[i].name+`</option>"`;
+          }
+      $("#size"+html_id).html(html);
+    }
+  })
 }
 
 
@@ -219,7 +214,6 @@ function addProduct(product_id, size, quantity){
         url:"api/products",
         type:"GET",
         success: function(data){
-          console.log(data);
           var html ="";
           for (var i = 0; i < data.length; i++){
             html += `<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
@@ -240,11 +234,7 @@ function addProduct(product_id, size, quantity){
                       
                       
                         <select id="size`+i+`" class="btn btn btn-secondary">
-                          <option  class="dropdown-item" value="1">XS</option>
-                          <option  class="dropdown-item" value="2">S</option>
-                          <option  class="dropdown-item" value="3">M</option>
-                          <option  class="dropdown-item" value="4">L</option>
-                          <option  class="dropdown-item" value="5">XL</option>
+                          `+getProductStock(data[i].id,i)+`
                           </select>
                             
                         <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>

@@ -95,9 +95,10 @@ class ProductsDao extends BaseDao{
     }
 
         public function get_avaliable_sizes($product_id){
-            $query =  "SELECT ps.product_id, ps.size_id, ps.quantity_avaliable
+            $query =  "SELECT ps.product_id, ps.size_id, s.name, ps.quantity_avaliable
                        FROM products p 
                        JOIN product_stock ps ON p.id = ps.product_id
+                       JOIN sizes s ON s.id = ps.size_id
                        WHERE p.id = :product_id
                        AND ps.quantity_avaliable > 0";
 

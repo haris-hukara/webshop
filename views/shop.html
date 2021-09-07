@@ -11,64 +11,17 @@
           </div>
         </div>
       </div>
-
+      
+    </div>
       <div class="site-section">
         <div class="container">
           <div class="row mb-5">
             <div class="col-md-9 order-2">
-              <div class="row">
-                <div class="col-md-12 mb-5">
-                  <div class="float-md-left mb-4">
-                    <h2 class="text-black h5">Shop All</h2>
-                  </div>
-                  <div class="d-flex">
-                    <div class="dropdown mr-1 ml-md-auto">
-                      <button
-                        type="button"
-                        class="btn btn-secondary btn-sm dropdown-toggle"
-                        id="dropdownMenuOffset"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        Latest
-                      </button>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="dropdownMenuOffset"
-                      >
-                        <a class="dropdown-item" href="#">Men</a>
-                        <a class="dropdown-item" href="#">Women</a>
-                        <a class="dropdown-item" href="#">Children</a>
-                      </div>
-                    </div>
-                    <div class="btn-group">
-                      <button
-                        type="button"
-                        class="btn btn-secondary btn-sm dropdown-toggle"
-                        id="dropdownMenuReference"
-                        data-toggle="dropdown"
-                      >
-                        Reference
-                      </button>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="dropdownMenuReference"
-                      >
-                        <a class="dropdown-item" href="#">Relevance</a>
-                        <a class="dropdown-item" href="#">Name, A to Z</a>
-                        <a class="dropdown-item" href="#">Name, Z to A</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Price, low to high</a>
-                        <a class="dropdown-item" href="#">Price, high to low</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        
+              
 <div id="data-load" class="row mb-5">
               
-                
+ 
 </div>
               <div class="row" data-aos="fade-up">
                 <div class="col-md-12 text-center">
@@ -89,51 +42,60 @@
 
             <div class="col-md-3 order-1 mb-5 mb-md-0">
               <div class="border p-4 rounded mb-4">
-                <h3 class="mb-3 h6 text-uppercase text-black d-block">
-                  Categories
-                </h3>
-                <ul class="list-unstyled mb-0">
-                  <li class="mb-1">
-                    <a href="#" class="d-flex"
-                      ><span>Men</span>
-                      <span class="text-black ml-auto">(2,220)</span></a
-                    >
-                  </li>
-                  <li class="mb-1">
-                    <a href="#" class="d-flex"
-                      ><span>Women</span>
-                      <span class="text-black ml-auto">(2,550)</span></a
-                    >
-                  </li>
-                  <li class="mb-1">
-                    <a href="#" class="d-flex"
-                      ><span>Children</span>
-                      <span class="text-black ml-auto">(2,124)</span></a
-                    >
-                  </li>
-                </ul>
+                <div class="col-md-12 mb-5">
+                  <h2 class="text-black h5">Sort by</h2>
+                
+                <div class=" float-md-left d-flex">
+                  <div class="dropdown mr-1 ml-md-auto">
+                    <select id="sort" class="btn btn btn-secondary">
+                      <option value="-name">Name ↑</option>
+                      <option value="+name">Name ↓</option>
+                      <option value="-unit_price">Price ↑</option>
+                      <option value="+unit_price">Price ↓</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
               </div>
 
               <div class="border p-4 rounded mb-4">
    
                 <div class="mb-4">
-                  <h3 class="mb-3 h6 text-uppercase text-black d-block">
-                    Size
-                  </h3>
-                  <label for="s_sm" class="d-flex">
-                    <input type="checkbox" id="s_sm" class="mr-2 mt-1" />
-                    <span class="text-black">Small (2,319)</span>
-                  </label>
-                  <label for="s_md" class="d-flex">
-                    <input type="checkbox" id="s_md" class="mr-2 mt-1" />
-                    <span class="text-black">Medium (1,282)</span>
-                  </label>
-                  <label for="s_lg" class="d-flex">
-                    <input type="checkbox" id="s_lg" class="mr-2 mt-1" />
-                    <span class="text-black">Large (1,392)</span>
-                  </label>
+                  <div class="col-md-12 mb-5">
+                    <h2 class="text-black h5">Products per page</h2>
+                  
+                  <div class=" float-md-left d-flex">
+                    <div class="dropdown mr-1 ml-md-auto">
+                      <select id="sort" class="btn btn btn-secondary">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
+              <div class="border p-4 rounded mb-4">
+   
+                <div class="mb-4">
+                  <div class="col-md-12 mb-5">
+                    <h2 class="text-black h5">Sort by</h2>
+                  
+                  <div class=" float-md-left d-flex">
+                    <div class="dropdown mr-1 ml-md-auto">
+                      <select id="sort" class="btn btn btn-secondary">
+                        <option value="-name">Name ↑</option>
+                        <option value="+name">Name ↓</option>
+                        <option value="-unit_price">Price ↑</option>
+                        <option value="+unit_price">Price ↓</option>
+                        </select>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -146,8 +108,15 @@
 
 </html>
 <script type="text/javascript">
+var a;
 setCartCount();
-aa();
+loadData();
+
+function getSizeId(i){
+  var e = document.getElementById(i);
+  return e.options[e.selectedIndex].value;
+}
+
 
 function getProducts(){
     $.ajax({
@@ -213,7 +182,11 @@ function setCartCount(){
   }
 }
 
-function addProduct(product_id, size_id, quantity){
+
+
+function addProduct(product_id, size, quantity){
+    
+   var size_id = getSizeId("size"+size);
     
     if(getCart() == false){
       document.getElementById("count").setAttribute("hidden","true");
@@ -224,7 +197,7 @@ function addProduct(product_id, size_id, quantity){
       var product_index = inCart(product_id,size_id);
       var new_quantity = getQuantity(product_index) + quantity;
       removeProduct(product_index);
-      addProduct(product_id, size_id, new_quantity );
+      addProduct(product_id, size, new_quantity );
     
     }else{
 
@@ -236,11 +209,12 @@ function addProduct(product_id, size_id, quantity){
     localStorage.setItem('products', JSON.stringify(products));
     
     // change cart icon count
-    setCartCount()
+   
+    setCartCount();
     }
   }
 
-  function aa(){
+  function loadData(){
       $.ajax({
         url:"api/products",
         type:"GET",
@@ -261,20 +235,19 @@ function addProduct(product_id, size_id, quantity){
                     </figure>
                     
                     <div class="block-4-text p-4">
-                      <h3><a href="shop-single.html">Product Name</a></h3>
-                      <p class="mb-0">Product description</p>
-                      <p class="text-primary font-weight-bold">00.00 KM</p>
+                      <h3><a href="shop-single.html">`+data[i].name+`</a></h3>
+                      <p class="text-primary font-weight-bold">`+data[i].unit_price+` KM</p>
                       
-                      <div class="btn-group" style="align-content: center;">
-                          <select type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown" aria-expanded="false">
-                              <option  class="dropdown-item" value=1>XS</option>
-                              <option  class="dropdown-item" value=2>S</option>
-                              <option  class="dropdown-item" value=3>M</option>
-                              <option  class="dropdown-item" value=4>L</option>
-                              <option  class="dropdown-item" value=5>XL</option>
-                            </select>
+                      
+                        <select id="size`+i+`" class="btn btn btn-secondary">
+                          <option  class="dropdown-item" value="1">XS</option>
+                          <option  class="dropdown-item" value="2">S</option>
+                          <option  class="dropdown-item" value="3">M</option>
+                          <option  class="dropdown-item" value="4">L</option>
+                          <option  class="dropdown-item" value="5">XL</option>
+                          </select>
                             
-                            <button onclick="addProduct(1,1,2)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
+                        <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
                 </div>
                 </div>
                 </div>        
@@ -288,3 +261,4 @@ function addProduct(product_id, size_id, quantity){
     
 
 </script>
+

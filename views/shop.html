@@ -25,16 +25,8 @@
 </div>
               <div class="row" data-aos="fade-up">
                 <div class="col-md-12 text-center">
-                  <div class="site-block-27">
-                    <ul>
-                      <li><a href="#">&lt;</a></li>
-                      <li class="active"><span>1</span></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                      <li><a href="#">&gt;</a></li>
-                    </ul>
+                  <div id="pages" class="site-block-27">
+                   
                   </div>
                 </div>
               </div>
@@ -49,9 +41,9 @@
                   <div class="dropdown mr-1 ml-md-auto">
                     <select id="sort" class="btn btn btn-secondary">
                       <option value="-name">Name ↑</option>
-                      <option value="+name">Name ↓</option>
+                      <option value="%2bname">Name ↓</option>
                       <option value="-unit_price">Price ↑</option>
-                      <option value="+unit_price">Price ↓</option>
+                      <option value="%2bunit_price">Price ↓</option>
                       </select>
                   </div>
                 </div>
@@ -67,7 +59,8 @@
                   <div class=" float-md-left d-flex">
                     <div class="dropdown mr-1 ml-md-auto">
                       <select id="per_page" class="btn btn btn-secondary">
-                        <option value="10">10</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                         </select>
@@ -78,7 +71,7 @@
               </div>
            
            <input type="text" class="form-control py-4" id="product_search" placeholder="Enter product name">
-           <button onclick="search()" type="button" class="btn" style="margin-top:1em; border-radius: 0.2em; width: 100%; background-color: #7971ea; color: white;">Refresh search</button>
+           <button onclick="search_products()" type="button" class="btn" style="margin-top:1em; border-radius: 0.2em; width: 100%; background-color: #7971ea; color: white;">Refresh search</button>
 
             </div>
           </div>
@@ -92,23 +85,29 @@
 
 </html>
 <script type="text/javascript">
-var a;
 setCartCount();
-loadData();
-
+loadAllData();
 
 function getElementValue(element_id){
  return document.getElementById(element_id).value
 }
 
-function getDropdownValue(i){
-  var e = document.getElementById(i);
+function getDropdownValue(id){
+  var e = document.getElementById(id);
   return e.options[e.selectedIndex].value;
 }
 
 function getSizeId(i){
   var e = document.getElementById(i);
   return JSON.parse( e.options[e.selectedIndex].value);
+}
+
+function storedSearch(){
+  return JSON.parse(localStorage.getItem("search"))[0];
+}
+
+function getTotalRecords(){
+  return JSON.parse(localStorage.getItem("total_records"));
 }
 
 
@@ -186,7 +185,35 @@ function setCartCount(){
   }
 }
 
+function search_products(){
+  setTotalRecordsOfSearch(getElementValue("product_search"));
+  
+  let search = [];
+  search.push({order_by: getDropdownValue("sort"), 
+              per_page: getDropdownValue("per_page"),
+              search: getElementValue("product_search")});
+  
+  localStorage.setItem('search', JSON.stringify(search));
+  
+  loadData(offset = 0, getDropdownValue("per_page"), getElementValue("product_search"), getDropdownValue("sort") )
+  
+  $("#pages").html("");
+  
+  setTimeout(function() {
+    createPaggination( getTotalRecords(), storedSearch().per_page);
+  }, 1000);
 
+}
+
+function setTotalRecordsOfSearch(search){
+    $.ajax({
+        url:"api/products_count?search="+search,
+        type:"GET",
+        success: function(data){
+          localStorage.setItem('total_records', JSON.parse(data.avaliable_products));
+      }
+      })
+}
 
 function addProduct(product_id, size, quantity){
     
@@ -213,12 +240,21 @@ function addProduct(product_id, size, quantity){
     localStorage.setItem('products', JSON.stringify(products));
     
     // change cart icon count
-   
     setCartCount();
     }
   }
 
-  function loadData(offset = 0, limit = 1, search ="", order ="%2bid" ){
+  function loadPage(offset, limit){
+    loadData(offset,limit, storedSearch().search,order, storedSearch().order_by);
+  }
+
+  function loadAllData(){
+    loadData(offset = 0, limit = 10, search ="", order ="%2bid" );
+    setTotalRecordsOfSearch("");
+    createPaggination(getTotalRecords(), 5);
+  }
+
+  function loadData(offset = 0, limit = 10, search ="", order ="%2bid" ){
       $.ajax({
         url:"api/products?offset="+offset+"&limit="+limit+"&search="+search+"&order=" + order,
         type:"GET",
@@ -229,8 +265,7 @@ function addProduct(product_id, size, quantity){
                      <div class="block-4 text-center border">
                     
                     <figure class="block-4-image">
-                      <a href="shop-single.html"
-                        ><img
+                      <a><img
                           src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
                           alt="Product image"
                           class="img-fluid"
@@ -238,7 +273,7 @@ function addProduct(product_id, size, quantity){
                     </figure>
                     
                     <div class="block-4-text p-4">
-                      <h3><a href="shop-single.html">`+data[i].name+`</a></h3>
+                      <h3><a>`+data[i].name+`</a></h3>
                       <p class="text-primary font-weight-bold">`+data[i].unit_price+` KM</p>
                       
                       
@@ -256,8 +291,26 @@ function addProduct(product_id, size, quantity){
           $("#data-load").html(html);
         }
       })
-    }
+  }
     
+
+
+function getPagesCount(totalRecords, recordsPerPage){
+    var numOfPages = totalRecords / recordsPerPage;
+    return Math.ceil(numOfPages);
+}
+
+function createPaggination(totalRecords, recordsPerPage){
+    var len = getPagesCount(totalRecords, recordsPerPage);
+    var html ="";
+    var offset = 0;
+    
+    for(var p = 1; p < len+1; p++){
+        html += `<button id="page`+p+`" onclick="loadPage(`+parseInt(offset)+`,`+recordsPerPage+`)" data-aos="fade-down" type="button" class="btn" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">`+p+`</button>`;
+        offset +=parseInt(recordsPerPage);
+    };
+    $("#pages").html(html);
+}
 
 </script>
 

@@ -48,7 +48,25 @@ class ProductsDao extends BaseDao{
         return $this->query($query,$params);
  }
 
- public function get_avaliable_products($search, $offset, $limit, $order = "-id", $category =""){
+ public function get_avaliable_products_count($search=""){
+    $params = [];
+    $params["search"] = $search;
+
+        $avaliable_products = "SELECT DISTINCT ps.product_id
+                                    FROM products p 
+                                    JOIN product_stock ps ON p.id = ps.product_id
+                                    WHERE ps.quantity_avaliable > 0";
+
+        $query = "SELECT COUNT(p.id) AS avaliable_products
+                  FROM products p
+                  JOIN product_subcategory ps ON p.subcategory_id = ps.id  
+                  WHERE p.id IN ({$avaliable_products})
+                  AND LOWER(p.name) LIKE CONCAT('%', :search, '%')";
+        
+        return $this->query_unique($query,$params);
+ }
+
+    public function get_avaliable_products($search, $offset, $limit, $order = "-id", $category =""){
 
         switch (substr($order, 0, 1)){
             case '-': $order_direction = 'ASC'; break;

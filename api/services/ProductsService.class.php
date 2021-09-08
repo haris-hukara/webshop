@@ -21,7 +21,15 @@ class ProductsService extends BaseService{
       }
     }
 
-    public function get_avaliable_products($search, $offset, $limit, $order ,$category){
+    public function get_avaliable_products_count($search){
+      if ($search){
+      return $this->dao->get_avaliable_products_count($search);
+      }
+      return $this->dao->get_avaliable_products_count("");
+    }
+
+
+      public function get_avaliable_products($search, $offset, $limit, $order ,$category){
       if ($search && $category ){
         return ($this->dao->get_avaliable_products($search, $offset, $limit, $order ,$category));
       }if($search){

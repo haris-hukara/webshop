@@ -18,6 +18,7 @@ Flight::route('GET /admin/products', function(){
 
     flight::json(Flight::productsService()->get_products($search, $offset, $limit, $order, $category));
 });
+
 /**
  * @OA\Get(path="/products", tags={"products"},
  *                    @OA\Parameter( type="integer", in="query",name="offset", default=0, description= "Offset for paggination"),           
@@ -38,6 +39,16 @@ Flight::route('GET /products', function(){
     flight::json(Flight::productsService()->get_avaliable_products($search, $offset, $limit, $order, $category));
 });
 
+/**
+ * @OA\Get(path="/products_count", tags={"products"},
+*                     @OA\Parameter( type="integer", in="query",name="search", default="Adidas", description= "Case insensitive search for product name"),
+ *     @OA\Response(response="200", description="Returns count of all avaliable products ")
+ * )
+ */
+Flight::route('GET /products_count', function(){  
+    $search = Flight::query('search');
+    flight::json(Flight::productsService()->get_avaliable_products_count($search));
+});
 
  /**
 * @OA\Put(path="/admin/products/{id}",tags={"products","admin"},security={{"ApiKeyAuth":{}}},

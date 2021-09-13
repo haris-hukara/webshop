@@ -1,0 +1,329 @@
+    <div class="site-wrap">
+ 
+
+      <div class="bg-light py-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mb-0">
+              <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
+              <strong class="text-black">Cart</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-section">
+        <div class="container">
+          <div class="row mb-5">
+            <form class="col-md-12" method="post">
+              <div class="site-blocks-table">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="product-thumbnail">Image</th>
+                      <th class="product-name">Product name</th>
+                      <th class="product-name">Size</th>
+                      <th class="product-price">Price</th>
+                      <th class="product-quantity">Quantity</th>
+                      <th class="product-total">Total</th>
+                      <th class="product-remove">Remove</th>
+                    </tr>
+
+                  </thead>
+                  <tbody id="cart_table">
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row mb-5">
+                <div class="col-md-6 mb-3 mb-md-0">
+                  <button class="btn btn-primary btn-sm btn-block" onclick="window.location='#shop'">
+                    Continue shopping
+                  </button>
+                </div>
+       
+              </div>
+         
+            </div>
+            <div class="col-md-6 pl-5">
+              <div class="row justify-content-end">
+                <div class="col-md-7">
+                  <div class="row">
+                    <div class="col-md-12 text-right border-bottom mb-5">
+                      <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                    </div>
+                  </div>
+                  <div class="row mb-5">
+                    <div class="col-md-6">
+                      <span class="text-black"><h3>Total</h3></span>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <strong  class="text-black"><h3 id="total_amount">00.00</h3></strong>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <button
+                        class="btn btn-primary btn-lg py-3 btn-block"
+                        onclick="window.location='#checkout'"
+                      >
+                        Proceed To Checkout
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  
+</html>
+<script type="text/javascript">
+  setCartCount();
+  createCartForProduct();
+  
+  function getElementValue(element_id){
+   return document.getElementById(element_id).value
+  }
+  
+  function getDropdownValue(id){
+    var e = document.getElementById(id);
+    return e.options[e.selectedIndex].value;
+  }
+  
+  function getSizeId(i){
+    var e = document.getElementById(i);
+    return JSON.parse( e.options[e.selectedIndex].value);
+  }
+  
+  function storedSearch(){
+    return JSON.parse(localStorage.getItem("search"))[0];
+  }
+  
+  function getTotalRecords(){
+    return JSON.parse(localStorage.getItem("total_records"));
+  }
+  
+  
+  function getProducts(){
+      $.ajax({
+          url:"api/products",
+          type: "GET",
+          beforeSend: function(xhr){xhr.setRequestHeader('Authorization', localStorage.getItem("token"));},
+          success: function (data){
+              console.log(data);}
+      });
+  }
+  
+  
+  function inCart(product_id, size_id){
+  
+      var cart = JSON.parse(getCart());
+              for(var i = 0; i < cart.length; i++){
+                  if(cart[i].product_id == product_id && cart[i].size_id == size_id){
+                  return i;           
+                  }
+              }
+      return false;
+      }
+  
+  function removeProduct(index){
+      var storageProducts = JSON.parse(getCart());
+      storageProducts.splice(index, 1);
+      var products = storageProducts;
+      localStorage.setItem('products', JSON.stringify(products));
+      setCartCount();
+  }
+  
+  function getQuantity(index){
+      return JSON.parse(getCart())[index].quantity;
+  }
+  
+  function getCart(){
+    if (localStorage.getItem('products') == null){
+      return false;
+    }
+    return localStorage.getItem('products'); 
+  }
+  
+  function setCartEmpty(){
+    localStorage.setItem('products','[]'); 
+  }
+  
+  function setCartCount(){
+    if(getCart() == false || JSON.parse(getCart()).length == 0 ){
+        document.getElementById("count").setAttribute("hidden","true");
+    }
+    else{
+      document.getElementById("count").innerHTML = JSON.parse(getCart()).length
+      document.getElementById("count").removeAttribute("hidden");
+    }
+  }
+  
+
+  function addProduct(product_id, size, quantity) {
+    var size_id = getSizeId("size" + size);
+    var size_name = getSizeName("size" + size);
+    var product_name = document.getElementById("name-p"+size).innerHTML;
+
+    if (getCart() == false) {
+      document.getElementById("count").setAttribute("hidden", "true");
+      setCartEmpty();
+    }
+
+    if (inCart(product_id, size_id) !== false) {
+      var product_index = inCart(product_id, size_id);
+      var new_quantity = getQuantity(product_index) + quantity;
+      removeProduct(product_index);
+      addProduct(product_id, size, new_quantity);
+    } else {
+      let products = [];
+      if (localStorage.getItem("products")) {
+        products = JSON.parse(getCart());
+      }
+      products.push({
+        product_name:product_name,
+        product_id: product_id,
+        size_name: size_name,
+        size_id: size_id,
+        quantity: quantity
+      });
+      localStorage.setItem("products", JSON.stringify(products));
+
+      // change cart icon count
+      setCartCount();
+    }
+  }
+    
+    function loadData(offset = 0, limit = 10, search ="", order ="%2bid" ){
+        $.ajax({
+          url:"api/products?offset="+offset+"&limit="+limit+"&search="+search+"&order=" + order,
+          type:"GET",
+          success: function(data){
+            var html ="";
+            for (var i = 0; i < data.length; i++){
+              html += `<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+                       <div class="block-4 text-center border">
+                        
+                      <figure class="block-4-image">
+                        <a><img
+                            src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
+                            alt="Product image"
+                            class="img-fluid"
+                        /></a>
+                      </figure>
+                      
+                      <div class="block-4-text p-4">
+                        <h3><a>`+data[i].name+`</a></h3>
+                        <p class="text-primary font-weight-bold">`+data[i].unit_price+` KM</p>
+                        
+                        
+                          <select id="size`+i+`" class="btn btn btn-secondary">
+                            `+getProductSizesInStock(data[i].id,i)+`
+                            </select>
+                              
+                          <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
+                  </div>
+                  </div>
+                  </div>        
+                  </div>`
+            }
+  
+            $("#data-load").html(html);
+          }
+        })
+    }
+   
+    function getLocalStorage(name) {
+      return JSON.parse(localStorage.getItem(name));
+  }
+  
+  function removeProductFromCart(id){
+    removeProduct(id);
+    createCartForProduct();
+  }
+
+  function calculateProductTotal(html_id){
+  var unit_price = document.getElementById("unit-p"+html_id).innerHTML;
+  var quantity = document.getElementById("quantity-p"+html_id).value;
+  return (parseInt(unit_price) * quantity); 
+}
+
+ function createCartForProduct(){
+   var html=""
+  for ( var i = 0; i < getLocalStorage("products").length; i++){
+             html +=`
+                    <tr>
+                      <td class="product-thumbnail">
+                        <img style="width:80px"src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid">
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2>
+                      </td>
+                      <td class="product-size">
+                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].size_name+`</h2>
+                      </td>
+                      <td id="unit-p`+i+`">`+setUnitPrice(i,getLocalStorage("products")[i].product_id)+`.00 KM</td>
+                      <td>
+                        <div class="input-group mb-3" style="max-width: 120px">
+                          <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary js-btn-minus" type="button">
+                              −
+                            </button>
+                          </div>
+                          <input id="quantity-p`+i+`" type="text" class="form-control text-center" value="`+getLocalStorage("products")[i].quantity+`" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary js-btn-plus" type="button">
+                              +
+                            </button>
+                          </div>
+                        </div>  
+                      </td>
+                      <td id="total-p`+i+`">00.00 KM</td>
+                      <td> <button onClick="removeProductFromCart(`+i+`)" data-aos="fade-down" type="button" class="btn aos-init aos-animate" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">X</button>
+                  </td>
+                    </tr>`
+
+                  }
+                $("#cart_table").html(html);
+                setTimeout(function () {
+                  for ( var i = 0; i < getLocalStorage("products").length; i++){
+                  $("#total-p"+i).html(calculateProductTotal(i) +".00 KM");
+                  }
+                }, 500);
+                setTimeout(function () {calcutaTotal()},500);
+                }
+
+    
+   function calcutaTotal(){
+     var total = 0;
+    for ( var i = 0; i < getLocalStorage("products").length; i++){
+                  total += parseInt(document.getElementById("total-p"+i).innerHTML);
+                }
+                $("#total_amount").html(total+".00 KM");
+    }
+    
+   function setUnitPrice(html_index,product_id){
+    
+    $.ajax({
+          url:"api/product/"+product_id,
+          type:"GET",
+          success: function(data){
+            $("#unit-p"+html_index).html(data.unit_price +".00 KM");
+          }
+        })
+      }
+          </script>
+  
+  

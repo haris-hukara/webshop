@@ -1,0 +1,123 @@
+<div class="site-section">
+  <div class="container">
+    <div class="container">
+      <div class="row mb-5">
+        <div class="col-md-12">
+          <div class="site-blocks-table">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="product-thumbnail">Order ID</th>
+                  <th class="product-name">Shipping Address</th>
+                  <th class="product-price">Status</th>
+                  <th class="product-price">Order date</th>
+                  <th class="product-price">Order details</th>
+                </tr>
+              </thead>
+              <tbody id="my_orders">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="order-details" hidden = "true">
+      <h2 class="text-black h3">Order details</h2>
+      <h2 id="order_id" class="text-black h5">Order ID: </h2><table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="product-thumbnail">Image</th>
+            <th class="product-name">Product name</th>
+            <th class="product-name">Size</th>
+            <th class="product-price">Price</th>
+            <th class="product-quantity">Quantity</th>
+            <th class="product-total">Total</th>
+          </tr>
+        </thead>
+        <tbody id="details_table">
+         
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<script type="text/javascript">
+loadUserOrders();
+
+function loadOrderDetails(order_id){
+  $.ajax({
+    url:"api/user/order/details/" + order_id,
+    type:"GET",
+    beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+    success: function(data){
+      var html ="";
+      for (var i = 0; i < data.length; i++){
+        html += ` <tr>
+            <td class="product-thumbnail">
+              <img style="width: 80px" src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid">
+            </td>
+            <td>
+              <h2 class="h5 text-black">`+data[i].product_name+`</h2>
+            </td>
+            <td>
+              <h2 class="h5 text-black">`+data[i].size+`</h2>
+            </td>
+            <td>`+data[i].unit_price+`.00 KM</td>
+            <td>`+data[i].quantity+`</td>
+            <td id="details-total-p`+i+`">`+data[i].total+`.00 KM</td>
+          </tr>`;
+      }
+      html+= `<tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="h5">Total: </td>
+            </tr>`
+      $("#details_table").html(html);
+      $("#order_id").html("Order ID: "+ order_id);
+      document.getElementById("order-details").removeAttribute("hidden");
+    }
+  })
+}
+
+function loadUserOrders(){
+  $.ajax({
+    url:"api/user/orders",
+    type:"GET",
+    beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+    success: function(data){
+      var html ="";
+      for (var i = 0; i < data.length; i++){
+        html += ` <tr>
+                  <td id="my-order-id`+i+`">`+data[i].id+`</td>
+                  <td id="my-order-address`+i+`">`+data[i].shipping_address+`</td>
+                  <td id="my-order-status`+i+`">`+data[i].status+`</td>
+                  <td id="my-order-date`+i+`">`+data[i].order_date+`</td>
+                  <td id="id="my-order-details`+i+`">
+                    <button onclick="loadOrderDetails(`+data[i].id+`)" class="btn" style="margin-top:1em; border-radius: 0.2em; width: 100%; background-color: #7971ea; color: white;">See order details</button>
+                  </td>
+                </tr>`;
+      }
+ 
+      $("#my_orders").html(html);
+    }
+  })
+}
+
+function calcutaTotal(){
+    var total = 0;
+    for ( var i = 0; i < getLocalStorage("products").length; i++){
+                  total += parseInt(document.getElementById("total-p"+i).innerHTML);
+                }
+                $("#").html(total+".00 KM");
+    }
+
+
+</script>

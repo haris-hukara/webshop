@@ -10,13 +10,13 @@ Flight::route('GET /user/order/details/@id', function($id){
 });
 
 /**
- * @OA\Get(path="/order/details/price/{id}", tags={"Order Details"},
+ * @OA\Get(path="/user/order/details/price/{id}", tags={"Order Details"},security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Order ID"),
  *     @OA\Response(response="200", description="Detailed info about order")
  * )
  */
-Flight::route('GET /order/details/price/@id', function($id){
-    Flight::json(Flight::orderDetailsService()->get_order_price_by_id($id));  
+Flight::route('GET /user/order/details/price/@id', function($id){
+    Flight::json(Flight::orderDetailsService()->get_order_price_by_id(Flight::get('user'),$id));  
 });
 
 /**

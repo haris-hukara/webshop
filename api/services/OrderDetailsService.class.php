@@ -19,11 +19,15 @@ class OrderDetailsService extends BaseService{
         return $this->dao->get_order_details_by_account_id_and_order_id($user['id'], $order_id);
     }
     return $this->dao->get_order_details_by_order_id($order_id);
-  }
+  } 
 
-  public function get_order_price_by_id($id){
-    return ($this->dao->get_order_price_by_id($id));
+  public function get_order_price_by_id($user, $id){
+    if( $user['rl'] == "ADMIN"){
+      return ($this->dao->get_order_price_by_id($id));
+    }else{
+      return ($this->dao->get_order_price_by_account_id($user['id'], $id));
     }
+  }
 
   public function add_order_details($details){
     if(!isset($details['order_id'])) throw new Exception("Order ID is missing");

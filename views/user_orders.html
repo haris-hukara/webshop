@@ -78,13 +78,17 @@ function loadOrderDetails(order_id){
             <td></td>
             <td></td>
             <td></td>
-            <td class="h5">Total: </td>
+            <td id="details-total" class="h5">Total: </td>
             </tr>`
       $("#details_table").html(html);
       $("#order_id").html("Order ID: "+ order_id);
       document.getElementById("order-details").removeAttribute("hidden");
     }
   })
+  setTimeout(function () {
+    loadTotalOrderPrice(order_id);
+                }, 500);
+  
 }
 
 function loadUserOrders(){
@@ -105,19 +109,21 @@ function loadUserOrders(){
                   </td>
                 </tr>`;
       }
- 
       $("#my_orders").html(html);
-    }
+      }
   })
 }
 
-function calcutaTotal(){
-    var total = 0;
-    for ( var i = 0; i < getLocalStorage("products").length; i++){
-                  total += parseInt(document.getElementById("total-p"+i).innerHTML);
-                }
-                $("#").html(total+".00 KM");
+function loadTotalOrderPrice(order_id){
+  $.ajax({
+    url:"api/user/order/details/price/"+order_id,
+    type:"GET",
+    beforeSend: function(xhr){xhr.setRequestHeader('Authentication', localStorage.getItem("token"));},
+    success: function(data){
+      $("#details-total").html("Total: " + data[0].total_price +".00 KM");
     }
+  })
+}
 
 
 </script>

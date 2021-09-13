@@ -48,7 +48,7 @@ class OrderDetailsDao extends BaseDao{
                           WHERE od.order_id = :order_id", 
                           ["order_id" => $order_id]);
     }
-    
+     
     public function get_order_price_by_id($id){
       $details =  $this->query("SELECT 	od.order_id, 
                                             SUM(od.quantity * p.unit_price) AS 'total_price'
@@ -56,6 +56,19 @@ class OrderDetailsDao extends BaseDao{
                                        JOIN products p ON p.id = od.product_id
                                        WHERE od.order_id = :order_id", 
                                        ["order_id" => $id]);
+        return $details;
+    }   
+    public function get_order_price_by_account_id($account_id, $id){
+      $details =  $this->query("SELECT 	od.order_id, ua.id AS 'user_id', 
+                                SUM(od.quantity * p.unit_price) AS 'total_price'
+                                FROM order_details od 
+                                JOIN products p ON p.id = od.product_id
+                                JOIN orders o ON o.id = od.order_id
+                                JOIN user_account ua ON ua.user_details_id = o.user_details_id
+                                WHERE od.order_id = :order_id
+                                AND ua.id = :account_id", 
+                                       ["order_id" => $id,
+                                        "account_id" => $account_id]);
         return $details;
     }   
 

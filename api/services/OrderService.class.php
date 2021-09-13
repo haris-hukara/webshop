@@ -40,6 +40,10 @@ class OrderService extends BaseService{
     return $order;
   }
 
+  public function get_all_orders_for_user($user){
+    return $this->dao->get_all_orders_by_account_id($user['id']);
+  }
+
 
 }
 

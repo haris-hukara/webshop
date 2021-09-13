@@ -47,7 +47,7 @@ class UserDetailsService extends BaseService{
       return ($this->dao->get_all($offset,$limit, $order));
     }
   }
- 
+  
   public function get_user_details_by_account_id_and_details_id($user, $details_id){
     if($user['rl'] == "ADMIN"){
       return $this->dao->get_by_id($details_id);

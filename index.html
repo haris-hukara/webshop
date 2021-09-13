@@ -85,8 +85,11 @@
                       <a href="#"><span class="icon icon-heart-o"></span></a>
                     </li>
                     <li>
-                      <a href="cart.html" class="site-cart">
-                        <span class="icon icon-shopping_cart"></span>
+                      <a href="#cart" class="site-cart">
+                        <span
+                          onclick="createCart()"
+                          class="icon icon-shopping_cart"
+                        ></span>
                         <span id="count" class="count">2</span>
                       </a>
                     </li>
@@ -123,17 +126,9 @@
                   </li>
                 </ul>
               </li>
-              <li class="has-children">
-                <a href="about.html">About</a>
-                <ul class="dropdown">
-                  <li><a href="#">Menu One</a></li>
-                  <li><a href="#">Menu Two</a></li>
-                  <li><a href="#">Menu Three</a></li>
-                </ul>
-              </li>
+
               <li><a href="#shop">Shop</a></li>
-              <li><a href="#">Catalogue</a></li>
-              <li><a href="#">New Arrivals</a></li>
+              <li><a href="#user_orders">My orders</a></li>
               <li>
                 <a onclick="doLogout();" href="login.html"
                   ><i class="fa fa-sign-out"></i> Log out</a
@@ -146,8 +141,10 @@
 
       <main id="jqueryspapp" role="main">
         <section id="homepage" data-load="homepage.html"></section>
-        <section id="blog-single" data-load="#blog-single"></section>
         <section id="shop" data-load="shop.html"></section>
+        <section id="cart" data-load="cart.html"></section>
+        <section id="checkout" data-load="checkout.html"></section>
+        <section id="user_orders" data-load="user_orders.html"></section>
       </main>
 
       <footer class="site-footer border-top">

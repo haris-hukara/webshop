@@ -125,5 +125,29 @@ class ProductsDao extends BaseDao{
 
             return $this->query($query,$params);
         }
+        
+        public function get_avaliable_product_by_id($product_id){
+            
+            $avaliable_products = "SELECT DISTINCT ps.product_id
+                                FROM products p 
+                                JOIN product_stock ps ON p.id = ps.product_id
+                                WHERE ps.quantity_avaliable > 0";
+
+            $query =  "SELECT p.*
+                       FROM products p
+                       JOIN product_subcategory ps ON p.subcategory_id = ps.id  
+                       WHERE p.id IN ( {$avaliable_products} )
+                       AND p.id = :product_id
+                            ";
+
+            $params = [];
+            $params["product_id"] = $product_id;
+
+            return $this->query_unique($query,$params);
+        }
+
+
+
+
 }
 ?>

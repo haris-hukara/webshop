@@ -50,6 +50,17 @@ Flight::route('GET /products_count', function(){
     flight::json(Flight::productsService()->get_avaliable_products_count($search));
 });
 
+/**
+ * @OA\Get(path="/product/{id}", tags={"products"},
+*  @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Id of avaliable product"),
+ *     @OA\Response(response="200", description="Returns product info of avaliable product")
+ * )
+ */
+Flight::route('GET /product/@id', function($id){  
+        flight::json(Flight::productsService()->get_avaliable_product_by_id($id));
+});
+
+
  /**
 * @OA\Put(path="/admin/products/{id}",tags={"products","admin"},security={{"ApiKeyAuth":{}}},
 * @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", example = "1", description="Update city by city id"),

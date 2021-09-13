@@ -41,6 +41,10 @@ class ProductsService extends BaseService{
       }
     }
 
+    public function get_avaliable_product_by_id($id){
+      return $this->dao->get_avaliable_product_by_id($id);
+    }
+
     public function update_product($id, $data){
       
       if(!isset($data['name'])) throw new Exception("Name is missing");

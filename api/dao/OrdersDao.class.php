@@ -21,6 +21,16 @@ class OrdersDao extends BaseDao{
                               LIMIT ${limit} OFFSET ${offset}", 
                              ["shipping_address" => strtolower($search)]);
     }
+
+    public function get_all_orders_by_account_id($account_id){
+        return $this->query( "SELECT o.*
+                              FROM user_account ua
+                              JOIN orders o ON o.user_details_id = ua.user_details_id
+                              WHERE ua.id = :account_id", 
+                             ["account_id" => $account_id]);
+    }
+
+
 }
 ?>
 

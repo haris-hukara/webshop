@@ -16,3 +16,27 @@ function parse_jwt(token){
     }).join(''));
     return JSON.parse(jsonPayload);
 }
+
+
+
+function setCartCount(){
+    if(getCart() == false || JSON.parse(getCart()).length == 0 ){
+        document.getElementById("count").setAttribute("hidden","true");
+    }
+    else{
+      document.getElementById("count").innerHTML = JSON.parse(getCart()).length
+      document.getElementById("count").removeAttribute("hidden");
+    }
+  }
+
+  function getCart(){
+    if (localStorage.getItem('products') == null){
+      return false;
+    }
+    return localStorage.getItem('products'); 
+  }
+
+  function setCartEmpty(){
+    localStorage.setItem('products','[]'); 
+    setCartCount();
+  }

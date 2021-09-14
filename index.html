@@ -90,7 +90,7 @@
                           onclick="createCart()"
                           class="icon icon-shopping_cart"
                         ></span>
-                        <span id="count" class="count">2</span>
+                        <span id="count" class="count" hidden="true"></span>
                       </a>
                     </li>
                     <li class="d-inline-block d-md-none ml-md-0">
@@ -132,6 +132,7 @@
         <section id="cart" data-load="cart.html"></section>
         <section id="checkout" data-load="checkout.html"></section>
         <section id="user_orders" data-load="user_orders.html"></section>
+        <section id="thankyou" data-load="thankyou.html"></section>
       </main>
 
       <footer class="site-footer border-top">
@@ -257,7 +258,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script src="./assets/js/utils.js"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         var app = $.jQuerySPApp({ defaultView: "#homepage" }); // initialize
@@ -268,7 +269,8 @@
           $("body").show();
           var user_info = parse_jwt(window.localStorage.getItem("token"));
           if (user_info.rl == "ADMIN") {
-            alert("you ar admin");
+            setCartCount();
+          } else {
             $(".admin-stuff").remove();
           }
         }

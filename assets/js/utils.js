@@ -37,6 +37,5 @@ function setCartCount(){
   }
 
   function setCartEmpty(){
-    localStorage.setItem('products','[]'); 
-    setCartCount();
+    localStorage.setItem('products','[]');
   }

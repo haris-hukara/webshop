@@ -103,20 +103,9 @@
 
 
   function postUserDetails(user_details){
-    
-    $.ajax({
-          url:"api/details/add",
-          type:"POST",
-          data: user_details,
-          success: function(db_data){
-            postOrder(user_details, db_data.id);
-          },
-          error: function(jqXHR,textStatus,errorThrown){
-            console.log(jqXHR);
-          }
-
-        })
-        
+    RestClient.post("api/details/add", user_details, function(data){
+            postOrder(user_details, data.id);
+          });
       }
  
  function postOrder(details, details_id){
@@ -127,44 +116,27 @@
     order["payment_method_id"] = details.payment_method;
     order["status"] = "ACTIVE";
 
-    $.ajax({
-          url:"api/order",
-          type:"POST",
-          data: order,
-          success: function(db_data){
-            postOrderDetails(JSON.parse(getCart()), db_data.id);
-          },
-          error: function(jqXHR,textStatus,errorThrown){
-            console.log(jqXHR);
-          }
-
-        })
+    RestClient.post("api/order",order,function(data){
+            postOrderDetails(JSON.parse(getCart()), data.id);
+          });
       }
 
+  
   function postOrderDetails(cart, order_id){
     var order_details ={};
 
-   for(i = 0; i<cart.length; i++){
+   for(i = 0; i < cart.length; i++){
+    
     order_details["order_id"] = order_id;
     order_details["product_id"] = cart[i].product_id;
     order_details["size_id"] = cart[i].size_id;
     order_details["quantity"] = cart[i].quantity;
-    console.log(order_details["order_id"]);
-    $.ajax({
-          url:"api/order/details",
-          type:"POST",
-          data: order_details,
-          success: function(db_data){
 
-          },
-          error: function(jqXHR,textStatus,errorThrown){
-            console.log(jqXHR);
-          }
-
-        })
-      }
+    RestClient.post("api/order/details",order_details,function(data){});
+    }
       window.location  = ("#thankyou");
       setCartEmpty();
-   }
+      setCartCount();
+    }
 
 </script>

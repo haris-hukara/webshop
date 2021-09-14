@@ -116,49 +116,19 @@
     return JSON.parse(localStorage.getItem("total_records"));
   }
 
-  function getProducts() {
-    $.ajax({
-      url: "api/products",
-      type: "GET",
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader(
-          "Authorization",
-          localStorage.getItem("token")
-        );
-      },
-      success: function (data) {
-        console.log(data);
-      },
-    });
-  }
-
-  function htmlStock(value, name) {
-    var html =
-      `"<option class="dropdown-item" value="` +
-      value +
-      `">` +
-      name +
-      `</option>"`;
+    function htmlStock(value, name) {
+    var html =`"<option class="dropdown-item" value="`+value+`">`+name+`</option>"`;
     return html;
   }
 
   function getProductSizesInStock(product_id, html_id) {
-    $.ajax({
-      url: "api/product/avaliable_sizes/" + product_id,
-      type: "GET",
-      success: function (data) {
+    RestClient.get("api/product/avaliable_sizes/"+product_id, function (data) {
         var html = "";
         for (var i = 0; i < data.length; i++) {
-          html +=
-            `"<option class="dropdown-item" value="` +
-            data[i].size_id +
-            `">` +
-            data[i].name +
-            `</option>"`;
+          html += `"<option class="dropdown-item" value="`+data[i].size_id+`">`+data[i].name+`</option>"`;
         }
         $("#size" + html_id).html(html);
-      },
-    });
+      });
   }
 
   function inCart(product_id, size_id) {
@@ -232,16 +202,9 @@
   }
 
   function setTotalRecordsOfSearch(search) {
-    $.ajax({
-      url: "api/products_count?search=" + search,
-      type: "GET",
-      success: function (data) {
-        localStorage.setItem(
-          "total_records",
-          JSON.parse(data.avaliable_products)
-        );
-      },
-    });
+    RestClient.get("api/products_count?search="+search, function (data) {
+        localStorage.setItem("total_records",JSON.parse(data.avaliable_products));
+      })
   }
 
   function addProduct(product_id, size, quantity) {
@@ -279,13 +242,7 @@
   }
 
   function loadPage(offset, limit) {
-    loadProducts(
-      offset,
-      limit,
-      storedSearch().search,
-      order,
-      storedSearch().order_by
-    );
+    loadProducts(offset,limit,storedSearch().search,order,storedSearch().order_by);
   }
 
   function loadDefaulltProducts() {
@@ -295,63 +252,30 @@
   }
 
   function loadProducts(offset = 0, limit = 10, search = "", order = "%2bid") {
-    $.ajax({
-      url:
-        "api/products?offset=" +
-        offset +
-        "&limit=" +
-        limit +
-        "&search=" +
-        search +
-        "&order=" +
-        order,
-      type: "GET",
-      success: function (data) {
+    RestClient.get("api/products?offset="+offset 
+                              +"&limit="+limit
+                              +"&search="+search
+                              +"&order="+order, function (data) {
         var html = "";
         for (var i = 0; i < data.length; i++) {
           html +=
             `<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                    <div class="block-4 text-center border">
-                  
-                  <figure class="block-4-image">
+                    <figure class="block-4-image">
                     <a><img
                         src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
-                        alt="Product image"
-                        class="img-fluid"
-                    /></a>
-                  </figure>
-                  
+                        alt="Product image" class="img-fluid"/></a>
+                    </figure>
                   <div class="block-4-text p-4">
-                    <h3><a id="name-p`+i+`">` +
-            data[i].name +
-            `</a></h3>
-                    <p class="text-primary font-weight-bold">` +
-            data[i].unit_price +
-            ` KM</p>
-                    
-                    
-                      <select id="size` +
-            i +
-            `" class="btn btn btn-secondary">
-                        ` +
-           getProductSizesInStock(data[i].id, i) +
-            `
-                        </select>
-                          
-                      <button onclick="addProduct(` +
-            data[i].id +
-            `,` +
-            i +
-            `,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
-              </div>
-              </div>
-              </div>        
-              </div>`;
+                    <h3><a id="name-p`+i+`">`+data[i].name+`</a></h3>
+                    <p class="text-primary font-weight-bold">`+data[i].unit_price+` KM</p>
+                      <select id="size`+i+`" class="btn btn btn-secondary">`+getProductSizesInStock(data[i].id, i)+`</select>
+                      <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
+              </div></div></div></div>`;
         }
-
         $("#data-load").html(html);
-      },
-    });
+      }
+  )
   }
 
   function getPagesCount(totalRecords, recordsPerPage) {
@@ -366,15 +290,7 @@
 
     for (var p = 1; p < len + 1; p++) {
       html +=
-        `<button id="page` +
-        p +
-        `" onclick="loadPage(` +
-        parseInt(offset) +
-        `,` +
-        recordsPerPage +
-        `)" data-aos="fade-down" type="button" class="btn" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">` +
-        p +
-        `</button>`;
+        `<button id="page`+p+`" onclick="loadPage(`+parseInt(offset)+`,`+recordsPerPage+`)" data-aos="fade-down" type="button" class="btn" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">`+p+`</button>`;
       offset += parseInt(recordsPerPage);
     }
     $("#pages").html(html);
@@ -395,39 +311,23 @@ function calculateProductTotal(html_id){
 function createCartForProduct(){
    var html=""
   for ( var i = 0; i < getLocalStorage("products").length; i++){
-             html +=`
-                    <tr>
-                      <td class="product-thumbnail">
-                        <img style="width:80px"src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid">
-                      </td>
+             html +=`<tr><td class="product-thumbnail">
+                        <img style="width:80px"src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid"></td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2>
-                      </td>
+                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2></td>
                       <td class="product-size">
-                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].size_name+`</h2>
-                      </td>
-                      <td id="unit-p`+i+`">`+setUnitPrice(i,getLocalStorage("products")[i].product_id)+`.00 KM</td>
-                      <td>
+                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].size_name+`</h2></td>
+                      <td id="unit-p`+i+`">`+setUnitPrice(i,getLocalStorage("products")[i].product_id)+`.00 KM</td><td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
-                            <button class="btn btn-outline-primary js-btn-minus" type="button">
-                              −
-                            </button>
-                          </div>
+                            <button class="btn btn-outline-primary js-btn-minus" type="button">−</button></div>
                           <input id="quantity-p`+i+`" type="text" class="form-control text-center" value="`+getLocalStorage("products")[i].quantity+`" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                           <div class="input-group-append">
-                            <button class="btn btn-outline-primary js-btn-plus" type="button">
-                              +
-                            </button>
-                          </div>
-                        </div>  
-                      </td>
+                            <button class="btn btn-outline-primary js-btn-plus" type="button">+</button>
+                          </div></div></td>
                       <td id="total-p`+i+`">00.00 KM</td>
-                      <td> <button onClick="removeProductFromCart(`+i+`)" data-aos="fade-down" type="button" class="btn aos-init aos-animate" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">X</button>
-                  </td>
-                    </tr>`
-
-                  }
+                      <td><button onClick="removeProductFromCart(`+i+`)" data-aos="fade-down" type="button" class="btn aos-init aos-animate" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">X</button></td></tr>`
+}
                 $("#cart_table").html(html);
                 setTimeout(function () {
                   for ( var i = 0; i < getLocalStorage("products").length; i++){
@@ -441,19 +341,15 @@ function createCartForProduct(){
    function calcutaTotal(){
      var total = 0;
     for ( var i = 0; i < getLocalStorage("products").length; i++){
-                  total += parseInt(document.getElementById("total-p"+i).innerHTML);
-                }
-                $("#total_amount").html(total+".00 KM");
+         total += parseInt(document.getElementById("total-p"+i).innerHTML);
+         }
+         $("#total_amount").html(total+".00 KM");
     }
+
    function setUnitPrice(html_index,product_id){
-    
-    $.ajax({
-          url:"api/product/"+product_id,
-          type:"GET",
-          success: function(data){
+    RestClient.get("api/product/"+product_id, function(data){
             $("#unit-p"+html_index).html(data.unit_price +".00 KM");
-          }
-        })
+          })
       }    
 </script>
 

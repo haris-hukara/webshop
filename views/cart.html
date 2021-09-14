@@ -72,7 +72,7 @@
                     <div class="col-md-12">
                       <button
                         class="btn btn-primary btn-lg py-3 btn-block"
-                        onclick="window.location='#checkout'"
+                        onclick="goToCheckout()"
                       >
                         Proceed To Checkout
                       </button>
@@ -150,28 +150,10 @@
       return JSON.parse(getCart())[index].quantity;
   }
   
-  function getCart(){
-    if (localStorage.getItem('products') == null){
-      return false;
-    }
-    return localStorage.getItem('products'); 
-  }
-  
-  function setCartEmpty(){
-    localStorage.setItem('products','[]'); 
-  }
-  
-  function setCartCount(){
-    if(getCart() == false || JSON.parse(getCart()).length == 0 ){
-        document.getElementById("count").setAttribute("hidden","true");
-    }
-    else{
-      document.getElementById("count").innerHTML = JSON.parse(getCart()).length
-      document.getElementById("count").removeAttribute("hidden");
-    }
-  }
-  
 
+ 
+  
+ 
   function addProduct(product_id, size, quantity) {
     var size_id = getSizeId("size" + size);
     var size_name = getSizeName("size" + size);
@@ -325,6 +307,18 @@
           }
         })
       }
-          </script>
+
+
+  function goToCheckout(){
+    if ((JSON.parse(getCart()).length) == 0 ) 
+    {
+      window.location = ("#shop");
+      toastr.error("Your cart is empty, buy something");
+    }  else{
+      window.location = ("#checkout");
+    }
+  }    
+
+  </script>
   
   

@@ -28,6 +28,20 @@ class UserAccountService extends BaseService{
       return $db_user;
     }
 
+    public function getUserAccountById($user, $id){
+      $user_account;
+      try {
+        $user_account =  $this->dao->get_by_id($id);
+      } catch (\Exception $e) {
+        throw $e;
+      }
+
+      if($user['id'] == $user_account['id'] ){
+      return $user_account;
+      }else{
+        throw new Exception("Not your account", 401);
+      }
+    }
 
     public function forgot($userAccount){
       $db_user = $this->dao->get_user_by_email($userAccount['email']);

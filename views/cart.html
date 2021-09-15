@@ -232,9 +232,12 @@
   }
   
   function removeProductFromCart(id){
+    var product_name = JSON.parse(getCart())[id].product_name;
+    var product_size = JSON.parse(getCart())[0].size_name;
     removeProduct(id);
+    toastr.success( "Product: " + product_name + " Size: " + product_size + " is removed from cart");
     createCartForProduct();
-  }
+  }  
 
   function calculateProductTotal(html_id){
   var unit_price = document.getElementById("unit-p"+html_id).innerHTML;

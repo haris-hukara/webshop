@@ -41,6 +41,16 @@ Flight::route('GET /admin/accounts/@id', function($id){
          Flight::json(Flight::userAccountService()->get_by_id($id));  
 });
 
+/**
+ * @OA\Get(path="/user/account/{id}", tags={"user account"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Id of account"),
+ *     @OA\Response(response="200", description="Fetch individual account")
+ * )
+ */
+Flight::route('GET /user/account/@id', function($id){
+         Flight::json(Flight::userAccountService()->getUserAccountById(Flight::get('user'),$id));  
+});
+
 
 /**
 * @OA\Put(path="/account/{id}",tags={"user account"},security={{"ApiKeyAuth":{}}},

@@ -235,7 +235,8 @@
         quantity: quantity
       });
       localStorage.setItem("products", JSON.stringify(products));
-
+     
+      toastr.success( "Product: " + product_name + " Size: " + size_name + " is added to cart");
       // change cart icon count
       setCartCount();
     }

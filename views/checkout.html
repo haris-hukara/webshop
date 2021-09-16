@@ -1,7 +1,7 @@
    <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <a href="cart.html">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+          <div class="col-md-12 mb-0"><a href="#homepage">Home</a> <span class="mx-2 mb-0">/</span> <a href="#cart">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
         </div>
       </div>
     </div>
@@ -10,56 +10,54 @@
       <div class="container">
         
         <div class="row align-items-md-center justify-content-center">
-          <div class="col-md-7">
-              <h2 class="h3 mb-3 text-black text-center">Billing Details</h2>
+          <div id="other-info-form" class="col-md-7" hidden="true">
+              <div style="margin-top: 2em">
+                    
+        </div><h2 class="h3 mb-3 text-black text-center">Billing Details</h2>
               <div class="p-3 p-lg-5 border text-center">
-                <form
-                id="checkout-detail-form"
-                class="login100-form validate-form flex-sb flex-w"
-                role="form"
-              >
+                <form id="checkout-detail-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
                 <div class="form-group row">
                   <div class="col-md-6">
                     <label for="c_name" class="text-black">First Name <span class="text-danger">*</span></label>
-                    <input name="name" required minlength="2" type="text" class="form-control text-center" id="c_fname">
+                    <input name="name" required="" minlength="2" type="text" class="form-control text-center" id="c_fname">
                   </div>
                   <div class="col-md-6">
                     <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                    <input name="surname" required minlength="2" type="text" class="form-control text-center" id="c_lname" >
+                    <input name="surname" required="" minlength="2" type="text" class="form-control text-center" id="c_lname">
                   </div>
                 </div>
       
                 <div class="form-group row mb-5">
                   <div class="col-md-6">
                     <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
-                    <input name="email" required minlength="5" type="email" class="form-control text-center" id="c_email_address">
+                    <input name="email" required="" minlength="5" type="email" class="form-control text-center" id="c_email_address">
                   </div>
                   <div class="col-md-6">
                     <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                    <input name="phone_number" required minlength="9" type="text" class="form-control text-center" id="c_phone" placeholder="Phone Number">
+                    <input name="phone_number" required="" minlength="9" type="text" class="form-control text-center" id="c_phone" placeholder="Phone Number">
                   </div>
                 </div><div class="form-group row">
                   
                   <div class="col-md-12">
                     <label for="c_city" class="text-black">City <span class="text-danger">*</span></label>
-                    <input name="city" required minlength="3" type="text" class="form-control text-center" id="c_city">
+                    <input name="city" required="" minlength="3" type="text" class="form-control text-center" id="c_city">
                   </div>
                 </div>
                 <div class="form-group row">
                   <div class="col-md-12">
                     <label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-                    <input name="zip_code" required minlength="5" required maxlength="5" type="text" class="form-control text-center" id="c_postal_zip">
+                    <input name="zip_code" required="" minlength="5" maxlength="5" type="text" class="form-control text-center" id="c_postal_zip">
                   </div>
                 </div><div class="form-group row">
                   <div class="col-md-12">
                     <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
-                    <input name="address" required minlength="5" type="text" class="form-control text-center" id="c_address" placeholder="Street address">
+                    <input name="address" required="" minlength="5" type="text" class="form-control text-center" id="c_address" placeholder="Street address">
                   </div>
                 </div>
               <div class="form-group row">
                   <div class="col-md-12">
                     <label for="c_shipping_address" class="text-black">Address for shipping <span class="text-danger">*</span></label>
-                    <input name="shipping_address" required minlength="5" type="text" class="text-center form-control" id="c_shipping_address" placeholder="Street address">
+                    <input name="shipping_address" required="" minlength="5" type="text" class="text-center form-control" id="c_shipping_address" placeholder="Street address">
                   </div>
                 </div><div class="form-group">
                   <label for="c_payment_method" class="text-black">Payment Method<span class="text-danger">*</span></label>
@@ -67,24 +65,65 @@
                     <option value="1">Cash</option>    
                     <option value="2">Credit card</option>    
                   </select>
-                </div><button type="submit"  class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Place Order</button></div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Place Order</button>
+                 </form><div style="margin-top: 2em"> 
+                  <a href="#checkout" onclick="showMyForm()" class="h6" style="text-decoration: underline;">
+                        Use my information
+                      </a></div></div>
             </div>          
-        </div>
-
-          </form>
+            </div>
+          
           
           <div class="row align-items-md-center justify-content-center">
-            <div class="col-md-7">
+            <div id="my-info-form" class="col-md-7">
               <h2 class="h3 mb-3 text-black text-center">Billing Details</h2>
               <div class="p-3 p-lg-5 border text-center">
          
-         <form id="account-checkout-detail-form"
-          class="login100-form validate-form flex-sb flex-w"
-          role="form">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="u_name" class="text-black">First Name </label>
+                    <input name="name" type="text" class="form-control text-center" id="u_name" placeholder="Name" disabled="">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="u_surname" class="text-black">Last Name </label>
+                    <input name="surname" type="text" class="form-control text-center" id="u_surname" placeholder="Surname" disabled="">
+                  </div>
+                </div>
+      
+                <div class="form-group row mb-5">
+                  <div class="col-md-6">
+                    <label for="u_email_address" class="text-black">Email Address </label>
+                    <input name="email" type="email" class="form-control text-center" id="u_email_address" placeholder="Email Address" disabled="">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="u_phone" class="text-black">Phone</label>
+                    <input name="phone_number" type="text" class="form-control text-center" id="u_phone" placeholder="Phone Number" disabled="">
+                  </div>
+                </div><div class="form-group row">
+                  
+                  <div class="col-md-12">
+                    <label for="u_city" class="text-black">City </label>
+                    <input name="city" type="text" class="form-control text-center" id="u_city" placeholder="City" disabled="">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="u_postal_zip" class="text-black">Posta / Zip </label>
+                    <input name="zip_code" type="text" class="form-control text-center" id="u_postal_zip" placeholder="Zip Code" disabled="">
+                  </div>
+                </div><div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="u_address" class="text-black">Address </label>
+                    <input name="address" type="text" class="form-control text-center" id="u_address" placeholder="Street address" disabled="">
+                  </div>
+                </div>
+
+         <form id="account-checkout-detail-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
           <div class="form-group row">
             <div class="col-md-12">
               <label for="c_shipping_address" class="text-black">Address for shipping <span class="text-danger">*</span></label>
-              <input name="shipping_address" required minlength="5" type="text" class="text-center form-control" id="c_shipping_address" placeholder="Street address">
+              <input name="shipping_address" required="" minlength="5" type="text" class="text-center form-control" id="c_shipping_address" placeholder="Street address">
             </div>
           </div><div class="form-group">
             <label for="c_payment_method" class="text-black">Payment Method<span class="text-danger">*</span></label>
@@ -92,23 +131,40 @@
               <option value="1">Cash</option>    
               <option value="2">Credit card</option>    
             </select>
-          </div><button type="submit"  class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Place Order</button></div>
-          </form>
+          </div><div><button type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Place Order</button></div>
+        </form>
+        <div style="margin-top: 2em">
+                    <a href="#checkout" onclick="showOtherForm()" class="h6" style="text-decoration: underline;">
+                      Use other information
+                    </a>
+        </div>
+        </div>
+         
           </div>          
           </div>
           </div>
           </div>
           </div>
-     <!-- </form> -->
-  
 
-   
+       <!-- </form> -->
     </div>
+    
 
     
   </div>
   
   <script type="text/javascript">
+  loadUserDetails(parse_jwt(window.localStorage.getItem("token")).id);
+  function showMyForm(){
+    document.getElementById("other-info-form").setAttribute("hidden", "true");
+    document.getElementById("my-info-form").removeAttribute("hidden");
+  }
+  
+  function showOtherForm(){
+    document.getElementById("my-info-form").setAttribute("hidden", "true");
+    document.getElementById("other-info-form").removeAttribute("hidden");
+  }
+
 
   $("#checkout-detail-form").validate({
     submitHandler: function (form, event) {
@@ -116,7 +172,7 @@
       postUserDetails(jsonize_form($(form)));
     },
   });
-  
+
   $("#account-checkout-detail-form").validate({
     submitHandler: function (form, event) {
       event.preventDefault();
@@ -131,7 +187,7 @@
             ;
           });
   }
-
+  
   function makeOrder(details){
     postUserDetails(details);
     setTimeout(function () {postOrder(details);},2000);
@@ -186,5 +242,18 @@
       setCartEmpty();
       setCartCount();
     }
+
+
+    function loadUserDetails(account_id){
+      RestClient.get("api/user/details/"+account_id, function(data){
+        document.getElementById("u_name").setAttribute("placeholder", data.name);
+        document.getElementById("u_surname").setAttribute("placeholder", data.surname);
+        document.getElementById("u_email_address").setAttribute("placeholder", data.email);
+        document.getElementById("u_phone").setAttribute("placeholder", data.phone_number);
+        document.getElementById("u_city").setAttribute("placeholder", data.city);
+        document.getElementById("u_postal_zip").setAttribute("placeholder", data.zip_code);
+        document.getElementById("u_address").setAttribute("placeholder", data.address);
+    })
+  }
 
 </script>

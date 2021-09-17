@@ -1,0 +1,115 @@
+   <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="#homepage">Home</a> <span class="mx-2 mb-0">/</span> <a href="#cart">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+
+          
+        <div class="row align-items-md-center justify-content-center">
+          <div id="other-info-form" class="col-md-7">
+              <div style="margin-top: 2em">
+                    
+        </div><h2 class="h3 mb-3 text-black text-center">User Details</h2>
+        <div><h5><i onclick="setEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+        </div>
+              <div class="p-3 p-lg-5 border text-center">
+                <form id="user-profile-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="name" class="text-black">First Name <span class="text-danger">*</span></label>
+                    <input disabled name="name" required="" minlength="2" type="text" class="form-control text-center" id="up_fname">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="surname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                    <input disabled name="surname" required="" minlength="2" type="text" class="form-control text-center" id="up_lname">
+                  </div>
+                </div>
+      
+                <div class="form-group row mb-5">
+                  <div class="col-md-6">
+                    <label for="email" class="text-black">Email Address <span class="text-danger">*</span></label>
+                    <input disabled name="email" required="" minlength="5" type="email" class="form-control text-center" id="up_email_address">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="phone_number" class="text-black">Phone <span class="text-danger">*</span></label>
+                    <input disabled name="phone_number" required="" minlength="9" type="text" class="form-control text-center" id="up_phone" placeholder="Phone Number">
+                  </div>
+                </div><div class="form-group row">
+                  
+                  <div class="col-md-12">
+                    <label for="city" class="text-black">City <span class="text-danger">*</span></label>
+                    <input disabled name="city" required="" minlength="3" type="text" class="form-control text-center" id="up_city">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="zip_code" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
+                    <input disabled name="zip_code" required="" minlength="5" maxlength="5" type="number" class="form-control text-center" id="up_postal_zip">
+                  </div>
+                </div><div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="address" class="text-black">Address <span class="text-danger">*</span></label>
+                    <input disabled name="address" required="" minlength="5" type="text" class="form-control text-center" id="up_address" placeholder="Street address">
+                  </div>
+                </div>
+              <button disabled id="up_submit" type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Save changes</button>
+                 </form><div style="margin-top: 2em"> 
+                  <a href="#user_profile" onclick="" class="h6" style="text-decoration: underline;">
+                        Change Password
+                      </a></div></div>
+            </div>          
+            </div>
+          </div>
+          </div>
+          </div>
+
+          
+       <!-- </form> -->
+    </div>
+    
+
+    
+  </div>
+
+
+<script type="text/javascript">
+loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
+  function setEditable(){
+    $('[id^=up]').removeAttr("disabled");
+    }
+
+// parse_jwt(window.localStorage.getItem("token")).id
+  function loadUserProfileDetails(account_id){
+      RestClient.get("api/user/details/"+account_id, function(data){
+        $("#up_fname").val( data.name);
+        $("#up_lname").val(data.surname);
+        $("#up_email_address").val( data.email);
+        $("#up_phone").val( data.phone_number);
+        $("#up_city").val( data.city);
+        $("#up_postal_zip").val( data.zip_code);
+        $("#up_address").val( data.address);
+    });
+  }
+
+  function updateUserDetails(details){
+    var account_id = parse_jwt(window.localStorage.getItem("token")).id
+    RestClient.put("api/user/details/"+account_id, details, function(data){
+      $('[id^=up]').prop('disabled', true);
+      loadUserProfileDetails(account_id);
+      toastr.success("Your profile info has been updated");
+    });
+  }
+
+  $("#user-profile-form").validate({
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      updateUserDetails(jsonize_form($(form)));
+    },
+  });
+
+</script> 

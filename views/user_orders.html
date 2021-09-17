@@ -77,7 +77,6 @@ function loadUserOrders(){
   RestClient.get("api/user/orders",function(data){
       var html ="";
       for (var i = (data.length)-1; i > -1 ; i--){
-        console.log(i);
         html += ` <tr><td id="my-order-id`+i+`">`+data[i].id+`</td>
                   <td id="my-order-address`+i+`">`+data[i].shipping_address+`</td>
                   <td id="my-order-status`+i+`">`+data[i].status+`</td>

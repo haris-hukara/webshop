@@ -11,11 +11,42 @@
 
           
         <div class="row align-items-md-center justify-content-center">
-          <div id="other-info-form" class="col-md-7">
+          <div class="col-md-7">
+              <div style="margin-top: 2em">
+                    
+        </div><h2 class="h3 mb-3 text-black text-center">Email change</h2>
+        <div><h5><i onclick="setEmailEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+        </div>
+              <div class="p-3 p-lg-5 border text-center">
+                <form id="user-email-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
+            
+      
+               <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="account-email" class="text-black">Email Address<span class="text-danger">*</span></label>
+                    <input disabled name="email" required="" minlength="5" type="email" class="form-control text-center" id="ac_email">
+                  </div>
+                </div>
+                         
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="account-password" class="text-black">Password<span class="text-danger">*</span></label>
+                    <input disabled name="password" required="" minlength="8" type="password" class="form-control text-center" id="ac_password">
+                  </div>
+                </div>
+
+             
+                
+              <button disabled id="ac_submit" type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Save changes</button>
+                 </form></div>
+            </div>          
+            </div>
+        <div class="row align-items-md-center justify-content-center">
+          <div class="col-md-7">
               <div style="margin-top: 2em">
                     
         </div><h2 class="h3 mb-3 text-black text-center">User Details</h2>
-        <div><h5><i onclick="setEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+        <div><h5><i onclick="setDetailsEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
         </div>
               <div class="p-3 p-lg-5 border text-center">
                 <form id="user-profile-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
@@ -53,15 +84,12 @@
                   </div>
                 </div><div class="form-group row">
                   <div class="col-md-12">
-                    <label for="address" class="text-black">Address <span class="text-danger">*</span></label>
+                    <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
                     <input disabled name="address" required="" minlength="5" type="text" class="form-control text-center" id="up_address" placeholder="Street address">
                   </div>
                 </div>
               <button disabled id="up_submit" type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Save changes</button>
-                 </form><div style="margin-top: 2em"> 
-                  <a href="#user_profile" onclick="" class="h6" style="text-decoration: underline;">
-                        Change Password
-                      </a></div></div>
+                 </form></div>
             </div>          
             </div>
           </div>
@@ -79,8 +107,11 @@
 
 <script type="text/javascript">
 loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
-  function setEditable(){
+  function setDetailsEditable(){
     $('[id^=up]').removeAttr("disabled");
+    }
+  function setEmailEditable(){
+    $('[id^=ac_]').removeAttr("disabled");
     }
 
 // parse_jwt(window.localStorage.getItem("token")).id
@@ -93,7 +124,16 @@ loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
         $("#up_city").val( data.city);
         $("#up_postal_zip").val( data.zip_code);
         $("#up_address").val( data.address);
+        $("#ac_password").val("");
     });
+    loadAccountInfo(account_id);
+  }
+
+  function loadAccountInfo(account_id){
+    RestClient.get("api/user/account/"+account_id, function(data){
+        $("#ac_email").val(data.email);
+    });
+
   }
 
   function updateUserDetails(details){
@@ -105,10 +145,39 @@ loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
     });
   }
 
+  
+  function updateUserAccount(details, account_id){
+    delete details['password'];
+    RestClient.put("api/account/"+account_id, details, function(data){
+      $('[id^=ac_]').prop('disabled', true);
+      loadUserProfileDetails(account_id);
+      toastr.success("Your email address for login has been updated");
+    });
+  }
+  
+  function checkAndUpdate(details){
+    var account_id = parse_jwt(window.localStorage.getItem("token")).id
+    RestClient.get("api/user/password/account/"+account_id+"?password="+details.password, function(data){
+      if(data == true){
+        updateUserAccount(details,account_id)
+      }else{
+        toastr.error("Wrong password");
+      }
+    })
+   
+  }
+
   $("#user-profile-form").validate({
     submitHandler: function (form, event) {
       event.preventDefault();
       updateUserDetails(jsonize_form($(form)));
+    },
+  });
+
+  $("#user-email-form").validate({
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      checkAndUpdate(jsonize_form($(form)));
     },
   });
 

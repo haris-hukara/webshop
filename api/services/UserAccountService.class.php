@@ -43,6 +43,24 @@ class UserAccountService extends BaseService{
       }
     }
 
+    public function checkAccountPassword($user, $id, $password){
+      $user_account;
+      try {
+        $user_account =  $this->dao->get_by_id($id);
+      } catch (\Exception $e) {
+        throw $e;
+      }
+
+      if($user['id'] == $user_account['id'] ){
+        if ($user_account['password'] == md5($password)){
+          return true;
+        };
+      }else{
+        throw new Exception("Not your account", 401);
+      }
+        return false;
+    }
+
     public function forgot($userAccount){
       $db_user = $this->dao->get_user_by_email($userAccount['email']);
       if(!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);

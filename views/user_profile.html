@@ -164,7 +164,7 @@ loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
   }
 
   function loadAccountInfo(account_id){
-    RestClient.get("api/user/account/"+account_id, function(data){
+    RestClient.post("api/user/account/"+account_id, function(data){
         $("#ac_email").val(data.email);
     });
 

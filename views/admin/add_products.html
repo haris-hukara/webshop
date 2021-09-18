@@ -1,0 +1,284 @@
+<style>
+  .error {
+    color: #c80000;
+  }
+  label[id$="size-error"] {
+    display: block;
+    background-color: #fff;
+    margin: 0.15em;
+    font-size: 0.7em;
+    line-height: 1.4;
+    text-align: center;
+  }
+</style>
+<div class="site-section">
+  <div class="container">
+    <div class="row align-items-center justify-content-center">
+      <div
+        class="col-md-3 text-center align-items-center justify-content-center"
+        style="margin: 2em"
+      >
+        <div
+          class="
+            align-items-md-center
+            justify-content-center
+            aos-animate aos-init
+          "
+          data-aos="fade-up"
+        >
+          <div class="block-4 text-center border">
+            <figure class="block-4-image">
+              <a
+                ><img
+                  src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
+                  alt="Product image"
+                  class="img-fluid"
+              /></a>
+            </figure>
+            <div class="block-4-text p-4">
+              <h3><a id="product_name">Product name</a></h3>
+              <p id="product_price" class="text-primary font-weight-bold">
+                00.00 KM
+              </p>
+              <select id="product_sizes" class="btn btn btn-secondary">
+                "
+                <option class="dropdown-item" value="1">XS</option>
+                ""
+                <option class="dropdown-item" value="2">S</option>
+                ""
+                <option class="dropdown-item" value="3">M</option>
+                ""
+                <option class="dropdown-item" value="4">L</option>
+                ""
+                <option class="dropdown-item" value="5">XL</option>
+                "
+              </select>
+              <button
+                type="button"
+                class="btn"
+                style="
+                  border-radius: 0.2em;
+                  margin-left: 0.5em;
+                  background-color: #7971ea;
+                  color: white;
+                "
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="p-3 p-lg-5 border text-center">
+        <form
+          id="add-product-form"
+          class="login100-form validate-form flex-sb flex-w"
+          role="form"
+          novalidate="novalidate"
+        >
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="name" class="text-black"
+                >Product name<span class="text-danger">*</span></label
+              >
+              <input
+                name="name"
+                required=""
+                minlength="2"
+                type="text"
+                class="form-control text-center"
+                id="product_name"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="unit_price" class="text-black"
+                >Unit price<span class="text-danger">*</span></label
+              >
+              <input
+                name="unit_price"
+                required=""
+                min="1"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_unit_price"
+              />
+            </div>
+          </div>
+
+          <div class="form-group row mb-5">
+            <div class="col-md-6">
+              <label for="image_link" class="text-black"
+                >Image Link<span class="text-danger">*</span></label
+              >
+              <input
+                name="image_link"
+                required=""
+                minlength="5"
+                type="text"
+                class="form-control text-center"
+                id="product_link"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="gender_category" class="text-black"
+                >Gender category<span class="text-danger">*</span></label
+              >
+              <input
+                name="gender_category"
+                required=""
+                minlength="1"
+                maxlength="1"
+                type="text"
+                class="form-control text-center"
+                id="product_gender"
+                placeholder="M / F"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="category" class="text-black"
+                >Category<span class="text-danger">*</span></label
+              >
+              <select
+                name="category"
+                id="product_category"
+                class="text-center form-control valid"
+                aria-invalid="false"
+              >
+                <option value="1">Clothes</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="subcategory_id" class="text-black"
+                >Sub category<span class="text-danger">*</span></label
+              >
+              <select
+                name="subcategory_id"
+                id="product_subcategory"
+                class="text-center form-control valid"
+                aria-invalid="false"
+              >
+                <option value="1">Hoodie</option>
+                <option value="2">T-Shirt</option>
+                <option value="3">Jeans</option>
+              </select>
+            </div>
+          </div>
+          <label for="sizes" class="text-black mt-3"
+            >Enter stock quantity for each size<span class="text-danger"
+              >*</span
+            ></label
+          >
+          <div
+            class="
+              form-group
+              row
+              text-center
+              align-items-center
+              justify-content-center
+            "
+          >
+            <div class="col-md-2">
+              <label for="xs" class="text-black"
+                >XS<span class="text-danger">*</span></label
+              ><input
+                name="xs"
+                required=""
+                min="0"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_xs_size"
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="s" class="text-black"
+                >S<span class="text-danger">*</span></label
+              ><input
+                name="s"
+                required=""
+                min="0"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_s_size"
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="m" class="text-black"
+                >M<span class="text-danger">*</span></label
+              ><input
+                name="m"
+                required=""
+                min="0"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_m_size"
+              />
+            </div>
+          </div>
+          <div
+            class="
+              form-group
+              row
+              text-center
+              align-items-center
+              justify-content-center
+            "
+          >
+            <div class="col-md-2">
+              <label for="l" class="text-black"
+                >L<span class="text-danger">*</span></label
+              ><input
+                name="l"
+                required=""
+                min="0"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_l_size"
+              />
+            </div>
+            <div class="col-md-2">
+              <label for="xl" class="text-black"
+                >XL<span class="text-danger">*</span></label
+              ><input
+                name="xl"
+                required=""
+                min="0"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_xl_size"
+              />
+            </div>
+          </div>
+          <button
+            id="up_submit"
+            type="submit"
+            class="btn btn-primary btn-lg py-2 btn-block"
+            style="margin-top: 2em"
+          >
+            Add product
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $("#add-product-form").validate({
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      console.log(jsonize_form($(form)));
+      //checkAndUpdate(jsonize_form($(form)));
+    },
+  });
+</script>

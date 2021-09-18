@@ -71,7 +71,7 @@
                 "
               >
                 <div class="site-logo">
-                  <a href="#homepage" class="js-logo-clone">Shoppers</a>
+                  <a href="index.html" class="js-logo-clone">Shoppers</a>
                 </div>
               </div>
 
@@ -112,13 +112,9 @@
         >
           <div class="container">
             <ul class="site-menu js-clone-nav d-none d-md-block">
-              <li><a href="#homepage">Home</a></li>
-              <li><a href="#shop">Shop</a></li>
-              <li>
-                <a href="#user_orders" onClick="loadUserOrders()">My orders</a>
-              </li>
+              <li><a href="index.html">Home</a></li>
               <li class="admin-stuff">
-                <a href="admin.html">Admin panel</a>
+                <a href="#add_products">Admin</a>
               </li>
               <li>
                 <a onclick="doLogout();" href="login.html"
@@ -131,13 +127,10 @@
       </header>
 
       <main id="jqueryspapp" role="main">
-        <section id="homepage" data-load="homepage.html"></section>
-        <section id="shop" data-load="shop.html"></section>
-        <section id="cart" data-load="cart.html"></section>
-        <section id="checkout" data-load="checkout.html"></section>
-        <section id="user_orders" data-load="user_orders.html"></section>
-        <section id="thankyou" data-load="thankyou.html"></section>
-        <section id="user_profile" data-load="user_profile.html"></section>
+        <section
+          id="add_products"
+          data-load="admin/add_products.html"
+        ></section>
       </main>
 
       <footer class="site-footer border-top">
@@ -268,7 +261,7 @@
 
     <script type="text/javascript">
       $(document).ready(function () {
-        var app = $.jQuerySPApp({ defaultView: "#homepage" }); // initialize
+        var app = $.jQuerySPApp({ defaultView: "#add_products" }); // initialize
 
         if (!window.localStorage.getItem("token")) {
           window.location = "login.html";

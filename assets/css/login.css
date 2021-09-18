@@ -365,7 +365,7 @@ iframe {
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/
-/* selecting all labels whose id ends with -error  */
+/* selecting all labels where id ends with -error  */
 label[id$="-error"] {
   display: block;
   background-color: #fff;

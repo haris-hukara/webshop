@@ -1,7 +1,7 @@
    <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="#homepage">Home</a> <span class="mx-2 mb-0">/</span> <a href="#cart">Cart</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
+          <div class="col-md-12 mb-0"><a href="#homepage">Home</a><span class="mx-2 mb-0">/</span> <strong class="text-black">My account</strong></div>
         </div>
       </div>
     </div>
@@ -10,37 +10,7 @@
       <div class="container">
 
           
-        <div class="row align-items-md-center justify-content-center">
-          <div class="col-md-7">
-              <div style="margin-top: 2em">
-                    
-        </div><h2 class="h3 mb-3 text-black text-center">Email change</h2>
-        <div><h5><i onclick="setEmailEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
-        </div>
-              <div class="p-3 p-lg-5 border text-center">
-                <form id="user-email-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
-            
-      
-               <div class="form-group row">
-                  <div class="col-md-12">
-                    <label for="account-email" class="text-black">Email Address<span class="text-danger">*</span></label>
-                    <input disabled name="email" required="" minlength="5" type="email" class="form-control text-center" id="ac_email">
-                  </div>
-                </div>
-                         
-                <div class="form-group row">
-                  <div class="col-md-12">
-                    <label for="account-password" class="text-black">Password<span class="text-danger">*</span></label>
-                    <input disabled name="password" required="" minlength="8" type="password" class="form-control text-center" id="ac_password">
-                  </div>
-                </div>
-
-             
-                
-              <button disabled id="ac_submit" type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Save changes</button>
-                 </form></div>
-            </div>          
-            </div>
+     
         <div class="row align-items-md-center justify-content-center">
           <div class="col-md-7">
               <div style="margin-top: 2em">
@@ -92,6 +62,66 @@
                  </form></div>
             </div>          
             </div>
+            <div class="row align-items-md-center justify-content-center">
+              <div class="col-md-7">
+                  <div style="margin-top: 2em">
+                        
+            </div><h2 class="h3 mb-3 text-black text-center">Email change</h2>
+            <div><h5><i onclick="setEmailEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+            </div>
+                  <div class="p-3 p-lg-5 border text-center">
+                    <form id="user-email-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
+                
+          
+                   <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="account-email" class="text-black">Email Address<span class="text-danger">*</span></label>
+                        <input disabled name="email" required="" minlength="5" type="email" class="form-control text-center" id="ac_email">
+                      </div>
+                    </div>
+                             
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="account-password" class="text-black">Password<span class="text-danger">*</span></label>
+                        <input disabled name="password" required="" minlength="8" type="password" class="form-control text-center" id="ac_password">
+                      </div>
+                    </div>
+    
+                 
+                    
+                  <button disabled id="ac_submit" type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Save changes</button>
+                     </form></div>
+                </div>          
+                </div>
+            <div class="row align-items-md-center justify-content-center">
+              <div class="col-md-7">
+                  <div style="margin-top: 2em">
+                        
+            </div><h2 class="h3 mb-3 text-black text-center">Password change</h2>
+            <div><h5><i onclick="setPasswordEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+            </div>
+                  <div class="p-3 p-lg-5 border text-center">
+                    <form id="user-password-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
+                
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="account-password" class="text-black">Old Password<span class="text-danger">*</span></label>
+                        <input disabled name="old_password" required="" minlength="8" type="password" class="form-control text-center" id="cp_old_password">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label for="account-password" class="text-black">New Password<span class="text-danger">*</span></label>
+                        <input disabled name="password" required="" minlength="8" type="password" class="form-control text-center" id="cp_password">
+                      </div>
+                    </div>
+    
+                 
+                    
+                  <button disabled id="cp_submit" type="submit" class="btn btn-primary btn-lg py-2 btn-block" style="margin-top: 2em;">Save changes</button>
+                     </form></div>
+                </div>          
+                </div>
           </div>
           </div>
           </div>
@@ -112,6 +142,10 @@ loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
     }
   function setEmailEditable(){
     $('[id^=ac_]').removeAttr("disabled");
+  }
+  
+  function setPasswordEditable(){
+      $('[id^=cp_]').removeAttr("disabled");
     }
 
 // parse_jwt(window.localStorage.getItem("token")).id
@@ -154,12 +188,20 @@ loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
       toastr.success("Your email address for login has been updated");
     });
   }
+  function updateUserAccountPassword(details, account_id){
+    delete details['old_password'];
+    RestClient.put("api/account/"+account_id, details, function(data){
+      $('[id^=cp_]').prop('disabled', true);
+      $('[id^=cp_]').val("");
+      toastr.success("Your password has been updated");
+    });
+  }
   
   function checkAndUpdate(details){
     var account_id = parse_jwt(window.localStorage.getItem("token")).id
-    RestClient.get("api/user/password/account/"+account_id+"?password="+details.password, function(data){
+    RestClient.get("api/user/password/account/"+account_id+"?password="+details.old_password, function(data){
       if(data == true){
-        updateUserAccount(details,account_id)
+        updateUserAccountPassword(details,account_id)
       }else{
         toastr.error("Wrong password");
       }
@@ -175,6 +217,13 @@ loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
   });
 
   $("#user-email-form").validate({
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      checkAndUpdate(jsonize_form($(form)));
+    },
+  });
+
+  $("#user-password-form").validate({
     submitHandler: function (form, event) {
       event.preventDefault();
       checkAndUpdate(jsonize_form($(form)));

@@ -30,6 +30,7 @@
             <figure class="block-4-image">
               <a
                 ><img
+                  id="product_image"
                   src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
                   alt="Product image"
                   class="img-fluid"
@@ -41,17 +42,11 @@
                 00.00 KM
               </p>
               <select id="product_sizes" class="btn btn btn-secondary">
-                "
                 <option class="dropdown-item" value="1">XS</option>
-                ""
                 <option class="dropdown-item" value="2">S</option>
-                ""
                 <option class="dropdown-item" value="3">M</option>
-                ""
                 <option class="dropdown-item" value="4">L</option>
-                ""
                 <option class="dropdown-item" value="5">XL</option>
-                "
               </select>
               <button
                 type="button"
@@ -187,7 +182,7 @@
               <label for="xs" class="text-black"
                 >XS<span class="text-danger">*</span></label
               ><input
-                name="xs"
+                name="size1"
                 required=""
                 min="0"
                 step="1"
@@ -200,7 +195,7 @@
               <label for="s" class="text-black"
                 >S<span class="text-danger">*</span></label
               ><input
-                name="s"
+                name="size2"
                 required=""
                 min="0"
                 step="1"
@@ -213,7 +208,7 @@
               <label for="m" class="text-black"
                 >M<span class="text-danger">*</span></label
               ><input
-                name="m"
+                name="size3"
                 required=""
                 min="0"
                 step="1"
@@ -236,7 +231,7 @@
               <label for="l" class="text-black"
                 >L<span class="text-danger">*</span></label
               ><input
-                name="l"
+                name="size4"
                 required=""
                 min="0"
                 step="1"
@@ -249,7 +244,7 @@
               <label for="xl" class="text-black"
                 >XL<span class="text-danger">*</span></label
               ><input
-                name="xl"
+                name="size5"
                 required=""
                 min="0"
                 step="1"
@@ -260,7 +255,6 @@
             </div>
           </div>
           <button
-            id="up_submit"
             type="submit"
             class="btn btn-primary btn-lg py-2 btn-block"
             style="margin-top: 2em"
@@ -268,17 +262,76 @@
             Add product
           </button>
         </form>
+        <button
+          class="btn btn-primary btn-lg py-2 btn-block"
+          style="margin-top: 2em"
+          onclick="previewProduct()"
+        >
+          Preview product
+        </button>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
+  $("[name^=size]").val(0);
+
   $("#add-product-form").validate({
     submitHandler: function (form, event) {
       event.preventDefault();
-      console.log(jsonize_form($(form)));
+      addProductInStore(jsonize_form($(form)));
       //checkAndUpdate(jsonize_form($(form)));
     },
   });
+
+  function addProductInStore(details) {
+    var stock = {};
+    RestClient.post("api/admin/products", details, function (data) {
+      stock["product_id"] = data.id;
+      for (var size = 1; size < 6; size++) {
+        stock["size_id"] = size;
+        stock["quantity_avaliable"] = details["size" + size];
+        if (stock["quantity_avaliable"] > 0) {
+          addProductStock(stock);
+        }
+      }
+      toastr.success("Product successfully added");
+      document.getElementById("add-product-form").reset();
+      $("[name^=size]").val(0);
+    });
+  }
+
+  function addProductStock(details) {
+    RestClient.post("api/admin/products/stock", details, function (data) {});
+  }
+
+  function previewProduct() {
+    var info = jsonize_form($("#add-product-form"));
+    for (var element in info) {
+      if (info[element] == "" || info[element] == null) {
+        toastr.error("Please enter data for all fields");
+        return false;
+      }
+    }
+    $("#product_image").attr("src", info.image_link);
+    $("#product_name").html(info.name);
+    $("#product_price").html(info.unit_price + ".00 KM");
+    setSizesDropdown(info);
+  }
+
+  function setSizesDropdown(info) {
+    var html = `<option class="dropdown-item" value="1">XS</option>
+                <option class="dropdown-item" value="2">S</option>
+                <option class="dropdown-item" value="3">M</option>
+                <option class="dropdown-item" value="4">L</option>
+                <option class="dropdown-item" value="5">XL</option>`;
+    $("#product_sizes").html(html);
+
+    for (var i = 1; i < 6; i++) {
+      if (info["size" + i] <= 0 || info["size" + i] == null) {
+        $("option[value='" + i + "']").remove();
+      }
+    }
+  }
 </script>

@@ -211,6 +211,7 @@
     var size_id = getSizeId("size" + size);
     var size_name = getSizeName("size" + size);
     var product_name = document.getElementById("name-p"+size).innerHTML;
+    var product_picture = $("#picture-p"+size).attr('src');
 
     if (getCart() == false) {
       document.getElementById("count").setAttribute("hidden", "true");
@@ -232,7 +233,8 @@
         product_id: product_id,
         size_name: size_name,
         size_id: size_id,
-        quantity: quantity
+        quantity: quantity,
+        product_picture: product_picture
       });
       localStorage.setItem("products", JSON.stringify(products));
      
@@ -258,13 +260,15 @@
                               +"&search="+search
                               +"&order="+order, function (data) {
         var html = "";
+        console.log(data);
         for (var i = 0; i < data.length; i++) {
           html +=
             `<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
                    <div class="block-4 text-center border">
                     <figure class="block-4-image">
                     <a><img
-                        src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
+                        id="picture-p`+i+`"
+                        src="`+data[i].image_link+`"
                         alt="Product image" class="img-fluid"/></a>
                     </figure>
                   <div class="block-4-text p-4">

@@ -200,7 +200,7 @@
                         
                       <figure class="block-4-image">
                         <a><img
-                            src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg"
+                            src="`+JSON.parse(localStorage.getItem("products"))[i].product_picture+`"
                             alt="Product image"
                             class="img-fluid"
                         /></a>
@@ -251,7 +251,7 @@
              html +=`
                     <tr>
                       <td class="product-thumbnail">
-                        <img style="width:80px"src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid">
+                        <img style="width:80px"src="`+getLocalStorage("products")[i].product_picture+`" alt="Image" class="img-fluid">
                       </td>
                       <td class="product-name">
                         <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2>

@@ -54,8 +54,8 @@ function loadOrderDetails(order_id){
       var html ="";
       for (var i = 0; i < data.length; i++){
         html += ` <tr>
-            <td class="product-thumbnail">
-              <img style="width: 80px" src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid"></td>
+            <td class="product-thumbnail d-flex justify-content-center">
+              <img style="width: 80px" src="`+data[i].image_link+`" alt="Image" class="img-fluid"></td>
             <td><h2 class="h5 text-black">`+data[i].product_name+`</h2></td>
             <td><h2 class="h5 text-black">`+data[i].size+`</h2></td>
             <td>`+data[i].unit_price+`.00 KM</td>

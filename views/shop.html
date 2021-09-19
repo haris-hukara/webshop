@@ -1,4 +1,19 @@
+<style>
+  .product_picture{
+    margin-top: 0.3em;
+    height: 20em;
+    width: 15em;
+    object-fit: cover;
+    object-position: center;
+  }
 
+  p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+</style>
     <div class="site-wrap">
 
       <div class="bg-light py-3">
@@ -59,8 +74,8 @@
                   <div class=" float-md-left d-flex">
                     <div class="dropdown mr-1 ml-md-auto">
                       <select id="per_page" class="btn btn btn-secondary">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                         </select>
@@ -207,11 +222,11 @@
       })
   }
 
-  function addProduct(product_id, size, quantity) {
-    var size_id = getSizeId("size" + size);
-    var size_name = getSizeName("size" + size);
-    var product_name = document.getElementById("name-p"+size).innerHTML;
-    var product_picture = $("#picture-p"+size).attr('src');
+  function addProduct(product_id, position, quantity) {
+    var size_id = getSizeId("size" + position);
+    var size_name = getSizeName("size" + position);
+    var product_name = document.getElementById("name-p"+position).innerHTML;
+    var product_picture = $("#picture-p"+position).attr('src');
 
     if (getCart() == false) {
       document.getElementById("count").setAttribute("hidden", "true");
@@ -222,7 +237,7 @@
       var product_index = inCart(product_id, size_id);
       var new_quantity = getQuantity(product_index) + quantity;
       removeProduct(product_index);
-      addProduct(product_id, size, new_quantity);
+      addProduct(product_id, position, new_quantity);
     } else {
       let products = [];
       if (localStorage.getItem("products")) {
@@ -245,11 +260,11 @@
   }
 
   function loadPage(offset, limit) {
-    loadProducts(offset,limit,storedSearch().search,order,storedSearch().order_by);
+    loadProducts(offset,limit,storedSearch().search, storedSearch().order_by);
   }
 
   function loadDefaulltProducts() {
-    loadProducts((offset = 0), (limit = 10), (search = ""), (order = "%2bid"));
+    loadProducts((offset = 0), (limit = 5), (search = ""), (order = "-name"));
     setTotalRecordsOfSearch("");
     createPaggination(getTotalRecords(), 5);
   }
@@ -260,7 +275,6 @@
                               +"&search="+search
                               +"&order="+order, function (data) {
         var html = "";
-        console.log(data);
         for (var i = 0; i < data.length; i++) {
           html +=
             `<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
@@ -268,12 +282,13 @@
                     <figure class="block-4-image">
                     <a><img
                         id="picture-p`+i+`"
+                        class="product_picture"
                         src="`+data[i].image_link+`"
                         alt="Product image" class="img-fluid"/></a>
                     </figure>
                   <div class="block-4-text p-4">
-                    <h3><a id="name-p`+i+`">`+data[i].name+`</a></h3>
-                    <p class="text-primary font-weight-bold">`+data[i].unit_price+` KM</p>
+                    <h3><p id="name-p`+i+`">`+data[i].name+`</p></h3>
+                    <p class="text-primary font-weight-bold mb-3 h5">`+data[i].unit_price+` KM</p>
                       <select id="size`+i+`" class="btn btn btn-secondary">`+getProductSizesInStock(data[i].id, i)+`</select>
                       <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
               </div></div></div></div>`;

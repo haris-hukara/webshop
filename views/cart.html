@@ -184,45 +184,7 @@
     }
   }
     
-    function loadData(offset = 0, limit = 10, search ="", order ="%2bid" ){
-        $.ajax({
-          url:"api/products?offset="+offset+"&limit="+limit+"&search="+search+"&order=" + order,
-          type:"GET",
-          success: function(data){
-            var html ="";
-            for (var i = 0; i < data.length; i++){
-              html += `<div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                       <div class="block-4 text-center border">
-                        
-                      <figure class="block-4-image">
-                        <a><img
-                            src="`+JSON.parse(localStorage.getItem("products"))[i].product_picture+`"
-                            alt="Product image"
-                            class="img-fluid"
-                        /></a>
-                      </figure>
-                      
-                      <div class="block-4-text p-4">
-                        <h3><a>`+data[i].name+`</a></h3>
-                        <p class="text-primary font-weight-bold">`+data[i].unit_price+` KM</p>
-                        
-                        
-                          <select id="size`+i+`" class="btn btn btn-secondary">
-                            `+getProductSizesInStock(data[i].id,i)+`
-                            </select>
-                              
-                          <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
-                  </div>
-                  </div>
-                  </div>        
-                  </div>`
-            }
-  
-            $("#data-load").html(html);
-          }
-        })
-    }
-   
+ 
     function getLocalStorage(name) {
       return JSON.parse(localStorage.getItem(name));
   }

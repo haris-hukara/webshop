@@ -260,6 +260,9 @@
   }
 
   function loadPage(offset, limit) {
+    if(localStorage.getItem("search") == null){
+      localStorage.setItem("search",'[{"order_by":"-name","per_page":"5","search":""}]')
+    }
     loadProducts(offset,limit,storedSearch().search, storedSearch().order_by);
   }
 
@@ -288,7 +291,7 @@
                     </figure>
                   <div class="block-4-text p-4">
                     <h3><p id="name-p`+i+`">`+data[i].name+`</p></h3>
-                    <p class="text-primary font-weight-bold mb-3 h5">`+data[i].unit_price+` KM</p>
+                    <p class="text-primary font-weight-bold mb-3 h5">`+data[i].unit_price+`.00 KM</p>
                       <select id="size`+i+`" class="btn btn btn-secondary">`+getProductSizesInStock(data[i].id, i)+`</select>
                       <button onclick="addProduct(`+data[i].id+`,`+i+`,1)" type="button" class="btn" style="border-radius: 0.2em; margin-left: 0.5em; background-color: #7971ea; color: white;">Add to Cart</button>
               </div></div></div></div>`;

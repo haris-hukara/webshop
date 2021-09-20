@@ -13,7 +13,7 @@ class AUtils{
     for (const attr in data){
       $(selector+" *[name='"+attr+"']").val(data[attr]);
     }
-  }
+  } 
 
   /*
   https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library

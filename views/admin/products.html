@@ -282,7 +282,7 @@
 
   function editProduct(id) {
       RestClient.get("api/admin/products/"+id, function(data){
-      json2form("#update-product", data);
+      AUtils.json2form("#update-product", data);
       $("#edit-product-modal").modal("show");
     });
     }

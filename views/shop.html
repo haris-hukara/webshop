@@ -15,12 +15,11 @@
 
 </style>
     <div class="site-wrap">
-
-      <div class="bg-light py-3">
+    <div class="bg-light py-3">
         <div class="container">
           <div class="row">
             <div class="col-md-12 mb-0">
-              <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
+              <a href="#homepage">Home</a> <span class="mx-2 mb-0">/</span>
               <strong class="text-black">Shop</strong>
             </div>
           </div>
@@ -334,30 +333,47 @@ function calculateProductTotal(html_id){
 function createCartForProduct(){
    var html=""
   for ( var i = 0; i < getLocalStorage("products").length; i++){
-             html +=`<tr><td class="product-thumbnail">
-                        <img style="width:80px"src="https://www.prodirectsoccer.com/productimages/V3_1_Main/141121_Main_Thumb_0413664.jpg" alt="Image" class="img-fluid"></td>
+             html +=`
+                    <tr>
+                      <td class="product-thumbnail">
+                        <img style="width:80px"src="`+getLocalStorage("products")[i].product_picture+`" alt="Image" class="img-fluid">
+                      </td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2></td>
+                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2>
+                      </td>
                       <td class="product-size">
-                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].size_name+`</h2></td>
-                      <td id="unit-p`+i+`">`+setUnitPrice(i,getLocalStorage("products")[i].product_id)+`.00 KM</td><td>
+                        <h2 class="h5 text-black">`+getLocalStorage("products")[i].size_name+`</h2>
+                      </td>
+                      <td id="unit-p`+i+`">`+setUnitPrice(i,getLocalStorage("products")[i].product_id)+`.00 KM</td>
+                      <td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
-                            <button class="btn btn-outline-primary js-btn-minus" type="button">−</button></div>
+                            <button class="btn btn-outline-primary js-btn-minus" type="button">
+                              −
+                            </button>
+                          </div>
                           <input id="quantity-p`+i+`" type="text" class="form-control text-center" value="`+getLocalStorage("products")[i].quantity+`" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                           <div class="input-group-append">
-                            <button class="btn btn-outline-primary js-btn-plus" type="button">+</button>
-                          </div></div></td>
+                            <button class="btn btn-outline-primary js-btn-plus" type="button">
+                              +
+                            </button>
+                          </div>
+                        </div>  
+                      </td>
                       <td id="total-p`+i+`">00.00 KM</td>
-                      <td><button onClick="removeProductFromCart(`+i+`)" data-aos="fade-down" type="button" class="btn aos-init aos-animate" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">X</button></td></tr>`
-}
+                      <td> <button onClick="removeProductFromCart(`+i+`)" data-aos="fade-down" type="button" class="btn aos-init aos-animate" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">X</button>
+                  </td>
+                    </tr>`
+
+                  }
                 $("#cart_table").html(html);
                 setTimeout(function () {
                   for ( var i = 0; i < getLocalStorage("products").length; i++){
                   $("#total-p"+i).html(calculateProductTotal(i) +".00 KM");
                   }
-                }, 500);
-                setTimeout(function () {calcutaTotal()},500);
+                }, 1500);
+                setTimeout(function () {calcutaTotal()},1500);
+                
                 }
 
     

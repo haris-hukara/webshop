@@ -7,8 +7,18 @@ class ProductStockDao extends BaseDao{
         parent::__construct("product_stock");
     }
     
-    public function get_product_stock_by_size_name($id, $size = NULL){
+    public function get_stock_by_product_id($id){
+        $query ="SELECT * 
+                 FROM product_stock
+                 WHERE product_id = :id"; 
         
+        $params = [];
+        $params["id"] = $id;      
+        return $this->query($query,$params);
+    }
+
+    public function get_product_stock_by_size_name($id, $size = NULL){
+         
         $query ="SELECT p.id, p.name, s.name AS 'size', ps.quantity_avaliable 
                  FROM products p
                  JOIN product_stock ps ON ps.product_id = p.id
@@ -19,7 +29,7 @@ class ProductStockDao extends BaseDao{
         $params["id"] = $id;
 
         if ($size){
-            $query .= " AND LOWER(s.name) = :size";
+            $query .= " AND LOWER(s.name) = :size ";
             $params["size"] = strtolower($size);
         }
             return $this->query_unique($query,$params);

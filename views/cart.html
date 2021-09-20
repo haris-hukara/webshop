@@ -1,18 +1,15 @@
-    <div class="site-wrap">
- 
-
-      <div class="bg-light py-3">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 mb-0">
-              <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
-              <strong class="text-black">Cart</strong>
-            </div>
-          </div>
-        </div>
+<div class="bg-light py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-0">
+        <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span>
+        <strong class="text-black">Cart</strong>
       </div>
-
-      <div class="site-section">
+    </div>
+  </div>
+</div>
+ <div class="site-wrap">
+       <div class="site-section">
         <div class="container">
           <div class="row mb-5">
             <form class="col-md-12" method="post">
@@ -113,17 +110,6 @@
   
   function getTotalRecords(){
     return JSON.parse(localStorage.getItem("total_records"));
-  }
-  
-  
-  function getProducts(){
-      $.ajax({
-          url:"api/products",
-          type: "GET",
-          beforeSend: function(xhr){xhr.setRequestHeader('Authorization', localStorage.getItem("token"));},
-          success: function (data){
-              console.log(data);}
-      });
   }
   
   
@@ -244,8 +230,8 @@
                   for ( var i = 0; i < getLocalStorage("products").length; i++){
                   $("#total-p"+i).html(calculateProductTotal(i) +".00 KM");
                   }
-                }, 2500);
-                setTimeout(function () {calcutaTotal()},2500);
+                }, 1500);
+                setTimeout(function () {calcutaTotal()},1500);
                 
                 }
 

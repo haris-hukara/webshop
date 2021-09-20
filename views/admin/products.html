@@ -1,0 +1,417 @@
+<div id="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Products</h1>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+    <div class="row" style="margin-top: 10px">
+      <div class="table-responsive">
+        <table
+          id="products-table"
+          class="table responsive table-striped table-bordered table-hover"
+        >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Unit price</th>
+              <th>Gender</th>
+              <th>Subcategory ID</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <!-- /.table-responsive -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+
+</div>
+<!-- /#page-wrapper -->
+<div class="modal fade" id="product-stock-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form role="form" id="product-stock-update">
+            <input type="hidden" name="product_id" />
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Product Stock</h4>
+            </div>
+            <div class="modal-body">
+                <label style="display: flex; justify-content: center" for="sizes" class="text-black mt-3"
+                >Enter stock quantity for each size<span class="text-danger"
+                  >*</span
+                ></label
+              >
+              <div
+                class="
+                  form-group
+                  row
+                  text-center
+                  align-items-center
+                  justify-content-center
+                "
+                style="display: flex; justify-content: center"
+              >
+                <div class="col-md-2">
+                  <label for="xs" class="text-black"
+                    >XS<span class="text-danger">*</span></label
+                  ><input
+                    name="size-1"
+                    required=""
+                    min="0"
+                    step="1"
+                    type="number"
+                    class="form-control text-center"
+                    id="product_xs_size"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="s" class="text-black"
+                    >S<span class="text-danger">*</span></label
+                  ><input
+                    name="size-2"
+                    required=""
+                    min="0"
+                    step="1"
+                    type="number"
+                    class="form-control text-center"
+                    id="product_s_size"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="m" class="text-black"
+                    >M<span class="text-danger">*</span></label
+                  ><input
+                    name="size-3"
+                    required=""
+                    min="0"
+                    step="1"
+                    type="number"
+                    class="form-control text-center"
+                    id="product_m_size"
+                  />
+                </div>
+              </div>
+              <div
+                class="
+                  form-group
+                  row
+                  text-center
+                  align-items-center
+                  justify-content-center
+                "
+                style="display: flex; justify-content: center"
+              >
+                <div class="col-md-2">
+                  <label for="l" class="text-black"
+                    >L<span class="text-danger">*</span></label
+                  ><input
+                    name="size-4"
+                    required=""
+                    min="0"
+                    step="1"
+                    type="number"
+                    class="form-control text-center"
+                    id="product_l_size"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label for="xl" class="text-black"
+                    >XL<span class="text-danger">*</span></label
+                  ><input
+                    name="size-5"
+                    required=""
+                    min="0"
+                    step="1"
+                    type="number"
+                    class="form-control text-center"
+                    id="product_xl_size"
+                  />
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div
+  class="modal fade"
+  id="edit-product-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form role="form" id="update-product">
+        <input type="hidden" name="id" />
+        <div class="modal-header">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-hidden="true"
+          >
+            &times;
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Product</h4>
+        </div>
+        <div class="modal-body">
+        
+            
+        <div class="form-group row mb-5">
+            <div class="col-md-6">
+              <label for="name" class="text-black"
+                >Product name<span class="text-danger">*</span></label
+              >
+              <input
+                name="name"
+                required=""
+                minlength="2"
+                type="text"
+                class="form-control text-center"
+                id="product_name"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="unit_price" class="text-black"
+                >Unit price<span class="text-danger">*</span></label
+              >
+              <input
+                name="unit_price"
+                required=""
+                min="1"
+                step="1"
+                type="number"
+                class="form-control text-center"
+                id="product_unit_price"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="image_link" class="text-black"
+                >Image Link<span class="text-danger">*</span></label
+              >
+              <input
+                name="image_link"
+                required=""
+                minlength="5"
+                type="text"
+                class="form-control text-center"
+                id="product_link"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="gender_category" class="text-black"
+                >Gender category<span class="text-danger">*</span></label
+              >
+              <select
+                name="gender_category"
+                id="gender_category"
+                class="text-center form-control valid"
+                aria-invalid="false"
+              >
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+            </div>
+          </div>
+   
+  
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="subcategory_id" class="text-black"
+                >Sub category<span class="text-danger">*</span></label
+              >
+              <select
+                name="subcategory_id"
+                id="product_subcategory"
+                class="text-center form-control valid"
+                aria-invalid="false"
+              >
+                <option value="1">Hoodie</option>
+                <option value="2">T-Shirt</option>
+                <option value="3">Jeans</option>
+              </select>
+            </div>
+          </div>
+            
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+  <script type="text/javascript">
+    getProducts();
+
+    $("#update-product").validate({
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      updateProduct(jsonize_form($(form)));
+      //checkAndUpdate(jsonize_form($(form)));
+    },
+  });
+
+  function editProduct(id) {
+      RestClient.get("api/admin/products/"+id, function(data){
+      json2form("#update-product", data);
+      $("#edit-product-modal").modal("show");
+    });
+    }
+
+  function updateProduct(details) {
+    RestClient.put("api/admin/products/" + details.id, details, function (data) {
+      toastr.success("Product successfully updated");
+      getProducts();
+      $("#edit-product-modal").trigger("reset");
+      $("#edit-product-modal").modal("hide");
+    });
+  }
+
+
+    $("#product-stock-update").validate({
+    submitHandler: function (form, event) {
+      event.preventDefault();
+      updateProductStock(jsonize_form($(form)));
+    },
+  });
+
+  
+  function editProductStock(id) {
+    RestClient.get("api/products/stock/"+(id), function(data){
+        $("[name^=size-]").val(0);
+        $("[name^=product_id]").val(id);
+        for(var i = 0; i < data.length; i++){
+            $(`[name=size-`+data[i].size_id+`]`).val(data[i].quantity_avaliable);
+        }
+      $("#product-stock-modal").modal("show");
+    });
+    }
+  
+ function updateProductStock(details) {
+    var stock = {};
+    var id = details.product_id;
+     for(var i = 1; i < 6; i++){
+        stock["size_id"] = i;
+        stock["quantity_avaliable"] = parseInt(details["size-" + i]);
+        RestClient.put("api/admin/product/stock/"+id, stock, function (data) {});
+    }
+      $("#product-stock-modal").trigger("reset");
+      $("#product-stock-modal").modal("hide");
+      toastr.success("Product stock successfully updated");
+  }
+    
+
+    function getProducts() {
+      $("#products-table").DataTable({
+        processing: true,
+        serverSide: true,
+        bDestroy: true,
+        pagingType: "simple",
+        preDrawCallback: function (settings) {
+          if (settings.aoData.length < settings._iDisplayLength) {
+            //disable pagination
+            settings._iRecordsTotal = 0;
+            settings._iRecordsDisplay = 0;
+          } else {
+            //enable pagination
+            settings._iRecordsTotal = 100000000;
+            settings._iRecordsDisplay = 1000000000;
+          }
+        },
+        responsive: true,
+        language: {
+          zeroRecords: "Nothing found - sorry",
+          info: "Showing page _PAGE_",
+          infoEmpty: "No records available",
+          infoFiltered: "",
+        },
+        ajax: {
+          url: "api/admin/products",
+          type: "GET",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader(
+              "Authentication",
+              localStorage.getItem("token")
+            );
+          },
+          dataSrc: function (resp) {
+            return resp;
+          },
+          data: function (d) {
+            d.offset = d.start;
+            d.limit = d.length;
+            d.search = d.search.value;
+            d.order =
+              (d.order[0].dir == "asc" ? "-" : "+") +
+              d.columns[d.order[0].column].data;
+            delete d.start;
+            delete d.length;
+            delete d.columns;
+            delete d.draw;
+          },
+        },
+        columns: [
+          {
+            // grabing data and pre proccessing it using datatable render func
+            data: "id",
+            render: function (data, type, row, meta) {
+              return (
+                '<div style="min-width: 60px;"> <span class="badge">' + "ID " + data +
+                '</span><a class="pull-right" style="font-size: 15px; cursor: pointer;" onclick="editProduct(' +
+                data +
+                ')"><i class="fa fa-edit"></i></a> </div>' +
+                '<div style="min-width: 60px;"><a class="pull-left" style="font-size: 15px; cursor: pointer;" onclick="editProductStock(' +
+                data +
+                ')"><i class="fa fa-cubes"></i> Stock </a> </div>' 
+
+              );
+            },
+          },
+
+          {
+            // grabing data and pre proccessing it using datatable render func
+            data: "image_link",
+            render: function (data, type, row, meta) {
+              return `<img src="${data}" width="50px" height="50px">`;
+            },
+          },
+          { data: "name" },
+          { data: "unit_price" },
+          { data: "gender_category" },
+          { data: "subcategory_id" },
+          { data: "created_at" },
+          
+        ],
+      });
+    }
+  </script>
+

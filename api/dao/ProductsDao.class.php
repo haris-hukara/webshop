@@ -24,7 +24,9 @@ class ProductsDao extends BaseDao{
                        ps.name AS 'category',
                        p.gender_category,                     
                        p.unit_price,
-                       p.image_link
+                       p.image_link,
+                       p.subcategory_id,
+                       p.created_at
                FROM products p
                JOIN product_subcategory ps ON p.subcategory_id = ps.id  
                WHERE LOWER(p.name) LIKE CONCAT('%', :search, '%')";

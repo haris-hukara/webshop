@@ -36,6 +36,15 @@
       href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
       rel="stylesheet"
     />
+    <!-- DataTable CSS -->
+    <link
+      href="./assets/css/dataTables/dataTables.bootstrap.css"
+      rel="stylesheet"
+    />
+    <link
+      href="./assets/css/dataTables/dataTables.responsive.css"
+      rel="stylesheet"
+    />
   </head>
   <body class="admin-stuff" style="display: none">
     <div class="site-wrap">
@@ -114,7 +123,11 @@
             <ul class="site-menu js-clone-nav d-none d-md-block">
               <li><a href="index.html">Home</a></li>
               <li class="admin-stuff">
-                <a href="#add_products">Admin</a>
+                <a href="#add_products">Add products</a>
+              </li>
+
+              <li class="admin-stuff">
+                <a href="#products">Products</a>
               </li>
               <li>
                 <a onclick="doLogout();" href="login.html"
@@ -131,6 +144,7 @@
           id="add_products"
           data-load="admin/add_products.html"
         ></section>
+        <section id="products" data-load="admin/products.html"></section>
       </main>
 
       <footer class="site-footer border-top">
@@ -258,6 +272,11 @@
 
     <script src="./assets/js/utils.js"></script>
     <script src="//cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+    <!-- Data Tables-->
+    <script src="./assets/js/dataTables/jquery.dataTables.min.js"></script>
+    <script src="./assets/js/dataTables/dataTables.bootstrap.min.js"></script>
+    <script src="//cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function () {

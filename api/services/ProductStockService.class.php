@@ -12,6 +12,9 @@ class ProductStockService extends BaseService{
     public function get_product_stock($id, $size = NULL){
         return $this->dao->get_product_stock_by_size_name($id, $size);
     }
+    public function get_stock_by_product_id($id){
+        return $this->dao->get_stock_by_product_id($id);
+    }
 
     public function add_product_stock($details){
         if(!isset($details['product_id'])) throw new Exception("Product id is missing");
@@ -36,12 +39,11 @@ class ProductStockService extends BaseService{
           }
     }
   
-    public function update_product_stock($details){
-        if(!isset($details['product_id'])) throw new Exception("Product id is missing");
+    public function update_product_stock($id, $details){
         if(!isset($details['size_id'])) throw new Exception("Product size id is missing");
         if(!isset($details['quantity_avaliable'])) throw new Exception("Quantity is missing");
 
-        $product_stock = $this->dao->update_product_stock( $details['product_id'],
+        $product_stock = $this->dao->update_product_stock( $id,
                                                            $details['size_id'],
                                                            $details['quantity_avaliable']);
 

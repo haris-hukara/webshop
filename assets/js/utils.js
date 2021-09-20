@@ -7,6 +7,12 @@ function jsonize_form(selector){
     return form_data;
 }
 
+function json2form(selector, data){
+  for (const attr in data){
+    $(selector+" *[name='"+attr+"']").val(data[attr]);
+  }
+}
+
 /* decoding jwt token */
 function parse_jwt(token){
     var base64Url = token.split('.')[1];

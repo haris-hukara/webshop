@@ -16,7 +16,7 @@
               <div style="margin-top: 2em">
                     
         </div><h2 class="h3 mb-3 text-black text-center">User Details</h2>
-        <div><h5><i onclick="setDetailsEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+        <div><h5><i onclick="UserProfile.setDetailsEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
         </div>
               <div class="p-3 p-lg-5 border text-center">
                 <form id="user-profile-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
@@ -67,7 +67,7 @@
                   <div style="margin-top: 2em">
                         
             </div><h2 class="h3 mb-3 text-black text-center">Email change</h2>
-            <div><h5><i onclick="setEmailEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+            <div><h5><i onclick="UserProfile.setEmailEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
             </div>
                   <div class="p-3 p-lg-5 border text-center">
                     <form id="user-email-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
@@ -98,7 +98,7 @@
                   <div style="margin-top: 2em">
                         
             </div><h2 class="h3 mb-3 text-black text-center">Password change</h2>
-            <div><h5><i onclick="setPasswordEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
+            <div><h5><i onclick="UserProfile.setPasswordEditable()"  style="margin: 0.5em; cursor: pointer;" class="fa fa-pencil-square pull-right" aria-hidden="true"></i></h5>
             </div>
                   <div class="p-3 p-lg-5 border text-center">
                     <form id="user-password-form" class="login100-form validate-form flex-sb flex-w" role="form" novalidate="novalidate">
@@ -134,100 +134,6 @@
     
   </div>
 
-
-<script type="text/javascript">
-loadUserProfileDetails(parse_jwt(window.localStorage.getItem("token")).id);
-  function setDetailsEditable(){
-    $('[id^=up]').removeAttr("disabled");
-    }
-  function setEmailEditable(){
-    $('[id^=ac_]').removeAttr("disabled");
-  }
-  
-  function setPasswordEditable(){
-      $('[id^=cp_]').removeAttr("disabled");
-    }
-
-// parse_jwt(window.localStorage.getItem("token")).id
-  function loadUserProfileDetails(account_id){
-      RestClient.get("api/user/details/"+account_id, function(data){
-        $("#up_fname").val( data.name);
-        $("#up_lname").val(data.surname);
-        $("#up_email_address").val( data.email);
-        $("#up_phone").val( data.phone_number);
-        $("#up_city").val( data.city);
-        $("#up_postal_zip").val( data.zip_code);
-        $("#up_address").val( data.address);
-        $("#ac_password").val("");
-    });
-    loadAccountInfo(account_id);
-  }
-
-  function loadAccountInfo(account_id){
-    RestClient.post("api/user/account/"+account_id, function(data){
-        $("#ac_email").val(data.email);
-    });
-
-  }
-
-  function updateUserDetails(details){
-    var account_id = parse_jwt(window.localStorage.getItem("token")).id
-    RestClient.put("api/user/details/"+account_id, details, function(data){
-      $('[id^=up]').prop('disabled', true);
-      loadUserProfileDetails(account_id);
-      toastr.success("Your profile info has been updated");
-    });
-  }
-
-  
-  function updateUserAccount(details, account_id){
-    delete details['password'];
-    RestClient.put("api/account/"+account_id, details, function(data){
-      $('[id^=ac_]').prop('disabled', true);
-      loadUserProfileDetails(account_id);
-      toastr.success("Your email address for login has been updated");
-    });
-  }
-  function updateUserAccountPassword(details, account_id){
-    delete details['old_password'];
-    RestClient.put("api/account/"+account_id, details, function(data){
-      $('[id^=cp_]').prop('disabled', true);
-      $('[id^=cp_]').val("");
-      toastr.success("Your password has been updated");
-    });
-  }
-  
-  function checkAndUpdate(details){
-    var account_id = parse_jwt(window.localStorage.getItem("token")).id
-    RestClient.get("api/user/password/account/"+account_id+"?password="+details.old_password, function(data){
-      if(data == true){
-        updateUserAccountPassword(details,account_id)
-      }else{
-        toastr.error("Wrong password");
-      }
-    })
-   
-  }
-
-  $("#user-profile-form").validate({
-    submitHandler: function (form, event) {
-      event.preventDefault();
-      updateUserDetails(jsonize_form($(form)));
-    },
-  });
-
-  $("#user-email-form").validate({
-    submitHandler: function (form, event) {
-      event.preventDefault();
-      checkAndUpdate(jsonize_form($(form)));
-    },
-  });
-
-  $("#user-password-form").validate({
-    submitHandler: function (form, event) {
-      event.preventDefault();
-      checkAndUpdate(jsonize_form($(form)));
-    },
-  });
-
-</script> 
+ <script type="text/javascript">
+  UserProfile.init();
+</script>

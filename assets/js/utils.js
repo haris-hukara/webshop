@@ -35,6 +35,10 @@ function setCartCount(){
     }
   }
 
+  function getLocalStorage(name) {
+    return JSON.parse(localStorage.getItem(name));
+}
+
   function getCart(){
     if (localStorage.getItem('products') == null){
       return false;

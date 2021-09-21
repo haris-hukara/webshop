@@ -3,7 +3,7 @@ class RestClient{
     $.ajax({
          url: endpoint,
          type: method,
-         data: (body),
+         data: JSON.stringify(body),
          contentType: "application/json",
          beforeSend: function(xhr){
            if (localStorage.getItem("token")){ // optional header token due login and other endpoints

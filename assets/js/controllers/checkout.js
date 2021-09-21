@@ -48,7 +48,7 @@ class Checkout{
 
 
   static post_user_details(user_details){
-    RestClient.post("api/details/add",JSON.stringify(user_details), function(data){
+    RestClient.post("api/details/add",user_details, function(data){
       Checkout.post_order(user_details, data.id);
           });
       }
@@ -61,7 +61,7 @@ class Checkout{
     order["shipping_address"] = details.shipping_address;
     order["payment_method_id"] = details.payment_method;
     order["status"] = "ACTIVE";
-    RestClient.post("api/order",JSON.stringify(order),function(data){
+    RestClient.post("api/order",order,function(data){
       Checkout.post_order_details(JSON.parse(getCart()), data.id);
           });
       }
@@ -77,7 +77,7 @@ class Checkout{
     order_details["size_id"] = cart[i].size_id;
     order_details["quantity"] = cart[i].quantity;
 
-    RestClient.post("api/order/details",JSON.stringify(order_details),function(data){});
+    RestClient.post("api/order/details",order_details,function(data){});
     }
       window.location  = ("#thankyou");
       setCartEmpty();

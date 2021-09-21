@@ -1,7 +1,7 @@
 class Products{
 
     static init(){
-        Products.getProducts();
+      Products.getProducts();
         $("#update-product").validate({
             submitHandler: function (form, event) {
               event.preventDefault();
@@ -56,7 +56,7 @@ class Products{
      for(var i = 1; i < 6; i++){
         stock["size_id"] = i;
         stock["quantity_avaliable"] = parseInt(details["size-" + i]);
-        RestClient.put("api/admin/product/stock/"+id,JSON.stringify(stock), function (data) {});
+        RestClient.put("api/admin/product/stock/"+id,stock, function (data) {});
     }
       $("#product-stock-modal").trigger("reset");
       $("#product-stock-modal").modal("hide");

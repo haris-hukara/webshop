@@ -45,3 +45,22 @@ function setCartCount(){
   function setCartEmpty(){
     localStorage.setItem('products','[]');
   }
+
+  function getElementValue(element_id) {
+    return document.getElementById(element_id).value;
+  }
+
+  function getDropdownValue(id) {
+    var e = document.getElementById(id);
+    return e.options[e.selectedIndex].value;
+  }
+
+  function getSizeId(i) {
+    var e = document.getElementById(i);
+    return JSON.parse(e.options[e.selectedIndex].value);
+  }
+
+  function getSizeName(i){
+    var e = document.getElementById(i);
+    return (e.options[e.selectedIndex].innerHTML);
+  }

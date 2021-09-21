@@ -109,12 +109,12 @@
 
               <div class="flex-sb-m w-full p-t-3 p-b-24">
                 <div>
-                  <a href="#" onclick="showForgotForm()" class="txt1">
+                  <a href="#" onclick="Login.showForgotForm()" class="txt1">
                     Forgot Password
                   </a>
                 </div>
                 <div>
-                  <a href="#" onclick="showRegisterForm()" class="txt1">
+                  <a href="#" onclick="Login.showRegisterForm()" class="txt1">
                     Register Here
                   </a>
                 </div>
@@ -251,7 +251,7 @@
               <div class="flex-sb-m w-full p-t-3 p-b-24">
                 <div></div>
                 <div>
-                  <a href="#" onclick="showLoginForm()" class="txt1">
+                  <a href="#" onclick="Login.showLoginForm()" class="txt1">
                     Back to login
                   </a>
                 </div>
@@ -288,7 +288,7 @@
               <div class="flex-sb-m w-full p-t-3 p-b-24">
                 <div></div>
                 <div>
-                  <a href="#" onclick="showLoginForm()" class="txt1">
+                  <a href="#" onclick="Login.showLoginForm()" class="txt1">
                     Back to login
                   </a>
                 </div>
@@ -327,7 +327,7 @@
               <div class="flex-sb-m w-full p-t-3 p-b-24">
                 <div></div>
                 <div>
-                  <a href="#" onclick="showLoginForm()" class="txt1">
+                  <a href="#" onclick="Login.showLoginForm()" class="txt1">
                     Back to login
                   </a>
                 </div>
@@ -368,149 +368,11 @@
     <script src="./assets/js/utils.js"></script>
     <!-- Toastr JS -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="assets/js/restClient.js"></script>
 
+    <script src="./assets/js/controllers/login.js"></script>
     <script type="text/javascript">
-      $(function () {
-        if (window.localStorage.getItem("token")) {
-          window.location = "index.html";
-        } else {
-          $("body").show();
-        }
-        var urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has("token")) {
-          $("#change-password-token").val(urlParams.get("token"));
-          showChangePasswordForm();
-        }
-        if (urlParams.has("confirm")) {
-          confirmRegistration(urlParams.get("confirm"));
-        }
-      });
-
-      function showChangePasswordForm() {
-        $("#change-password-form-container").removeClass("hidden");
-        $("#login-form-container").addClass("hidden");
-        $("#register-form-container").addClass("hidden");
-        $("#register-form-container").addClass("hidden");
-      }
-
-      function showForgotForm() {
-        $("#login-form-container").addClass("hidden");
-        $("#forgot-form-container").removeClass("hidden");
-      }
-
-      function showRegisterForm() {
-        $("#login-form-container").addClass("hidden");
-        $("#register-form-container").removeClass("hidden");
-      }
-
-      function showLoginForm() {
-        $("#login-form-container").removeClass("hidden");
-        $("#register-form-container").addClass("hidden");
-        $("#forgot-form-container").addClass("hidden");
-      }
-
-      function doRegister() {
-        $("#register-link").prop("disabled", true);
-        $.post("api/register", jsonize_form("#register-form"))
-          .done(function (data) {
-            console.log(data);
-            $("#register-form-container").addClass("hidden");
-            $("#form-alert").removeClass("hidden");
-            $("#form-alert .alert").html(data.message);
-          })
-          .fail(function (error) {
-            $("#register-link").prop("disabled", false);
-            console.log(error);
-            toastr.error(error.responseJSON.message);
-          });
-      }
-      function confirmRegistration(token) {
-        $.ajax({
-          url: "api/confirm/" + token,
-          type: "get",
-          success: function (response) {
-            toastr.success("You successfully activated your account");
-            setTimeout(function () {
-              window.localStorage.setItem("token", response.token);
-              window.location = "index.html";
-            }, 3000);
-          },
-          error: function (xhr) {
-            toastr.error(xhr.responseJSON.message);
-          },
-        });
-      }
-
-      function doLogin() {
-        $("#login-link").prop("disabled", true);
-        $.post("api/login", jsonize_form("#login-form"))
-          .done(function (data) {
-            window.localStorage.setItem("token", data.token);
-            window.location = "index.html";
-          })
-          .fail(function (error) {
-            $("#login-link").prop("disabled", false);
-            toastr.error(error.responseJSON.message);
-          });
-      }
-
-      function doForgotPassword() {
-        $("#forgot-link").prop("disabled", true);
-        $.post("api/forgot", jsonize_form("#forgot-form"))
-          .done(function (data) {
-            console.log(data);
-            $("#forgot-form-container").addClass("hidden");
-            $("#form-alert").removeClass("hidden");
-            $("#form-alert .alert").html(data.message);
-          })
-          .fail(function (error) {
-            $("#forgot-link").prop("disabled", false);
-            $("#forgot-form-container").addClass("hidden");
-            $("#form-alert").removeClass("hidden");
-            $("#form-alert .alert").html(error.responseJSON.message);
-          });
-      }
-
-      function doChangePassword() {
-        $("#change-link").prop("disabled", true);
-        $.post("api/reset", jsonize_form("#change-password-form"))
-          .done(function (data) {
-            window.localStorage.setItem("token", data.token);
-            window.location = "index.html";
-          })
-          .fail(function (error) {
-            $("#change-link").prop("disabled", false);
-            toastr.error(error.responseJSON.message);
-          });
-      }
-
-      $("#login-form").validate({
-        submitHandler: function (form, event) {
-          event.preventDefault();
-          doLogin();
-        },
-      });
-
-      $("#register-form").validate({
-        submitHandler: function (form, event) {
-          event.preventDefault();
-          doRegister();
-        },
-      });
-
-      $("#forgot-form").validate({
-        submitHandler: function (form, event) {
-          event.preventDefault();
-          doForgotPassword();
-        },
-      });
-
-      $("#change-password-form").validate({
-        submitHandler: function (form, event) {
-          event.preventDefault();
-          doChangePassword();
-        },
-      });
+      Login.init();
     </script>
   </body>
 </html>

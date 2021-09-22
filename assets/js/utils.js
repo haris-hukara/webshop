@@ -57,7 +57,7 @@ function setCartCount(){
   function getDropdownValue(id) {
     var e = document.getElementById(id);
     return e.options[e.selectedIndex].value;
-  }
+  } 
 
   function getSizeId(i) {
     var e = document.getElementById(i);

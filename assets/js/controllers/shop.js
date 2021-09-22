@@ -2,7 +2,7 @@ class Shop{
 
 static init(){
 
-  setCartCount();
+    setCartCount();
     Shop.default_products();
     
  //   AUtils.role_based_elements();

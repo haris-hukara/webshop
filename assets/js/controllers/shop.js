@@ -100,8 +100,7 @@ static init(){
        localStorage.setItem("search",'[{"order_by":"-name","per_page":"5","search":""}]')
     }
     Shop.get_products(offset,limit,Shop.get_stored_search().search, Shop.get_stored_search().order_by);
-    var page = (parseInt(limit)/parseInt(offset)) + 1;
-    if(offset == 0){page = 1};
+    var page = (offset + limit)/limit;
     Shop.change_page_button_style(page);
   }
 

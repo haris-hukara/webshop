@@ -132,7 +132,9 @@ static init(){
 
     setTimeout(function () {
       Shop.set_paggination(Shop.get_total_records(), Shop.get_stored_search().per_page);
+      Shop.change_page_button_style(1);
     }, 1000);
+    
   }
 
   static add_product(product_id, position, quantity) {

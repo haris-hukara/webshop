@@ -3,11 +3,83 @@ class Cart{
   static init(){
     setCartCount();
     Cart.create_cart();
-    
- //   AUtils.role_based_elements();
- //   EmailTemplate.get_all();
- //   EmailTemplate.chart();
   }
+
+  static get_product_cart_quantity(storage_index) {
+    return JSON.parse(getCart())[storage_index].quantity;
+  }
+
+  static product_in_cart(product_id, size_id) {
+    var cart = JSON.parse(getCart());
+    for (var i = 0; i < cart.length; i++) {
+      if (cart[i].product_id == product_id && cart[i].size_id == size_id) {
+        return i;
+      }
+    }
+    return false;
+  }
+
+  static get_product_from_cart(position){
+    return JSON.parse(getCart())[position];
+  }
+
+  static add_product(product_info){
+    let products = [];
+    if (localStorage.getItem("products")) {
+      products = JSON.parse(getCart());
+    }
+    products.push({
+      product_name:product_info["product_name"],
+      product_id: product_info["product_id"],
+      size_name: product_info["size_name"],
+      size_id: product_info["size_id"],
+      quantity: product_info["quantity"],
+      product_picture: product_info["product_picture"]
+    });
+    localStorage.setItem("products", JSON.stringify(products));
+  }
+
+  
+  static decrement_product_quantity(position){
+    Cart.change_product_quantity(position, (-1));
+    Cart.create_cart();
+  }
+  static increment_product_quantity(position){
+    Cart.change_product_quantity(position, 1);
+    Cart.create_cart();
+  }
+  
+  
+  static change_product_quantity(position, by_quantity) {
+    
+    var product_info={};
+    if (Cart.get_product_from_cart(position) != undefined){
+      product_info["product_name"] = Cart.get_product_from_cart(position).product_name;
+      product_info["product_id"] = Cart.get_product_from_cart(position).product_id;
+      product_info["size_id"] =  Cart.get_product_from_cart(position).size_id; 
+      product_info["size_name"] = Cart.get_product_from_cart(position).size_name;
+      product_info["product_picture"] = Cart.get_product_from_cart(position).product_picture;
+      product_info["quantity"] = Cart.get_product_from_cart(position).quantity;
+  
+     var this_position = Cart.product_in_cart(product_info["product_id"], product_info["size_id"]);
+    
+      if (this_position !== false ){
+      Cart.remove_product(this_position);
+      product_info["quantity"] += by_quantity;
+          
+          if(product_info["quantity"]!=0){
+              Cart.add_product(product_info);
+          }
+        
+                if (getCart() == false) {
+                  document.getElementById("count").setAttribute("hidden", "true");
+                  setCartEmpty();
+                }
+      }
+   }
+    setCartCount();
+  }
+
 
   static remove_product(index){
       var storageProducts = JSON.parse(getCart());
@@ -40,6 +112,7 @@ class Cart{
                         <img style="width:80px"src="`+getLocalStorage("products")[i].product_picture+`" alt="Image" class="img-fluid">
                       </td>
                       <td class="product-name">
+                      <p id="product-id-p`+i+`" hidden>`+getLocalStorage("products")[i].product_id+`</p> 
                         <h2 class="h5 text-black">`+getLocalStorage("products")[i].product_name+`</h2>
                       </td>
                       <td class="product-size">
@@ -49,13 +122,13 @@ class Cart{
                       <td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
-                            <button class="btn btn-outline-primary js-btn-minus" type="button">
+                            <button onClick="Cart.decrement_product_quantity(`+i+`)" class="btn btn-outline-primary js-btn-minus" type="button">
                               −
                             </button>
                           </div>
-                          <input id="quantity-p`+i+`" type="text" class="form-control text-center" value="`+getLocalStorage("products")[i].quantity+`" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                          <input disabled id="quantity-p`+i+`" type="text" class="form-control text-center" value="`+getLocalStorage("products")[i].quantity+`" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
                           <div class="input-group-append">
-                            <button class="btn btn-outline-primary js-btn-plus" type="button">
+                            <button onClick="Cart.increment_product_quantity(`+i+`)" class="btn btn-outline-primary js-btn-plus" type="button">
                               +
                             </button>
                           </div>
@@ -87,15 +160,10 @@ class Cart{
     }
     
    static set_unit_price(html_index,product_id){
-    
-    $.ajax({
-          url:"api/product/"+product_id,
-          type:"GET",
-          success: function(data){
-            $("#unit-p"+html_index).html(data.unit_price +".00 KM");
-          }
-        })
-      }
+    RestClient.get("api/product/"+product_id, function(data){
+      $("#unit-p"+html_index).html(data.unit_price +".00 KM");
+    })
+   }
 
 
   static go_to_checkout(){

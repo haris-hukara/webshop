@@ -21,6 +21,7 @@ static init(){
     Shop.get_products(0,5,a ,"-name");
     Shop.set_total_records_for_search("");
     Shop.set_paggination(Shop.get_total_records(), 5);
+    Shop.change_page_button_style(1);
   }
   
   static set_total_records_for_search(search) {
@@ -45,10 +46,10 @@ static init(){
 
     for (var p = 1; p < len + 1; p++) {
       html +=
-        `<button id="page`+p+`" onclick="Shop.load_page(`+parseInt(offset)+`,`+records_per_page+`)" data-aos="fade-down" type="button" class="btn" style="border-radius: 0.2em; margin: 0.5em; background-color: #7971ea; color: white;">`+p+`</button>`;
+        `<button id="page`+p+`" onclick="Shop.load_page(`+parseInt(offset)+`,`+records_per_page+`)" data-aos="fade-down" type="button" class="btn page-default"">`+p+`</button>`;
       offset += parseInt(records_per_page);
     }
-    $("#pages").html(html);
+    $("#pagination").html(html);
   }
 
   //getProductSizes
@@ -99,6 +100,15 @@ static init(){
        localStorage.setItem("search",'[{"order_by":"-name","per_page":"5","search":""}]')
     }
     Shop.get_products(offset,limit,Shop.get_stored_search().search, Shop.get_stored_search().order_by);
+    var page = (parseInt(limit)/parseInt(offset)) + 1;
+    if(offset == 0){page = 1};
+    Shop.change_page_button_style(page);
+  }
+
+  static change_page_button_style(page){
+    $('[id^=page]').addClass("page-default");
+    $(`[id=page`+page+"]").removeClass("page-default");
+    $(`[id=page`+page+"]").addClass("active-page");
   }
 
   static search_products() {
@@ -119,14 +129,12 @@ static init(){
       getDropdownValue("sort")
     );
 
-    $("#pages").html("");
+    $("#pagination").html("");
 
     setTimeout(function () {
       Shop.set_paggination(Shop.get_total_records(), Shop.get_stored_search().per_page);
     }, 1000);
   }
-
- 
 
   static add_product(product_id, position, quantity) {
     var size_id = getSizeId("size" + position);

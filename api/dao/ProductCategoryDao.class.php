@@ -22,5 +22,19 @@ class ProductCategoryDao extends BaseDao{
                              ["name" => strtolower($search)]);
     }
 
+    public function get_category_count(){
+        return $this->query( "SELECT pc.name, COUNT(pc.name) AS 'total'
+                                FROM products p
+                                JOIN product_subcategory ps ON ps.id = p.subcategory_id
+                                JOIN product_category pc ON pc.id = ps.category_id
+                                GROUP BY pc.id", 
+                            []);
+
+
+    }
+
+
+    
+
 }
 ?>

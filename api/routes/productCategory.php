@@ -27,6 +27,14 @@ Flight::route('GET /admin/product_category', function(){
 Flight::route('GET /admin/product_category/@id', function($id){  
     flight::json(Flight::productCategoryService()->get_by_id($id));
 });
+/**
+ * @OA\Get(path="/product_category_count", tags={"Product Category"},
+ *     @OA\Response(response="200", description="Count of products by category")
+ * )
+ */
+Flight::route('GET /product_category_count', function(){  
+    flight::json(Flight::productCategoryService()->get_product_categories_count());
+});
 
  /**
 * @OA\Put(path="/admin/product_category/{id}",tags={"Product Category","admin"},security={{"ApiKeyAuth":{}}},

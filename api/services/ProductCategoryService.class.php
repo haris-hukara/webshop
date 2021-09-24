@@ -11,6 +11,9 @@ class ProductCategoryService extends BaseService{
      $this->dao = new ProductCategoryDao();   
     }
 
+    public function get_product_categories_count(){
+              return ($this->dao-> get_category_count());
+ }
     public function get_product_categories($search, $offset, $limit, $order){
             if ($search){
               return ($this->dao->get_product_categories($search, $offset, $limit, $order));

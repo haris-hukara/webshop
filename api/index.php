@@ -59,7 +59,7 @@ Flight::map('query', function($name, $default_value = NULL){
         die;
     }
 });
-*/
+*/ 
 Flight::map('header', function($name){
     $headers = getallheaders();
     return @$headers[$name];

@@ -37,5 +37,3 @@ In order for it to work on your local machine, please run following command in t
 composer install
 ```
 
-
-

@@ -43,7 +43,7 @@ CREATE TABLE `country` (
 /*Table structure for table `order_details` */
 
 DROP TABLE IF EXISTS `order_details`;
-
+ 
 CREATE TABLE `order_details` (
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,

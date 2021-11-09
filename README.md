@@ -6,6 +6,7 @@ This is webshop application that I created as University project.
 USED:
 
  HTML, CSS, JS, Bootstrap, 
+ 
  PHP, FlightPHP, Swagger ( api documentation )
 
 

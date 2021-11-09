@@ -18,6 +18,7 @@ Features:
 - Sending emails with Swift Mailer
 - Registration, Login, Password Reset, etc.
 - Role based views ( admin / normal users )
+- JQuerry validation
 - JWT Authentication and Authorization
 
 

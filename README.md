@@ -4,6 +4,7 @@
 This is webshop application that I created as University project.
 
 Project description:
+
 First time users need to register in order to access the site.
 After submiting the registration form, confirmation email will be sent to user.
 When user confirms their registration, they can make orders, preview their cart, preview their past orders, change login info, etc. 

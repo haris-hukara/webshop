@@ -1,8 +1,6 @@
 # Webshop
 
 
-This is webshop application that I created as University project.
-
 Project description:
 
 First time users need to register in order to access the site.

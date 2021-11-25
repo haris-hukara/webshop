@@ -1,5 +1,5 @@
 # Webshop
-Using the app [ VIDEO ] -> ( [Click here !](https://github.com/haris-hukara/webshop/blob/main/video%20(%20using%20the%20app%20).mkv) )
+Using the app [ VIDEO ] -> ( [Click here !](https://github.com/haris-hukara/webshop/raw/main/video%20(%20using%20the%20app%20).mkv)  )
 
 Project description:
 
